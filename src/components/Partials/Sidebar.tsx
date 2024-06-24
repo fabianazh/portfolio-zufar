@@ -19,7 +19,7 @@ function NavLink({
         <>
             <Link
                 href={href}
-                className={`lg:text-base relative w-fit inline-block pb-0.5 font-medium group ${className}`}
+                className={`lg:text-base relative w-fit inline-block font-medium group ${className}`}
             >
                 {children}
                 <div
@@ -35,7 +35,9 @@ function NavLink({
 export default function Sidebar() {
     return (
         <>
-            <aside className="w-auto fixed h-screen overflow-hidden z-10 bg-white left-0 top-0 p-16 pr-12 flex flex-col gap-8">
+            <aside
+                className={`w-auto fixed h-screen overflow-hidden z-0 bg-white left-0 top-0 p-16 pr-12 hidden lg:flex flex-col gap-8`}
+            >
                 <h1 className="font-black text-6xl">
                     Zufar <span className="block"></span> Syabana
                 </h1>
