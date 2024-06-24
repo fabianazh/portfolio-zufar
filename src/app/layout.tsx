@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
 import "./globals.css"
-
-const inter = Inter({ subsets: ["latin"] })
+import Sidebar from "@/components/Partials/Sidebar"
+import GradientBackground from "@/components/Other/GradientBackground"
+import { urbanist } from "./fonts"
 
 export const metadata: Metadata = {
     title: "Zufar | Portfolio",
@@ -16,8 +16,10 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={inter.className}>
-                <main className="flex min-h-screen flex-col items-center justify-between p-24">
+            <body className={urbanist.className}>
+                {/* <GradientBackground /> */}
+                <Sidebar />
+                <main className="min-h-screen relative py-20 lg:pr-10 lg:pl-96">
                     {children}
                 </main>
             </body>
