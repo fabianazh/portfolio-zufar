@@ -1,71 +1,49 @@
-import Image from "next/image"
+import PhotoGrid from "../../components/Other/PhotoGrid"
 
-const photos = [
+const projects = [
     {
-        src: "https://via.placeholder.com/300x400",
-        alt: "Photo 1",
-        width: 300,
-        height: 400,
+        id: 400,
+        thumbnail: "https://via.placeholder.com/300x400",
+        year: "2024",
+        name: "RS. Hermina",
     },
     {
-        src: "https://via.placeholder.com/300x500",
-        alt: "Photo 2",
-        width: 300,
-        height: 500,
+        id: 500,
+        thumbnail: "https://via.placeholder.com/300x500",
+        year: "2024",
+        name: "RS. Hermina",
     },
     {
-        src: "https://via.placeholder.com/300x600",
-        alt: "Photo 3",
-        width: 300,
-        height: 600,
+        id: 600,
+        thumbnail: "https://via.placeholder.com/300x600",
+        year: "2024",
+        name: "RS. Hermina",
     },
     {
-        src: "https://via.placeholder.com/400x300",
-        alt: "Photo 4",
-        width: 400,
-        height: 300,
+        id: 300,
+        thumbnail: "https://via.placeholder.com/400x300",
+        year: "2024",
+        name: "RS. Hermina",
     },
     {
-        src: "https://via.placeholder.com/500x300",
-        alt: "Photo 5",
-        width: 500,
-        height: 300,
+        id: 300,
+        thumbnail: "https://via.placeholder.com/500x300",
+        year: "2024",
+        name: "RS. Hermina",
     },
     {
-        src: "https://via.placeholder.com/600x300",
-        alt: "Photo 6",
-        width: 600,
-        height: 300,
+        id: 300,
+        thumbnail: "https://via.placeholder.com/600x300",
+        year: "2024",
+        name: "RS. Hermina",
     },
 ]
-
-function PhotoGrid() {
-    return (
-        <div className="container mx-auto px-4">
-            <div className="columns-3 gap-4">
-                {photos.map((photo, index) => (
-                    <div key={index} className="w-full mb-4">
-                        <Image
-                            src={photo.src}
-                            alt={photo.alt}
-                            width={300}
-                            height={400}
-                            layout="responsive"
-                            objectFit="contain"
-                            className="w-full h-auto"
-                        />
-                    </div>
-                ))}
-            </div>
-        </div>
-    )
-}
 
 export default function ProjectsPage() {
     return (
         <>
-            <section className="w-full flex flex-col gap-16 min-h-screen">
-                <PhotoGrid></PhotoGrid>
+            <section className="w-full flex flex-col gap-16 min-h-screen pb-20">
+                <PhotoGrid projects={projects}></PhotoGrid>
             </section>
         </>
     )

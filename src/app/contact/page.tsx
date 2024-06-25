@@ -3,9 +3,9 @@ import Heading from "@/components/Typography/Heading"
 export default function ContactPage() {
     return (
         <>
-            <section className="w-full flex flex-col px-24 items-center min-h-screen gap-10">
-                <div className="flex flex-col items-start gap-3">
-                    <Heading>Contact Me</Heading>
+            <section className="w-full flex flex-col px-0 lg:px-24 items-center min-h-screen gap-10">
+                <div className="flex flex-col items-start gap-3 z-0">
+                    <Heading>Kontak Saya</Heading>
                     <span>
                         Saya sangat tertarik untuk mendiskusikan peluang karir
                         lebih lanjut dan bagaimana saya dapat berkontribusi pada
@@ -18,10 +18,13 @@ export default function ContactPage() {
                         <span>+62 895-3952-53663</span>
                     </div>
                 </div>
-                <form action="" className="w-full h-fit flex flex-col gap-4">
+                <form
+                    action=""
+                    className="w-full h-fit flex flex-col gap-4 z-0"
+                >
                     <div className="w-full h-fit flex flex-col">
-                        <div className="w-full grid grid-cols-2 h-fit">
-                            <div className="w-full border border-r-0 border-black h-fit flex-grow">
+                        <div className="w-full grid grid-flow-row lg:grid-flow-col h-fit">
+                            <div className="w-full border border-b-0 lg:border-b lg:border-r-0 border-black h-fit flex-grow">
                                 <input
                                     type="text"
                                     name="name"

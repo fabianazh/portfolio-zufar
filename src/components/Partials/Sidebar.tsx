@@ -1,36 +1,6 @@
-"use client"
-
-import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { BsInstagram, BsLinkedin } from "react-icons/bs"
-
-function NavLink({
-    children,
-    href,
-    className,
-}: {
-    children: React.ReactNode
-    href: string
-    className?: string
-}) {
-    const navActive = usePathname() === href
-
-    return (
-        <>
-            <Link
-                href={href}
-                className={`lg:text-base relative w-fit inline-block font-medium group ${className}`}
-            >
-                {children}
-                <div
-                    className={`absolute w-full h-0.5 bottom-0 left-0 bg-black origin-bottom-right transition-transform duration-300 group-hover:scale-x-100 group-hover:origin-bottom-left ${
-                        navActive ? "scale-x-100" : "scale-x-0"
-                    }`}
-                />
-            </Link>
-        </>
-    )
-}
+import NavLink from "./NavLink"
+import Link from "next/link"
 
 export default function Sidebar() {
     return (
@@ -43,7 +13,7 @@ export default function Sidebar() {
                 </h1>
                 <div className="flex divide-x-2 divide-stone-200">
                     <span className="text-lg font-medium text-stone-500">
-                        Arsitek
+                        Drafter
                     </span>
                 </div>
                 <nav className="w-full h-fit flex">
@@ -73,8 +43,11 @@ export default function Sidebar() {
                     </div>
                     <div className="w-full text-xs font-medium">
                         <span>
-                            &copy; {new Date().getFullYear()} Fabianazh. All
-                            rights reserved.
+                            &copy; {new Date().getFullYear()}{" "}
+                            <Link href={"https://fabianazh.vercel.app"}>
+                                Fabianazh
+                            </Link>
+                            . All rights reserved.
                         </span>
                     </div>
                 </div>

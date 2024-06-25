@@ -9,7 +9,7 @@ export default function Heading({
 }) {
     return (
         <h1
-            className={`text-2xl lg:text-4xl inline-block w-fit uppercase font-semibold ${urbanist.className} ${className}`}
+            className={`text-3xl lg:text-4xl inline-block w-fit uppercase font-semibold ${urbanist.className} ${className}`}
         >
             {children}
         </h1>

@@ -1,81 +1,119 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { usePathname } from "next/navigation"
 import { RxHamburgerMenu } from "react-icons/rx"
 import { BiX } from "react-icons/bi"
 import Link from "next/link"
 import { disableScroll, enableScroll } from "@/utils/controllScroll"
+import NavLink from "./NavLink"
+import { BsInstagram, BsLinkedin } from "react-icons/bs"
 
 export const Header = () => {
     const [isNavOpen, setIsNavOpen] = useState<boolean>(false)
 
-    let icon = <></>
+    const pathname = usePathname()
 
-    isNavOpen
-        ? (icon = <BiX className="text-3xl translate-x-1" />)
-        : (icon = <RxHamburgerMenu />)
-
-    function openNav(value: boolean) {
-        value === true ? disableScroll() : enableScroll()
-        setIsNavOpen(value)
+    function openNav() {
+        setIsNavOpen((isNavOpen) => !isNavOpen)
     }
+
+    useEffect(() => {
+        isNavOpen === true ? disableScroll() : enableScroll()
+    }, [isNavOpen])
+
+    useEffect(() => {
+        setIsNavOpen(false)
+    }, [pathname])
 
     return (
         <>
-            <header className="bg-white h-16 grid lg:hidden grid-cols-2 items-center justify-between w-screen px-6 z-50">
-                <div className="flex w-fit gap-x-10">
+            <header className="bg-white fixed h-auto flex lg:hidden items-center w-screen h-14 z-40 top-0 left-0 shadow">
+                <div className="grid grid-cols-2 justify-between w-full relative gap-x-10 top-0 px-6">
                     <div className="w-fit h-full flex place-items-center">
-                        <span className="text-xl font-black">ZS.</span>
+                        <span className="text-xl font-black">
+                            ZS
+                            <span className="text-yellow-600 inline-block">
+                                .
+                            </span>
+                        </span>
                     </div>
-                    <nav className="w-fit hidden xl:flex">
-                        <ul className="flex justify-between items-center gap-x-7">
-                            <li className="flex p-0">
-                                <Link
-                                    href="/"
-                                    className="text-[black] text-[15px] tracking-widest font-black transition-colors duration-300"
-                                >
-                                    Home
-                                </Link>
-                            </li>
-                            <li className="flex p-0">
-                                <Link
-                                    href="/about"
-                                    className="text-[black] text-[15px] tracking-widest font-black transition-colors duration-300"
-                                >
-                                    About
-                                </Link>
-                            </li>
-                            <li className="flex p-0">
-                                <Link
-                                    href="/projects"
-                                    className="text-[black] text-[15px] tracking-widest font-black transition-colors duration-300"
-                                >
-                                    Projects
-                                </Link>
-                            </li>
-                            <li className="flex p-0">
-                                <Link
-                                    href="/contact"
-                                    className="text-[black] text-[15px] tracking-widest font-black transition-colors duration-300"
-                                >
-                                    Contact
-                                </Link>
-                            </li>
-                        </ul>
-                    </nav>
+
+                    <div
+                        onClick={() => openNav()}
+                        className="flex relative text-2xl xl:hidden z-50"
+                    >
+                        <BiX
+                            className={`text-3xl absolute top-1/2 -translate-y-1/2 -right-0.5 transition-all ${
+                                isNavOpen ? "scale-100" : "scale-0"
+                            }`}
+                        />
+                        <RxHamburgerMenu
+                            className={`absolute top-1/2 -translate-y-1/2 right-0 transition-all ${
+                                isNavOpen ? "scale-0" : "scale-100"
+                            }`}
+                        />
+                    </div>
                 </div>
-                <div
-                    onClick={(isNavOpen) => openNav(!isNavOpen)}
-                    className="flex justify-end text-2xl xl:hidden"
+                <nav
+                    className={`transition-all absolute w-8/12 duration-500 h-screen flex flex-col top-0 right-0 bg-white py-16 px-10 gap-8 ${
+                        isNavOpen
+                            ? "-translate-x-0 opacity-100"
+                            : "translate-x-full opacity-50"
+                    }`}
                 >
-                    {icon}
-                </div>
+                    <div className="flex flex-col gap-6">
+                        <h1 className="font-black text-4xl">
+                            Zufar <span className="block"></span> Syabana
+                        </h1>
+                        <div className="flex divide-x-2 divide-stone-200">
+                            <span className="text-xl font-medium text-stone-500">
+                                Drafter
+                            </span>
+                        </div>
+                    </div>
+                    <ul className="flex flex-col w-fit justify-between items-start gap-4">
+                        <li className="flex p-0">
+                            <NavLink href="/">Home</NavLink>
+                        </li>
+                        <li className="flex p-0">
+                            <NavLink href="/about">About</NavLink>
+                        </li>
+                        <li className="flex p-0">
+                            <NavLink href="/projects">Projects</NavLink>
+                        </li>
+                        <li className="flex p-0">
+                            <NavLink href="/contact">Contact</NavLink>
+                        </li>
+                    </ul>
+                    <div className="w-full flex flex-col gap-6">
+                        <div className="w-full flex gap-2 items-center">
+                            <Link href={"https://www.instagram.com/zufarrr._"}>
+                                <BsInstagram />
+                            </Link>
+                            <Link href={"https://"}>
+                                <BsLinkedin />
+                            </Link>
+                        </div>
+                        <div className="w-full text-sm font-medium">
+                            <span>
+                                &copy; {new Date().getFullYear()}{" "}
+                                <Link href={"https://fabianazh.vercel.app"}>
+                                    Fabianazh
+                                </Link>
+                                . All rights reserved.
+                            </span>
+                        </div>
+                    </div>
+                </nav>
             </header>
 
             {/* Overlay */}
             <div
-                onClick={(isNavOpen) => setIsNavOpen(!isNavOpen)}
-                className={`nav__burger__overlay opacity-0 ${isNavOpen}`}
+                onClick={() => openNav()}
+                className={`-translate-x-0 w-screen flex transition-all fixed duration-[200] left-0 top-0 h-screen bg-black/60 ${
+                    isNavOpen ? "opacity-100 z-30" : "opacity-0 z-0"
+                }`}
             ></div>
             {/* End Overlay */}
         </>
