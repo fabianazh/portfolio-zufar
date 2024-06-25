@@ -1,3 +1,4 @@
+import Link from "next/link"
 import Heading from "@/components/Typography/Heading"
 
 export default function ContactPage() {
@@ -13,9 +14,25 @@ export default function ContactPage() {
                         melalui kontak atau formulir di bawah ini.
                     </span>
                     <div className="flex gap-2">
-                        <span>zufarsyabana@gmail.com</span>
-                        <span>|</span>
-                        <span>+62 895-3952-53663</span>
+                        <Link
+                            target={"_blank"}
+                            href={`mailto:zufarsyabana@gmail.com?subject=${encodeURIComponent(
+                                "Subject Anda"
+                            )}&body=${encodeURIComponent(
+                                "Halo, saya tertarik untuk mendiskusikan lebih lanjut..."
+                            )}`}
+                        >
+                            zufarsyabana@gmail.com
+                        </Link>
+                        <span> | </span>
+                        <Link
+                            target={"_blank"}
+                            href={`https://wa.me/62895395253663?text=${encodeURIComponent(
+                                "Halo, saya tertarik untuk mendiskusikan lebih lanjut..."
+                            )}`}
+                        >
+                            +62 895-3952-53663
+                        </Link>
                     </div>
                 </div>
                 <form
@@ -29,8 +46,9 @@ export default function ContactPage() {
                                     type="text"
                                     name="name"
                                     id="name"
-                                    className="w-full py-3 px-4 focus:border-0 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500"
+                                    className="w-full py-3 px-4 focus:border-0 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500 text-sm lg:text-base"
                                     required
+                                    autoComplete="false"
                                     placeholder="Nama"
                                 />
                             </div>
@@ -39,8 +57,9 @@ export default function ContactPage() {
                                     type="text"
                                     name="email"
                                     id="email"
-                                    className="w-full py-3 px-4 focus:border-0 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500"
+                                    className="w-full py-3 px-4 focus:border-0 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500 text-sm lg:text-base"
                                     required
+                                    autoComplete="false"
                                     placeholder="Email"
                                 />
                             </div>
@@ -50,8 +69,10 @@ export default function ContactPage() {
                                 name="message"
                                 id="message"
                                 rows={6}
-                                className="w-full h-fit resize-none py-3 px-4 focus:border-0 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500"
+                                className="w-full h-fit resize-none py-3 px-4 focus:border-0 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500 text-sm lg:text-base"
+                                required
                                 placeholder="Pesan"
+                                autoComplete="false"
                             ></textarea>
                         </div>
                     </div>
