@@ -35,7 +35,6 @@ export default function ContactForm() {
                         <div className="w-full border border-b-0 lg:border-b lg:border-r-0 border-black h-fit flex-grow">
                             <input
                                 type="text"
-                                name="name"
                                 id="name"
                                 className="w-full py-3 px-4 focus:border-0 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500 text-sm lg:text-base"
                                 {...register("name", { required: true })}
@@ -46,7 +45,6 @@ export default function ContactForm() {
                         <div className="w-full border border-black h-fit flex-grow">
                             <input
                                 type="text"
-                                name="email"
                                 id="email"
                                 className="w-full py-3 px-4 focus:border-0 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500 text-sm lg:text-base"
                                 {...register("email", { required: true })}
@@ -57,7 +55,6 @@ export default function ContactForm() {
                     </div>
                     <div className="w-full h-fit border border-t-0 border-black">
                         <textarea
-                            name="message"
                             id="message"
                             rows={6}
                             className="w-full h-fit resize-none py-3 px-4 focus:border-0 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500 text-sm lg:text-base"
