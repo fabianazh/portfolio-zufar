@@ -1,41 +1,31 @@
-import PhotoGrid from "../../components/Other/PhotoGrid"
+import PhotoGrid from "@/components/Other/PhotoGrid"
 
 const projects = [
     {
-        id: 400,
-        thumbnail: "https://via.placeholder.com/300x400",
+        id: "rs-hermina",
+        thumbnail: "/nama-projek/nama-gambar",
+        month: "Jan",
         year: "2024",
         name: "RS. Hermina",
+        desc: "deskripsi disini",
+        photos: [
+            "/nama-projek/nama-gambar",
+            "/nama-projek/nama-gambar",
+            "/nama-projek/nama-gambar",
+        ],
     },
     {
-        id: 500,
-        thumbnail: "https://via.placeholder.com/300x500",
+        id: "rs-hermina",
+        thumbnail: "/nama-projek/nama-gambar",
+        month: "Jan",
         year: "2024",
         name: "RS. Hermina",
-    },
-    {
-        id: 600,
-        thumbnail: "https://via.placeholder.com/300x600",
-        year: "2024",
-        name: "RS. Hermina",
-    },
-    {
-        id: 300,
-        thumbnail: "https://via.placeholder.com/400x300",
-        year: "2024",
-        name: "RS. Hermina",
-    },
-    {
-        id: 300,
-        thumbnail: "https://via.placeholder.com/500x300",
-        year: "2024",
-        name: "RS. Hermina",
-    },
-    {
-        id: 300,
-        thumbnail: "https://via.placeholder.com/600x300",
-        year: "2024",
-        name: "RS. Hermina",
+        desc: "deskripsi disini",
+        photos: [
+            "/nama-projek/nama-gambar",
+            "/nama-projek/nama-gambar",
+            "/nama-projek/nama-gambar",
+        ],
     },
 ]
 
