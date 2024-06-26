@@ -91,10 +91,12 @@ export const Header = () => {
                             <Link href={"https://www.instagram.com/zufarrr._"}>
                                 <BsInstagram />
                             </Link>
-                            <Link href={"https://"}>
+                            <Link
+                                href={"https://www.facebook.com/zufar.ali.393"}
+                            >
                                 <BsFacebook />
                             </Link>
-                            <Link href={"https://"}>
+                            <Link href={"https://www.linkedin.com/in/zufar-ms"}>
                                 <BsLinkedin />
                             </Link>
                         </div>
