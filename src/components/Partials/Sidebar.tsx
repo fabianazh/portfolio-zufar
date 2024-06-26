@@ -1,4 +1,4 @@
-import { BsInstagram, BsLinkedin } from "react-icons/bs"
+import { BsFacebook, BsInstagram, BsLinkedin } from "react-icons/bs"
 import NavLink from "./NavLink"
 import Link from "next/link"
 
@@ -36,6 +36,9 @@ export default function Sidebar() {
                     <div className="w-full flex gap-2 items-center">
                         <Link href={""}>
                             <BsInstagram />
+                        </Link>
+                        <Link href={"https://"}>
+                            <BsFacebook />
                         </Link>
                         <Link href={""}>
                             <BsLinkedin />

@@ -1,4 +1,6 @@
+import Link from "next/link"
 import Heading from "@/components/Typography/Heading"
+import ContactForm from "@/components/Section/ContactForm"
 
 export default function ContactPage() {
     return (
@@ -13,52 +15,28 @@ export default function ContactPage() {
                         melalui kontak atau formulir di bawah ini.
                     </span>
                     <div className="flex gap-2">
-                        <span>zufarsyabana@gmail.com</span>
-                        <span>|</span>
-                        <span>+62 895-3952-53663</span>
+                        <Link
+                            target={"_blank"}
+                            href={`mailto:zufarsyabana@gmail.com?subject=${encodeURIComponent(
+                                "Subject Anda"
+                            )}&body=${encodeURIComponent(
+                                "Halo, saya tertarik untuk mendiskusikan lebih lanjut..."
+                            )}`}
+                        >
+                            zufarsyabana@gmail.com
+                        </Link>
+                        <span> | </span>
+                        <Link
+                            target={"_blank"}
+                            href={`https://wa.me/62895395253663?text=${encodeURIComponent(
+                                "Halo, saya tertarik untuk mendiskusikan lebih lanjut..."
+                            )}`}
+                        >
+                            +62 895-3952-53663
+                        </Link>
                     </div>
                 </div>
-                <form
-                    action=""
-                    className="w-full h-fit flex flex-col gap-4 z-0"
-                >
-                    <div className="w-full h-fit flex flex-col">
-                        <div className="w-full grid grid-flow-row lg:grid-flow-col h-fit">
-                            <div className="w-full border border-b-0 lg:border-b lg:border-r-0 border-black h-fit flex-grow">
-                                <input
-                                    type="text"
-                                    name="name"
-                                    id="name"
-                                    className="w-full py-3 px-4 focus:border-0 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500"
-                                    required
-                                    placeholder="Nama"
-                                />
-                            </div>
-                            <div className="w-full border border-black h-fit flex-grow">
-                                <input
-                                    type="text"
-                                    name="email"
-                                    id="email"
-                                    className="w-full py-3 px-4 focus:border-0 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500"
-                                    required
-                                    placeholder="Email"
-                                />
-                            </div>
-                        </div>
-                        <div className="w-full h-fit border border-t-0 border-black">
-                            <textarea
-                                name="message"
-                                id="message"
-                                rows={6}
-                                className="w-full h-fit resize-none py-3 px-4 focus:border-0 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500"
-                                placeholder="Pesan"
-                            ></textarea>
-                        </div>
-                    </div>
-                    <div className="border border-black w-fit py-2 px-8">
-                        <button type="submit">Kirim</button>
-                    </div>
-                </form>
+                <ContactForm />
             </section>
         </>
     )

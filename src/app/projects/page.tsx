@@ -1,4 +1,4 @@
-import PhotoGrid from "../../components/Other/PhotoGrid"
+import PhotoGrid from "@/components/Other/PhotoGrid"
 
 const projects = [
     {
