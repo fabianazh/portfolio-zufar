@@ -1,17 +1,13 @@
-import Image from "next/image"
+import PhotoGrid from "@/components/Other/PhotoGrid"
+import { getAllProjects } from "@/utils/getProjectData"
 
-export default function HomePage() {
+export default function ProjectPage() {
+    const projects = getAllProjects()
+
     return (
         <>
-            <section className="w-full flex flex-col gap-16 min-h-screen">
-                <div className="w-full h-fit flex">
-                    <span className="block text-3xl font-semibold">
-                        Hai 👋,{" "}
-                        <span className="inline-">
-                            Saya Zufar Muhammad Ali Syabana
-                        </span>
-                    </span>
-                </div>
+            <section className="w-full flex min-h-screen">
+                <PhotoGrid projects={projects} />
             </section>
         </>
     )

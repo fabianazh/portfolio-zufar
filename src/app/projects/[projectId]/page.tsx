@@ -1,7 +1,7 @@
 import ProjectDetail from "@/components/Section/ProjectDetail"
 import { getProjectById } from "@/utils/getProjectData"
 import Link from "next/link"
-import { BiArrowFromRight } from "react-icons/bi"
+import { IoArrowBack } from "react-icons/io5"
 
 export async function generateMetadata({
     params,
@@ -50,8 +50,8 @@ export default function HomePage({
                     href={"/projects"}
                     className="flex w-fit h-fit gap-2 items-center text-lg"
                 >
-                    <BiArrowFromRight></BiArrowFromRight>
-                    <span>Kembali</span>
+                    <IoArrowBack></IoArrowBack>
+                    <span className="font-medium">Kembali</span>
                 </Link>
             </section>
             <ProjectDetail projectId={params.projectId} />
