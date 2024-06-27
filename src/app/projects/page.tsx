@@ -1,5 +1,5 @@
 import PhotoGrid from "@/components/Other/PhotoGrid"
-import getAllProjects from "@/utils/getAllProjects"
+import { getAllProjects } from "@/utils/getProjectData"
 
 export default function ProjectsPage() {
     const projects = getAllProjects()
