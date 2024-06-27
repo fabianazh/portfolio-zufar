@@ -11,3 +11,9 @@ interface Project {
     }[]
     created_at: string
 }
+
+interface FormData {
+    name: string
+    email: string
+    message: string
+}
