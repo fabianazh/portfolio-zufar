@@ -28,7 +28,7 @@ export const Header = () => {
 
     return (
         <>
-            <header className="bg-white fixed flex lg:hidden items-center w-screen h-14 z-40 top-0 left-0 shadow">
+            <header className="bg-white fixed h-auto flex lg:hidden items-center w-screen h-14 z-40 top-0 left-0 shadow">
                 <div className="grid grid-cols-2 justify-between w-full relative gap-x-10 top-0 px-6">
                     <div className="w-fit h-full flex place-items-center">
                         <span className="text-xl font-black">
@@ -91,10 +91,12 @@ export const Header = () => {
                             <Link href={"https://www.instagram.com/zufarrr._"}>
                                 <BsInstagram />
                             </Link>
-                            <Link href={"https://"}>
+                            <Link
+                                href={"https://www.facebook.com/zufar.ali.393"}
+                            >
                                 <BsFacebook />
                             </Link>
-                            <Link href={"https://"}>
+                            <Link href={"https://www.linkedin.com/in/zufar-ms"}>
                                 <BsLinkedin />
                             </Link>
                         </div>

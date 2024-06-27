@@ -1,9 +1,3 @@
-interface FormData {
-    name: string
-    email: string
-    message: string
-}
-
 interface Project {
     id: string
     thumbnail: string
