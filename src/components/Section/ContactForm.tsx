@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form"
 
 export default function ContactForm() {
-    const { register, handleSubmit } = useForm<FormData>()
+    const { register, handleSubmit, reset } = useForm<FormData>()
 
     function sendEmail(data: FormData) {
         const apiEndpoint = "/api/email"
@@ -15,6 +15,7 @@ export default function ContactForm() {
             .then((res) => res.json())
             .then((response) => {
                 alert(response.message)
+                reset()
             })
             .catch((err) => {
                 alert(err)

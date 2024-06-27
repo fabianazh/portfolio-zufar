@@ -6,12 +6,7 @@ export default function PhotoGrid({
     className,
     imgClassName,
 }: {
-    projects: {
-        id: number
-        thumbnail: string
-        year: string
-        name: string
-    }[]
+    projects: Project[]
     className?: string
     imgClassName?: string
 }) {

@@ -7,7 +7,7 @@ import { BiX } from "react-icons/bi"
 import Link from "next/link"
 import { disableScroll, enableScroll } from "@/utils/controllScroll"
 import NavLink from "./NavLink"
-import { BsInstagram, BsLinkedin } from "react-icons/bs"
+import { BsFacebook, BsInstagram, BsLinkedin } from "react-icons/bs"
 
 export const Header = () => {
     const [isNavOpen, setIsNavOpen] = useState<boolean>(false)
@@ -28,7 +28,7 @@ export const Header = () => {
 
     return (
         <>
-            <header className="bg-white fixed h-auto flex lg:hidden items-center w-screen h-14 z-40 top-0 left-0 shadow">
+            <header className="bg-white fixed flex lg:hidden items-center w-screen h-14 z-40 top-0 left-0 shadow">
                 <div className="grid grid-cols-2 justify-between w-full relative gap-x-10 top-0 px-6">
                     <div className="w-fit h-full flex place-items-center">
                         <span className="text-xl font-black">
@@ -90,6 +90,9 @@ export const Header = () => {
                         <div className="w-full flex gap-2 items-center">
                             <Link href={"https://www.instagram.com/zufarrr._"}>
                                 <BsInstagram />
+                            </Link>
+                            <Link href={"https://"}>
+                                <BsFacebook />
                             </Link>
                             <Link href={"https://"}>
                                 <BsLinkedin />
