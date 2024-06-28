@@ -4,6 +4,7 @@ import { getProjectById } from "@/utils/getProjectData"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import Modal from "@/components/Other/Modal"
+import ProjectDetailSkeleton from "@/components/Skeleton/ProjectDetailSkeleton"
 
 export default function ProjectDetail({ projectId }: { projectId: string }) {
     const [project, setProject] = useState<Project | null | undefined>(null)
@@ -27,7 +28,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
     }, [projectId])
 
     if (loading) {
-        return <div>Loading...</div>
+        return <ProjectDetailSkeleton />
     }
 
     if (error || !project) {
