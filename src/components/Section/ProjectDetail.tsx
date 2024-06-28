@@ -54,16 +54,17 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             onClick={() => {
                                 openModal()
                                 setModalData({
-                                    photo: project.thumbnail,
+                                    photo: project.thumbnail.photo,
                                     alt: project.name,
                                 })
                             }}
-                            src={`/img/projects/${project.thumbnail}`}
-                            alt={`Projek ${project.name}`}
+                            src={`/img/projects/${project.thumbnail.photo}`}
+                            alt={`Projek ${project.thumbnail.alt}`}
                             width={900}
                             height={700}
                             layout="responsive"
                             objectFit="contain"
+                            draggable={false}
                             className={`w-full h-auto cursor-pointer`}
                         />
                     </div>
@@ -98,10 +99,11 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             src={`/img/projects/${modalData.photo}`}
                             alt={`Projek ${modalData.alt}`}
                             width={900}
-                            height={700}
+                            height={800}
                             layout="responsive"
                             objectFit="contain"
-                            className={`w-full h-auto border`}
+                            draggable={false}
+                            className={`w-auto h-full`}
                         />
                         <span className="font-semibold text-black">
                             {modalData.alt}

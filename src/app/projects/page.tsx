@@ -1,11 +1,9 @@
-import ProjectsGrid from "@/components/Section/ProjectsGrid"
+import ProjectsList from "@/components/Section/ProjectsList"
 
 export default function ProjectPage() {
     return (
         <>
-            <section className="w-full flex min-h-screen">
-                <ProjectsGrid />
-            </section>
+            <ProjectsList />
         </>
     )
 }

@@ -88,17 +88,15 @@ export const Header = () => {
                     </ul>
                     <div className="w-full flex flex-col gap-6">
                         <div className="w-full flex gap-2 items-center">
-                            <Link href={"https://www.instagram.com/zufarrr._"}>
-                                <BsInstagram />
-                            </Link>
-                            <Link
-                                href={"https://www.facebook.com/zufar.ali.393"}
-                            >
-                                <BsFacebook />
-                            </Link>
-                            <Link href={"https://www.linkedin.com/in/zufar-ms"}>
-                                <BsLinkedin />
-                            </Link>
+                        <Link href={"https://www.facebook.com/zufar.ali.393"}>
+                            <BsFacebook />
+                        </Link>
+                        <Link href={"https://www.instagram.com/zufarrr._"}>
+                            <BsInstagram />
+                        </Link>
+                        <Link href={"https://www.linkedin.com/in/zufar-ms"}>
+                            <BsLinkedin />
+                        </Link>
                         </div>
                         <div className="w-full text-sm font-medium">
                             <span>

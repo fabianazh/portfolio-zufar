@@ -1,6 +1,9 @@
 interface Project {
     id: string
-    thumbnail: string
+    thumbnail: {
+        photo: string
+        alt: string
+    }
     month: string
     year: string
     name: string
@@ -10,6 +13,7 @@ interface Project {
         alt: string
     }[]
     created_at: string
+    isHighlighted: boolean
 }
 
 interface FormData {
