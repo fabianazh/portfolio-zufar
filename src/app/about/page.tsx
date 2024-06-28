@@ -1,5 +1,4 @@
 import Article from "@/components/Typography/Article"
-import Heading from "@/components/Typography/Heading"
 import LinkText from "@/components/Typography/LinkText"
 import Record from "@/components/Typography/Record"
 import Image from "next/image"
@@ -169,13 +168,13 @@ export default function AboutPage() {
                         <Article.Title>Pendidikan</Article.Title>
                         <Article.Content className="gap-2.5">
                             <Record>
-                                <Record.Description>
+                                <Record.Description className="font-semibold">
                                     SMKN 1 Kota Sukabumi
                                 </Record.Description>
                                 <Record.Year>2021 - 2024</Record.Year>
                             </Record>
                             <Record>
-                                <Record.Description>
+                                <Record.Description className="font-semibold">
                                     SMPN 2 Kota Sukabumi
                                 </Record.Description>
                                 <Record.Year>2018 - 2021</Record.Year>
@@ -186,28 +185,28 @@ export default function AboutPage() {
                         <Article.Title>Sertifikasi</Article.Title>
                         <Article.Content className="gap-2.5">
                             <Record>
-                                <Record.Description>
+                                <Record.Description className="font-semibold">
                                     KKNI level II - Desain Pemodelan dan
                                     Informasi Bangunan (LSP-P1)
                                 </Record.Description>
                                 <Record.Year>April 2024</Record.Year>
                             </Record>
                             <Record>
-                                <Record.Description>
+                                <Record.Description className="font-semibold">
                                     Praktik Kerja Lapangan - (PT. WYN KARYA
                                     PERKASA)
                                 </Record.Description>
                                 <Record.Year>Desember 2023</Record.Year>
                             </Record>
                             <Record>
-                                <Record.Description>
+                                <Record.Description className="font-semibold">
                                     Juru gambar/draftman - Arsitektur - Kelas
                                     III (LPJK)
                                 </Record.Description>
                                 <Record.Year>Desember 2023</Record.Year>
                             </Record>
                             <Record>
-                                <Record.Description>
+                                <Record.Description className="font-semibold">
                                     Kursus Dasar Autocad 2D dan 3D - (Ketua
                                     Program Keahlian DPIB)
                                 </Record.Description>

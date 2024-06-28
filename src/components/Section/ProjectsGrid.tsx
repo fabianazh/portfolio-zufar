@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 
-export default function PhotoGrid({
+export default function ProjectsGrid({
     projects,
     className,
     imgClassName,
@@ -28,7 +28,7 @@ export default function PhotoGrid({
                             height={400}
                             layout="responsive"
                             objectFit="contain"
-                            className={`w-full h-auto scale-100 duration-300 group-hover:scale-125 transition-all ${imgClassName}`}
+                            className={`w-full h-auto scale-100 duration-500 group-hover:scale-125 transition-all ${imgClassName}`}
                         />
                     </div>
                     <div className="flex w-full text-sm gap-2 text-black font-medium absolute bottom-0 left-0">

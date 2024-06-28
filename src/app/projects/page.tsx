@@ -1,4 +1,4 @@
-import PhotoGrid from "@/components/Other/PhotoGrid"
+import ProjectsGrid from "@/components/Section/ProjectsGrid"
 import { getAllProjects } from "@/utils/getProjectData"
 
 export default function ProjectPage() {
@@ -7,7 +7,7 @@ export default function ProjectPage() {
     return (
         <>
             <section className="w-full flex min-h-screen">
-                <PhotoGrid projects={projects} />
+                <ProjectsGrid projects={projects} />
             </section>
         </>
     )
