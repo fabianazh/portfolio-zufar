@@ -87,7 +87,7 @@ export const Header = () => {
                         </li>
                     </ul>
                     <div className="w-full flex flex-col gap-6">
-                        <div className="w-full flex gap-2 items-center">
+                        <div className="w-full flex gap-2.5 items-center">
                         <Link href={"https://www.facebook.com/zufar.ali.393"}>
                             <BsFacebook />
                         </Link>
