@@ -1,5 +1,6 @@
 import HighlightedProjects from "@/components/Section/HighlightedProjects"
 import Image from "next/image"
+import Link from "next/link"
 
 export default function HomePage() {
     return (
@@ -26,7 +27,7 @@ export default function HomePage() {
                 </div>
 
                 <div className="flex flex-col">
-                    <span className="block text-2xl lg:text-3xl font-extrabold">
+                    <span className="block text-2xl lg:text-3xl font-extrabold lg:font-bold">
                         Zufar Muhammad Ali Syabana,
                     </span>
                     <span className="block text-lg lg:text-2xl font-semibold">
@@ -35,9 +36,9 @@ export default function HomePage() {
                     </span>
                 </div>
 
-                <div className="w-full flex gap-4 h-fit">
-                    <div className="w-full lg:w-full flex h-fit">
-                        <span className="text-base font-medium">
+                <div className="w-full flex flex-col lg:flex-row gap-4 h-fit">
+                    <div className="w-full lg:w-9/12 flex h-fit">
+                        <span className="text-base font-base lg:font-medium">
                             Saya lulusan SMK DPIB dengan pengalaman sebagai
                             drafter dan surveyor, serta tersertifikasi dengan
                             berpredikat sangat baik. Mahir dalam perangkat lunak
@@ -46,10 +47,34 @@ export default function HomePage() {
                             di bidang konstruksi.
                         </span>
                     </div>
-                    {/* <div className="w-3/12 flex-grow flex place-items-center"></div> */}
+                    <div className="w-full lg:w-3/12 flex-grow flex flex-col gap-0.5">
+                        <span className="font-semibold text-lg">
+                            Hubungi Saya
+                        </span>
+                        <Link
+                            className="hover:underline mb-0.5"
+                            target={"_blank"}
+                            href={`mailto:zufarsyabana@gmail.com?subject=${encodeURIComponent(
+                                "Subject Anda"
+                            )}&body=${encodeURIComponent(
+                                "Halo, saya tertarik untuk mendiskusikan lebih lanjut..."
+                            )}`}
+                        >
+                            zufarsyabana@gmail.com
+                        </Link>
+                        <Link
+                            className="hover:underline"
+                            target={"_blank"}
+                            href={`https://wa.me/62895395253663?text=${encodeURIComponent(
+                                "Halo, saya tertarik untuk mendiskusikan lebih lanjut..."
+                            )}`}
+                        >
+                            +62 895-3952-53663
+                        </Link>
+                    </div>
                 </div>
             </section>
-            <HighlightedProjects />
+            {/* <HighlightedProjects /> */}
         </>
     )
 }

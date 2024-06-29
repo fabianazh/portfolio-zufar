@@ -5,7 +5,7 @@ import ProjectsGridSkeleton from "@/components/Skeleton/ProjectsGridSkeleton"
 import { getHighlightedProjects } from "@/utils/getProjectData"
 import Link from "next/link"
 import ProjectsGrid from "@/components/Other/ProjectsGrid"
-import { BiChevronLeft, BiChevronRight } from "react-icons/bi"
+import { RxArrowUp } from "react-icons/rx"
 
 export default function HighlightedProjects() {
     const [projects, setProjects] = useState<Project[] | undefined>([])
@@ -33,25 +33,26 @@ export default function HighlightedProjects() {
     return (
         <>
             <section className="w-full flex flex-col gap-4">
-                <div className="w-full flex justify-between items-start">
-                    <div className="flex w-fit flex-col">
+                <div className="w-full flex flex-col">
+                    <div className="flex w-full justify-between items-center">
                         <h1 className="text-2xl font-semibold">
                             Projek Unggulan
                         </h1>
-                        <span className="font-medium">
-                            Jelajahi projek unggulan di bawah ini untuk melihat
-                            karya-karya terbaik saya.
-                        </span>
-                    </div>{" "}
-                    <Link
-                        href={"/projects"}
-                        className="hover:underline inline-block w-fit"
-                    >
-                        <span className="font-medium inline-block">
-                            Lihat Lainnya
-                        </span>
-                        <BiChevronRight className="inline-block" />
-                    </Link>
+
+                        <Link
+                            href={"/projects"}
+                            className="hover:underline inline-block w-fit"
+                        >
+                            <span className="font-medium inline-block">
+                                Lihat Lainnya{" "}
+                            </span>
+                            <RxArrowUp className="inline-block rotate-45" />
+                        </Link>
+                    </div>
+                    <span className="font-medium">
+                        Jelajahi projek unggulan di bawah ini untuk melihat
+                        karya-karya terbaik saya.
+                    </span>
                 </div>
                 {loading ? (
                     <ProjectsGridSkeleton />
