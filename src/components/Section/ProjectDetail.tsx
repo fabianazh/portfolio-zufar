@@ -1,26 +1,25 @@
-"use client"
+'use client'
 
-import { getProjectById } from "@/utils/getProjectData"
-import Image from "next/image"
-import { useEffect, useState } from "react"
-import Modal from "@/components/Other/Modal"
-import ProjectDetailSkeleton from "@/components/Skeleton/ProjectDetailSkeleton"
-import AppIcon from "@/components/Other/AppIcon"
-import NotFound from "@/app/not-found"
+import { getProjectById } from '@/utils/getProjectData'
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import Modal from '@/components/Other/Modal'
+import ProjectDetailSkeleton from '@/components/Skeleton/ProjectDetailSkeleton'
+import NotFound from '@/app/not-found'
 
 export default function ProjectDetail({ projectId }: { projectId: string }) {
     const [project, setProject] = useState<Project | null | undefined>(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-    const [modalData, setModalData] = useState({ photo: "", alt: "" })
+    const [modalData, setModalData] = useState({ photo: '', alt: '' })
 
     useEffect(() => {
         async function fetchProject() {
             try {
                 const projectData = await getProjectById(projectId)
                 setProject(projectData)
-            } catch (e) {
+            } catch (error) {
                 setError(true)
             } finally {
                 setLoading(false)
@@ -29,7 +28,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
         fetchProject()
     }, [projectId])
 
-    if (loading) {
+    if (!loading) {
         return <ProjectDetailSkeleton />
     }
 
@@ -70,34 +69,34 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                         />
                     </div>
                     <div className="w-full h-fit flex flex-col lg:flex-row justify-between gap-2 lg:gap-4 mb-2 lg:mb-0">
-                        <div className="w-5/12 flex flex-col">
+                        <div className="w-full lg:w-4/12 flex flex-col">
                             <span className="text-sm font-medium">
                                 Nama Projek
                             </span>
-                            <span className="text-lg font-semibold truncate">
+                            <span className="text-lg font-semibold">
                                 {project.name}
                             </span>
                         </div>
 
-                        <div className="w-3/12 flex flex-col">
+                        <div className="w-full lg:w-3/12 flex flex-col">
                             <span className="text-sm font-medium">
                                 Kategori
                             </span>
-                            <span className="text-lg font-semibold truncate">
-                                {project.month} {project.year}
+                            <span className="text-lg font-semibold">
+                                Desain Bangunan, Eksterior
                             </span>
                         </div>
 
-                        <div className="w-3/12 flex flex-col">
+                        <div className="w-full lg:w-3/12 flex flex-col">
                             <span className="text-sm font-medium">Tools</span>
-                            <span className="text-lg font-semibold truncate">
-                                {project.month} {project.year}
+                            <span className="text-lg font-semibold">
+                                Sigma Chad, Vercel
                             </span>
                         </div>
 
-                        <div className="w-fit flex flex-col">
+                        <div className="w-full lg:w-fit flex flex-col">
                             <span className="text-sm font-medium">Tahun</span>
-                            <span className="text-lg font-semibold truncate">
+                            <span className="text-lg font-semibold">
                                 {project.month} {project.year}
                             </span>
                         </div>
