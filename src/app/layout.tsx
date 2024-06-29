@@ -1,33 +1,33 @@
-import type { Metadata } from "next"
-import "./globals.css"
-import Sidebar from "@/components/Partials/Sidebar"
-import { urbanist } from "./fonts"
-import { Header } from "@/components/Partials/Header"
+import type { Metadata } from 'next'
+import './globals.css'
+import Sidebar from '@/components/Partials/Sidebar'
+import { urbanist } from './fonts'
+import { Header } from '@/components/Partials/Header'
 
 export const metadata: Metadata = {
-    metadataBase: new URL("https://zufarms.vercel.app"),
+    metadataBase: new URL(`${process.env.NEXT_PUBLIC_BASE_URL}`),
     keywords: [
-        "Zufar Syabana",
-        "Zufar Muhammad Ali Syabana",
-        "ZufarSyabana",
-        "Zufar Syabana Terdekat",
-        "Syabana Terdekat",
-        "Zufar Portfolio",
-        "Zufar Portofolio",
-        "Zufar Syabana Portfolio",
+        'Zufar Syabana',
+        'Zufar Muhammad Ali Syabana',
+        'ZufarSyabana',
+        'Zufar Syabana Terdekat',
+        'Syabana Terdekat',
+        'Zufar Portfolio',
+        'Zufar Portofolio',
+        'Zufar Syabana Portfolio',
     ],
     title: {
-        default: "Zufar Syabana",
-        template: "%s | Zufar Syabana",
+        default: 'Zufar Syabana',
+        template: '%s | Zufar Syabana',
     },
-    description: "Drafter Arsitektur",
+    description: 'Drafter Arsitektur',
     openGraph: {
-        title: "Zufar Syabana",
-        description: "Drafter Arsitektur",
-        url: "https://zufarms.vercel.app",
-        siteName: "Zufar Syabana",
-        locale: "id_ID",
-        type: "website",
+        title: 'Zufar Syabana',
+        description: 'Drafter Arsitektur',
+        url: process.env.NEXT_PUBLIC_BASE_URL,
+        siteName: 'Zufar Syabana',
+        locale: 'id_ID',
+        type: 'website',
     },
 }
 

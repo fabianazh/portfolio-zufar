@@ -42,10 +42,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
     }
 
     function closeModal() {
-        setTimeout(() => {
-            setIsModalOpen(false)
-        }, 2000)
-        setModalData({ photo: "", alt: "" })
+        setIsModalOpen(false)
     }
 
     return (

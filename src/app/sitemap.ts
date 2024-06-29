@@ -1,7 +1,7 @@
-import { getAllProjects } from "@/utils/getProjectData"
+import { getAllProjects } from '@/utils/getProjectData'
 
 export default async function sitemap() {
-    const baseUrl = "https://zufarms.vercel.app"
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
     const projects = getAllProjects().map((project: Project) => {
         return {
