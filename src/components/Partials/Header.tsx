@@ -8,6 +8,7 @@ import Link from "next/link"
 import { disableScroll, enableScroll } from "@/utils/controllScroll"
 import NavLink from "./NavLink"
 import { BsFacebook, BsInstagram, BsLinkedin } from "react-icons/bs"
+import AppIcon from "@/components/Other/AppIcon"
 
 export const Header = () => {
     const [isNavOpen, setIsNavOpen] = useState<boolean>(false)
@@ -30,14 +31,7 @@ export const Header = () => {
         <>
             <header className="bg-white fixed flex lg:hidden items-center w-screen h-14 z-40 top-0 left-0 shadow">
                 <div className="grid grid-cols-2 justify-between w-full relative gap-x-10 top-0 px-6">
-                    <div className="w-fit h-full flex place-items-center">
-                        <span className="text-xl font-black">
-                            ZS
-                            <span className="text-yellow-600 inline-block">
-                                .
-                            </span>
-                        </span>
-                    </div>
+                    <AppIcon />
 
                     <div
                         onClick={() => openNav()}
@@ -88,15 +82,17 @@ export const Header = () => {
                     </ul>
                     <div className="w-full flex flex-col gap-6">
                         <div className="w-full flex gap-2.5 items-center">
-                        <Link href={"https://www.facebook.com/zufar.ali.393"}>
-                            <BsFacebook />
-                        </Link>
-                        <Link href={"https://www.instagram.com/zufarrr._"}>
-                            <BsInstagram />
-                        </Link>
-                        <Link href={"https://www.linkedin.com/in/zufar-ms"}>
-                            <BsLinkedin />
-                        </Link>
+                            <Link
+                                href={"https://www.facebook.com/zufar.ali.393"}
+                            >
+                                <BsFacebook />
+                            </Link>
+                            <Link href={"https://www.instagram.com/zufarrr._"}>
+                                <BsInstagram />
+                            </Link>
+                            <Link href={"https://www.linkedin.com/in/zufar-ms"}>
+                                <BsLinkedin />
+                            </Link>
                         </div>
                         <div className="w-full text-sm font-medium">
                             <span>

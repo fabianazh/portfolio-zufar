@@ -5,6 +5,8 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 import Modal from "@/components/Other/Modal"
 import ProjectDetailSkeleton from "@/components/Skeleton/ProjectDetailSkeleton"
+import AppIcon from "@/components/Other/AppIcon"
+import NotFound from "@/app/not-found"
 
 export default function ProjectDetail({ projectId }: { projectId: string }) {
     const [project, setProject] = useState<Project | null | undefined>(null)
@@ -32,7 +34,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
     }
 
     if (error || !project) {
-        return <div>Projek tidak ditemukan.</div>
+        return <NotFound message="Tidak dapat menemukan projek yang dicari." />
     }
 
     function openModal() {
@@ -40,7 +42,9 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
     }
 
     function closeModal() {
-        setIsModalOpen(false)
+        setTimeout(() => {
+            setIsModalOpen(false)
+        }, 2000)
         setModalData({ photo: "", alt: "" })
     }
 
@@ -69,18 +73,34 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                         />
                     </div>
                     <div className="w-full h-fit flex flex-col lg:flex-row justify-between gap-2 lg:gap-4 mb-2 lg:mb-0">
-                        <div className="w-fit flex flex-col">
+                        <div className="w-5/12 flex flex-col">
                             <span className="text-sm font-medium">
                                 Nama Projek
                             </span>
-                            <span className="text-lg font-semibold">
+                            <span className="text-lg font-semibold truncate">
                                 {project.name}
                             </span>
                         </div>
 
-                        <div className="w-fit flex flex-col lg:text-end">
+                        <div className="w-3/12 flex flex-col">
+                            <span className="text-sm font-medium">
+                                Kategori
+                            </span>
+                            <span className="text-lg font-semibold truncate">
+                                {project.month} {project.year}
+                            </span>
+                        </div>
+
+                        <div className="w-3/12 flex flex-col">
+                            <span className="text-sm font-medium">Tools</span>
+                            <span className="text-lg font-semibold truncate">
+                                {project.month} {project.year}
+                            </span>
+                        </div>
+
+                        <div className="w-fit flex flex-col">
                             <span className="text-sm font-medium">Tahun</span>
-                            <span className="text-lg font-semibold">
+                            <span className="text-lg font-semibold truncate">
                                 {project.month} {project.year}
                             </span>
                         </div>
@@ -94,7 +114,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                 {/* End Thumbnail  */}
 
                 <Modal isOpen={isModalOpen} open={openModal} close={closeModal}>
-                    <div className="w-fit h-fit flex flex-col items-center gap-2">
+                    <div className="w-fit h-fit flex flex-col gap-2">
                         <Image
                             src={`/img/projects/${modalData.photo}`}
                             alt={`Projek ${modalData.alt}`}
@@ -103,11 +123,13 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             layout="responsive"
                             objectFit="contain"
                             draggable={false}
-                            className={`w-auto h-full`}
+                            className={`w-auto h-full shrink-0 shadow-md`}
                         />
-                        <span className="font-semibold text-black">
-                            {modalData.alt}
-                        </span>
+                        <div className="flex relative w-full h-fit justify-center">
+                            <span className="font-semibold text-black">
+                                {modalData.alt}
+                            </span>
+                        </div>
                     </div>
                 </Modal>
 
