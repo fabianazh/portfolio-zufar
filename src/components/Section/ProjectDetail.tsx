@@ -48,7 +48,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
         <>
             <section className="w-full flex flex-col gap-8">
                 {/* Thumbnail  */}
-                <div className="w-full h-fit flex flex-col gap-2">
+                <div className="w-full h-fit flex flex-col gap-2.5">
                     <div className="w-full flex h-fit overflow-hidden scale-100 mb-2">
                         <Image
                             onClick={() => {
@@ -73,7 +73,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             <span className="text-sm font-medium">
                                 Nama Projek
                             </span>
-                            <span className="text-lg font-semibold">
+                            <span className="text-base font-bold">
                                 {project.name}
                             </span>
                         </div>
@@ -82,21 +82,21 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             <span className="text-sm font-medium">
                                 Kategori
                             </span>
-                            <span className="text-lg font-semibold">
+                            <span className="text-base font-bold">
                                 Desain Bangunan, Eksterior
                             </span>
                         </div>
 
                         <div className="w-full lg:w-3/12 flex flex-col">
                             <span className="text-sm font-medium">Tools</span>
-                            <span className="text-lg font-semibold">
+                            <span className="text-base font-bold">
                                 Sigma Chad, Vercel
                             </span>
                         </div>
 
                         <div className="w-full lg:w-fit flex flex-col">
                             <span className="text-sm font-medium">Tahun</span>
-                            <span className="text-lg font-semibold">
+                            <span className="text-base font-bold">
                                 {project.month} {project.year}
                             </span>
                         </div>

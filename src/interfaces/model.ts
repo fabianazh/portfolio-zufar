@@ -1,3 +1,11 @@
+interface User {
+    password: string
+    email: string
+    username: string
+    fullname: string
+    phone: string
+}
+
 interface Project {
     id: string
     thumbnail: {

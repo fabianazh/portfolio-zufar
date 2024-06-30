@@ -12,9 +12,8 @@ export function NavLink({
 }) {
     const pathname = usePathname()
     let navActive
-    const isRootPage = ['/', '/dashboard']
 
-    if (isRootPage) {
+    if (href === '/' || href === '/dashboard') {
         navActive = pathname === href
     } else {
         navActive = pathname.startsWith(href)

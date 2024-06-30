@@ -1,7 +1,7 @@
 import Navbar from '@/components/Partials/Navbar'
 import Footer from '@/components/Partials/Footer'
 import DashboardMenu from '@/components/Partials/DashboardMenu'
-import AppIcon from '../Other/AppIcon'
+import AppIcon from '@/components/Other/AppIcon'
 
 export default function Sidebar() {
     return (
