@@ -1,6 +1,6 @@
-import HighlightedProjects from "@/components/Section/HighlightedProjects"
-import Image from "next/image"
-import Link from "next/link"
+import HighlightedProjects from '@/components/Section/HighlightedProjects'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export default function HomePage() {
     return (
@@ -9,7 +9,7 @@ export default function HomePage() {
                 <div className="relative w-full h-72 lg:h-[28rem] flex gap-3 mb-2 lg:mb-5">
                     <div className="w-3/12 shrink-0 h-full relative">
                         <Image
-                            src="/img/z/z2.jpeg"
+                            src="/img/z/z4.png"
                             alt="Zufar"
                             width={300}
                             height={800}
@@ -37,7 +37,7 @@ export default function HomePage() {
                 </div>
 
                 <div className="w-full flex flex-col lg:flex-row gap-4 h-fit">
-                    <div className="w-full lg:w-9/12 flex h-fit">
+                    <div className="w-full lg:w-full flex h-fit">
                         <span className="text-base font-base lg:font-medium">
                             Saya lulusan SMK DPIB dengan pengalaman sebagai
                             drafter dan surveyor, serta tersertifikasi dengan
@@ -47,7 +47,7 @@ export default function HomePage() {
                             di bidang konstruksi.
                         </span>
                     </div>
-                    <div className="w-full lg:w-3/12 flex-grow flex flex-col gap-0.5">
+                    {/* <div className="w-full lg:w-3/12 flex-grow flex flex-col gap-0.5">
                         <span className="font-semibold text-lg">
                             Hubungi Saya
                         </span>
@@ -71,7 +71,7 @@ export default function HomePage() {
                         >
                             +62 895-3952-53663
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
             </section>
             {/* <HighlightedProjects /> */}

@@ -1,6 +1,6 @@
 'use client'
 
-import { getProjectById } from '@/utils/getProjectData'
+import { getProjectById } from '@/libs/utils/getProjectData'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import Modal from '@/components/Other/Modal'
@@ -28,7 +28,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
         fetchProject()
     }, [projectId])
 
-    if (!loading) {
+    if (loading) {
         return <ProjectDetailSkeleton />
     }
 

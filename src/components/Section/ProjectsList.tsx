@@ -1,9 +1,9 @@
-"use client"
+'use client'
 
-import { getAllProjects } from "@/utils/getProjectData"
-import { useEffect, useState } from "react"
-import ProjectsGridSkeleton from "@/components/Skeleton/ProjectsGridSkeleton"
-import ProjectsGrid from "@/components/Other/ProjectsGrid"
+import { getAllProjects } from '@/libs/utils/getProjectData'
+import { useEffect, useState } from 'react'
+import ProjectsGridSkeleton from '@/components/Skeleton/ProjectsGridSkeleton'
+import ProjectsGrid from '@/components/Other/ProjectsGrid'
 
 export default function ProjectsList() {
     const [projects, setProjects] = useState<Project[] | undefined>([])

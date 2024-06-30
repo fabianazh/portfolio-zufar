@@ -1,4 +1,4 @@
-import { getAllProjects } from '@/utils/getProjectData'
+import { getAllProjects } from '@/libs/utils/getProjectData'
 
 export default async function sitemap() {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL

@@ -16,7 +16,7 @@ export default function AppIcon({
                             Zufar <span className="block"></span> Syabana
                         </h1>
                         <div className="flex divide-x-2 divide-stone-200">
-                            <span className="text-xl font-medium text-stone-500">
+                            <span className="text-xl lg:text-lg font-medium text-stone-500">
                                 Drafter
                             </span>
                         </div>

@@ -1,3 +1,9 @@
 export default function SambaladoPage() {
-    return <></>
+    return (
+        <>
+            <section>
+                <form action=""></form>
+            </section>
+        </>
+    )
 }

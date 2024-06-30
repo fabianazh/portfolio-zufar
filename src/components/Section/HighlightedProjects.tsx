@@ -1,11 +1,11 @@
-"use client"
+'use client'
 
-import { useEffect, useState } from "react"
-import ProjectsGridSkeleton from "@/components/Skeleton/ProjectsGridSkeleton"
-import { getHighlightedProjects } from "@/utils/getProjectData"
-import Link from "next/link"
-import ProjectsGrid from "@/components/Other/ProjectsGrid"
-import { RxArrowUp } from "react-icons/rx"
+import { useEffect, useState } from 'react'
+import ProjectsGridSkeleton from '@/components/Skeleton/ProjectsGridSkeleton'
+import { getHighlightedProjects } from '@/libs/utils/getProjectData'
+import Link from 'next/link'
+import ProjectsGrid from '@/components/Other/ProjectsGrid'
+import { RxArrowUp } from 'react-icons/rx'
 
 export default function HighlightedProjects() {
     const [projects, setProjects] = useState<Project[] | undefined>([])
@@ -40,11 +40,11 @@ export default function HighlightedProjects() {
                         </h1>
 
                         <Link
-                            href={"/projects"}
+                            href={'/projects'}
                             className="hover:underline inline-block w-fit"
                         >
                             <span className="font-medium inline-block">
-                                Lihat Lainnya{" "}
+                                Lihat Lainnya{' '}
                             </span>
                             <RxArrowUp className="inline-block rotate-45" />
                         </Link>

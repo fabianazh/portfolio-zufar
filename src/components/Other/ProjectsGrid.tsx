@@ -22,11 +22,8 @@ export default function ProjectsGrid({ projects }: { projects: Project[] }) {
                             className={`w-full h-auto scale-100 duration-500 group-hover:scale-110 transition-all`}
                         />
                     </div>
-                    <div className="flex w-full text-sm gap-2 text-black font-medium absolute bottom-0 left-0">
-                        <div className="w-fit whitespace-nowrap">
-                            <span>{project.month} </span>
-                            <span>{project.year}</span>
-                        </div>
+                    <div className="flex w-full text-sm gap-2 text-black font-semibold absolute bottom-0 left-0">
+                        <span>{project.year}</span>
                         <span>/</span>
                         <span className="truncate">{project.name}</span>
                     </div>

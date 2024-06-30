@@ -1,7 +1,7 @@
-import ProjectDetail from "@/components/Section/ProjectDetail"
-import { getProjectById } from "@/utils/getProjectData"
-import Link from "next/link"
-import { IoArrowBack } from "react-icons/io5"
+import ProjectDetail from '@/components/Section/ProjectDetail'
+import { getProjectById } from '@/libs/utils/getProjectData'
+import Link from 'next/link'
+import { IoArrowBack } from 'react-icons/io5'
 
 export async function generateMetadata({
     params,
@@ -15,8 +15,8 @@ export async function generateMetadata({
 
         if (project === undefined) {
             return {
-                title: "Projek tidak ditemukan",
-                description: "Sepertinya projek yang kamu cari tidak ada.",
+                title: 'Projek tidak ditemukan',
+                description: 'Sepertinya projek yang kamu cari tidak ada.',
                 project: null,
             }
         }
@@ -27,16 +27,15 @@ export async function generateMetadata({
             project: project,
         }
     } catch (error) {
-        console.log(error)
         return {
-            title: "Projek tidak ditemukan",
-            description: "Sepertinya projek yang kamu cari tidak ada.",
+            title: 'Projek tidak ditemukan',
+            description: 'Sepertinya projek yang kamu cari tidak ada.',
             project: null,
         }
     }
 }
 
-export default function HomePage({
+export default function DetailProjectPage({
     params,
 }: {
     params: {
@@ -47,7 +46,7 @@ export default function HomePage({
         <>
             <section className="w-full h-fit mb-6 flex items-start">
                 <Link
-                    href={"/projects"}
+                    href={'/projects'}
                     className="flex w-fit h-fit gap-2 items-center text-lg"
                 >
                     <IoArrowBack></IoArrowBack>
