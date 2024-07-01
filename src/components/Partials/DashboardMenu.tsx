@@ -1,5 +1,6 @@
 'use client'
 
+import { signOut } from 'next-auth/react'
 import { usePathname } from 'next/navigation'
 
 export default function DashboardMenu() {
@@ -14,9 +15,12 @@ export default function DashboardMenu() {
                 <div className="w-full py-2 px-4 text-sm text-center rounded shadow-sm bg-stone-200">
                     Akun
                 </div>
-                <div className="w-full py-2 px-4 text-sm text-center rounded shadow-sm bg-black text-white">
+                <button
+                    onClick={() => signOut()}
+                    className="w-full py-2 px-4 text-sm text-center rounded shadow-sm bg-black text-white"
+                >
                     Logout
-                </div>
+                </button>
             </div>
         </>
     )
