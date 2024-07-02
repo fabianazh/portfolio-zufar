@@ -9,7 +9,7 @@ export default function HomePage() {
                 <div className="relative w-full h-72 lg:h-[28rem] flex gap-3 mb-2 lg:mb-5">
                     <div className="w-3/12 shrink-0 h-full relative">
                         <Image
-                            src="/img/z/z4.png"
+                            src="/img/z/z7.png"
                             alt="Zufar"
                             width={300}
                             height={800}

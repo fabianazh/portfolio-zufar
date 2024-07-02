@@ -1,15 +1,15 @@
-"use client"
+'use client'
 
-import { useForm } from "react-hook-form"
+import { useForm } from 'react-hook-form'
 
 export default function ContactForm() {
     const { register, handleSubmit, reset } = useForm<FormData>()
 
     function sendEmail(data: FormData) {
-        const apiEndpoint = "/api/email"
+        const apiEndpoint = '/api/email'
 
         fetch(apiEndpoint, {
-            method: "POST",
+            method: 'POST',
             body: JSON.stringify(data),
         })
             .then((res) => res.json())
@@ -38,7 +38,7 @@ export default function ContactForm() {
                                 type="text"
                                 id="name"
                                 className="w-full py-3 px-4 focus:border-0 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500 text-sm lg:text-base"
-                                {...register("name", { required: true })}
+                                {...register('name', { required: true })}
                                 autoComplete="false"
                                 placeholder="Nama"
                             />
@@ -48,7 +48,7 @@ export default function ContactForm() {
                                 type="text"
                                 id="email"
                                 className="w-full py-3 px-4 focus:border-0 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500 text-sm lg:text-base"
-                                {...register("email", { required: true })}
+                                {...register('email', { required: true })}
                                 autoComplete="false"
                                 placeholder="Email"
                             />
@@ -59,7 +59,7 @@ export default function ContactForm() {
                             id="message"
                             rows={6}
                             className="w-full h-fit resize-none py-3 px-4 focus:border-0 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500 text-sm lg:text-base"
-                            {...register("message", { required: true })}
+                            {...register('message', { required: true })}
                             placeholder="Pesan"
                             autoComplete="false"
                         ></textarea>

@@ -3,9 +3,11 @@ import Link from 'next/link'
 export default function AppIcon({
     className,
     size = 'lg' || 'sm',
+    role = true,
 }: {
     className?: string
     size: string
+    role?: boolean
 }) {
     return (
         <>
@@ -17,7 +19,7 @@ export default function AppIcon({
                         </h1>
                         <div className="flex divide-x-2 divide-stone-200">
                             <span className="text-xl lg:text-lg font-medium text-stone-500">
-                                Drafter
+                                {role && 'Drafter'}
                             </span>
                         </div>
                     </div>

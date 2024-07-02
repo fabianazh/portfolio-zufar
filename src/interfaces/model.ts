@@ -10,15 +10,17 @@ interface Project {
     id: string
     thumbnail: {
         photo: string
-        alt: string
+        desc: string
     }
     month: string
     year: string
     name: string
     desc: string
+    category: string
+    tools: string[]
     photos: {
         photo: string
-        alt: string
+        desc: string
     }[]
     created_at: string
     isHighlighted: boolean

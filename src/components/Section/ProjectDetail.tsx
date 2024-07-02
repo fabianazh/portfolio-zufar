@@ -12,7 +12,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-    const [modalData, setModalData] = useState({ photo: '', alt: '' })
+    const [modalData, setModalData] = useState({ photo: '', desc: '' })
 
     useEffect(() => {
         async function fetchProject() {
@@ -44,6 +44,8 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
         setIsModalOpen(false)
     }
 
+    const lastIndex = project.tools.length
+
     return (
         <>
             <section className="w-full flex flex-col gap-8">
@@ -55,11 +57,11 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                 openModal()
                                 setModalData({
                                     photo: project.thumbnail.photo,
-                                    alt: project.name,
+                                    desc: project.name,
                                 })
                             }}
                             src={`/img/projects/${project.thumbnail.photo}`}
-                            alt={`Projek ${project.thumbnail.alt}`}
+                            alt={`Projek ${project.thumbnail.desc}`}
                             width={900}
                             height={700}
                             layout="responsive"
@@ -83,15 +85,23 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                 Kategori
                             </span>
                             <span className="text-base font-bold">
-                                Desain Bangunan, Eksterior
+                                {project.category}
                             </span>
                         </div>
 
                         <div className="w-full lg:w-3/12 flex flex-col">
                             <span className="text-sm font-medium">Tools</span>
-                            <span className="text-base font-bold">
-                                Sigma Chad, Vercel
-                            </span>
+                            <div>
+                                {project.tools.map((tool, index) => (
+                                    <span
+                                        className="text-base font-bold"
+                                        key={tool}
+                                    >
+                                        {tool}
+                                        {index + 1 == lastIndex ? '.' : ', '}
+                                    </span>
+                                ))}
+                            </div>
                         </div>
 
                         <div className="w-full lg:w-fit flex flex-col">
@@ -110,10 +120,10 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                 {/* End Thumbnail  */}
 
                 <Modal isOpen={isModalOpen} open={openModal} close={closeModal}>
-                    <div className="w-fit h-fit flex flex-col gap-2">
+                    <div className="w-fit max-w-5xl h-fit flex flex-col gap-3">
                         <Image
                             src={`/img/projects/${modalData.photo}`}
-                            alt={`Projek ${modalData.alt}`}
+                            alt={`Projek ${modalData.desc}`}
                             width={900}
                             height={800}
                             layout="responsive"
@@ -122,8 +132,8 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             className={`w-auto h-full shrink-0 shadow-md`}
                         />
                         <div className="flex relative w-full h-fit justify-center">
-                            <span className="font-semibold text-black">
-                                {modalData.alt}
+                            <span className="text-base font-semibold text-black">
+                                {modalData.desc}
                             </span>
                         </div>
                     </div>
@@ -142,14 +152,14 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                     openModal()
                                     setModalData({
                                         photo: item.photo,
-                                        alt: item.alt,
+                                        desc: item.desc,
                                     })
                                 }}
                                 className="w-full relative h-full group cursor-pointer"
                             >
                                 <Image
                                     src={`/img/projects/${item.photo}`}
-                                    alt={`Projek ${item.alt}`}
+                                    alt={`Projek ${item.desc}`}
                                     width={700}
                                     height={900}
                                     layout="responsive"

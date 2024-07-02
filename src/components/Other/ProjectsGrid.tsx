@@ -13,13 +13,12 @@ export default function ProjectsGrid({ projects }: { projects: Project[] }) {
                     <div className="w-full flex h-fit overflow-hidden scale-100">
                         <Image
                             src={`/img/projects/${project.thumbnail.photo}`}
-                            alt={`Projek ${project.thumbnail.alt}`}
+                            alt={`Projek ${project.name}`}
                             width={300}
                             height={400}
                             layout="responsive"
-                            objectFit="contain"
                             draggable={false}
-                            className={`w-full h-auto scale-100 duration-500 group-hover:scale-110 transition-all`}
+                            className={`w-full h-full scale-100 duration-500 group-hover:scale-110 transition-all`}
                         />
                     </div>
                     <div className="flex w-full text-sm gap-2 text-black font-semibold absolute bottom-0 left-0">

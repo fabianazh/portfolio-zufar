@@ -1,9 +1,9 @@
-import ProjectsList from "@/components/Section/ProjectsList"
+import ProjectList from '@/components/Section/ProjectList'
 
 export default function ProjectPage() {
     return (
         <>
-            <ProjectsList />
+            <ProjectList />
         </>
     )
 }
