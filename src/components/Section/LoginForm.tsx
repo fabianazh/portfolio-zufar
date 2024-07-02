@@ -44,26 +44,26 @@ export default function LoginForm() {
     }
 
     return (
-        <section className="fixed top-0 left-0 h-screen w-full overflow-hidden flex">
+        <section className="fixed top-0 left-0 h-screen w-full overflow-hidden flex flex-col lg:flex-row">
             {/* Background */}
             <div className="z-10 absolute bg-white w-screen h-screen top-0 left-0">
                 <BackgroundBeams />
             </div>
             {/* Background */}
 
-            <div className="w-8/12 flex flex-col h-full z-20 bg-transparent p-8 py-4 justify-end">
+            <div className="w-full lg:w-8/12 hidden lg:flex flex-col h-full z-20 bg-transparent p-8 py-4 justify-end">
                 <AppIcon size="lg" role={false} />
             </div>
 
             {/* Form */}
-            <div className="w-4/12 flex flex-col h-full items-center z-20 bg-transparent backdrop-blur-sm shadow py-24">
+            <div className="w-full lg:w-4/12 flex flex-col h-full items-center z-20 bg-transparent lg:backdrop-blur-sm lg:shadow py-24">
                 <div>
                     <h1 className="block font-extrabold text-4xl">
                         Welcome Back!
                     </h1>
                 </div>
                 <form
-                    className="w-10/12 mt-16 flex flex-col gap-5"
+                    className="w-11/12 lg:w-10/12 mt-16 flex flex-col gap-5"
                     action=""
                     method="POST"
                     onSubmit={handleSubmit(onSubmit)}

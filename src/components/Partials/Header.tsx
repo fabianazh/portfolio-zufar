@@ -29,7 +29,11 @@ export const Header = () => {
 
     return (
         <>
-            <header className="bg-white fixed flex lg:hidden items-center w-screen h-14 z-40 top-0 left-0 shadow">
+            <header
+                className={`bg-white fixed items-center w-screen h-14 z-40 top-0 left-0 shadow ${
+                    pathname.startsWith('/auth') ? 'hidden' : 'flex lg:hidden'
+                }`}
+            >
                 <div className="grid grid-cols-2 justify-between w-full relative gap-x-10 top-0 px-6">
                     <AppIcon size="sm" />
 

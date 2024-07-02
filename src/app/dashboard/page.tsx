@@ -6,9 +6,9 @@ import { redirect } from 'next/navigation'
 export default function DashboardPage() {
     const { data } = useSession()
     console.log(data)
-    if (!data) {
-        redirect('/')
-    }
+    // if (!data) {
+    //     redirect('/')
+    // }
     return (
         <>
             <section>ini halaman dashboard {data?.user?.email}</section>
