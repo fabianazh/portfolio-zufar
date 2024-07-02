@@ -10,6 +10,7 @@ import { BackgroundBeams } from '../Other/BackgroundBeams'
 import Link from 'next/link'
 import { BsGoogle } from 'react-icons/bs'
 import AppIcon from '../Other/AppIcon'
+import Loaders from '../Other/Loader'
 
 type FormData = z.infer<typeof loginSchema>
 
@@ -18,6 +19,7 @@ export default function LoginForm() {
         handleSubmit,
         register,
         reset,
+        setError,
         formState: { errors, isSubmitting, isDirty, isValid },
     } = useForm<FormData>({
         resolver: zodResolver(loginSchema),
@@ -37,8 +39,13 @@ export default function LoginForm() {
             if (!res?.error) {
                 reset()
                 router.push('/dashboard')
+            } else {
+                setError('root', {
+                    message: 'Email atau password salah!',
+                })
             }
         } catch (error) {
+            console.log(error)
             reset()
         }
     }
@@ -68,6 +75,13 @@ export default function LoginForm() {
                     method="POST"
                     onSubmit={handleSubmit(onSubmit)}
                 >
+                    {errors.root && (
+                        <>
+                            <span className="text-sm lg:text-sm text-red-600">
+                                {errors.root.message}
+                            </span>
+                        </>
+                    )}
                     <div className="flex flex-col gap-6">
                         {/* Email Input */}
                         <div className="relative h-fit flex flex-col gap-1.5">
@@ -126,9 +140,9 @@ export default function LoginForm() {
                     <button
                         type="submit"
                         disabled={!isDirty || !isValid || isSubmitting}
-                        className="block w-full cursor-pointer text-sm rounded bg-black text-white py-2"
+                        className="flex justify-center text-center items-center w-full cursor-pointer text-sm rounded bg-black text-white py-2"
                     >
-                        {isSubmitting ? 'Harap tunggu sebentar...' : 'Login'}
+                        {isSubmitting ? <Loaders /> : 'Login'}
                     </button>
                     {/* Submit Button */}
 
