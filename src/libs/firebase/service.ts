@@ -7,24 +7,17 @@ import {
     query,
     where,
 } from 'firebase/firestore'
-import { app } from './init'
+import { app, firestore } from './init'
 
-const firestore = getFirestore(app)
-
-export async function retrieveData(collectionName: string) {
+export async function getData(collectionName: string) {
     const snapshot = await getDocs(collection(firestore, collectionName))
-    const data: { id: string }[] = []
-    snapshot.forEach((doc) => {
-        data.push({
-            id: doc.id,
-            ...doc.data(),
-        })
-    })
-
+    const data = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+    }))
     return data
 }
 
-export async function retrieveDataById(collectionName: string, id: string) {
+export async function getDataById(collectionName: string, id: string) {
     const snapshot = await getDoc(
         doc(collection(firestore, collectionName), id)
     )

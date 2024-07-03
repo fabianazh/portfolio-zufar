@@ -8,16 +8,18 @@ import { getFirestore } from 'firebase/firestore'
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: process.env.FIREBASE_API_KEY,
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.FIREBASE_APP_ID,
-    measurementId: process.env.FIREBASE_MEASUREMENT_ID,
+    apiKey: 'AIzaSyD4hVFQuV3inbMQxtJ5g4AKJeYbxSzY2xE',
+    authDomain: 'zufarms.firebaseapp.com',
+    databaseURL: 'https://zufarms-default-rtdb.firebaseio.com',
+    projectId: 'zufarms',
+    storageBucket: 'zufarms.appspot.com',
+    messagingSenderId: '803017164179',
+    appId: '1:803017164179:web:9257ed571259efa0075466',
+    measurementId: 'G-FYX4BLNRKK',
 }
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig)
 // export const analytics = getAnalytics(app)
-export const db = getFirestore(app)
+
+export const firestore = getFirestore(app)

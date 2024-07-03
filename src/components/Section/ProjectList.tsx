@@ -4,7 +4,7 @@ import { getAllProjects } from '@/libs/utils/getProjectData'
 import { useEffect, useState } from 'react'
 import ProjectsGridSkeleton from '@/components/Skeleton/ProjectsGridSkeleton'
 import ProjectsGrid from '@/components/Other/ProjectsGrid'
-import { retrieveData } from '@/libs/firebase/service'
+import { getData } from '@/libs/firebase/service'
 
 export default function ProjectList() {
     const [projects, setProjects] = useState<Project[] | undefined>([])
@@ -14,8 +14,9 @@ export default function ProjectList() {
     useEffect(() => {
         async function fetchProjects() {
             try {
-                const projectsData = await retrieveData('users')
+                const projectsData = await getData('projects')
                 console.log(projectsData)
+                setProjects(projectsData)
             } catch (error) {
                 setError(true)
             } finally {
