@@ -1,4 +1,4 @@
-import ProjectDetail from '@/components/Section/ProjectDetail'
+import ProjectDetail from '@/components/Section/Landing/ProjectDetail'
 import { getProjectById } from '@/libs/utils/getProjectData'
 import Link from 'next/link'
 import { IoArrowBack } from 'react-icons/io5'

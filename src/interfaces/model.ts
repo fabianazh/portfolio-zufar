@@ -17,7 +17,10 @@ interface Project {
     name: string
     desc: string
     category: string
-    tools: string[]
+    tools: {
+        name: string
+        url: string
+    }[]
     photos: {
         photo: string
         desc: string

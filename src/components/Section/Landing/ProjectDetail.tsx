@@ -1,11 +1,12 @@
 'use client'
 
-import { getProjectById } from '@/libs/utils/getProjectData'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import Modal from '@/components/Other/Modal'
 import ProjectDetailSkeleton from '@/components/Skeleton/ProjectDetailSkeleton'
 import NotFound from '@/app/not-found'
+import { getDataById } from '@/libs/firebase/service'
+import Link from 'next/link'
 
 export default function ProjectDetail({ projectId }: { projectId: string }) {
     const [project, setProject] = useState<Project | null | undefined>(null)
@@ -17,7 +18,10 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
     useEffect(() => {
         async function fetchProject() {
             try {
-                const projectData = await getProjectById(projectId)
+                const projectData = await getDataById<Project>(
+                    'projects',
+                    projectId
+                )
                 setProject(projectData)
             } catch (error) {
                 setError(true)
@@ -60,8 +64,8 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                     desc: project.name,
                                 })
                             }}
-                            src={`/img/projects/${project.thumbnail.photo}`}
-                            alt={`Projek ${project.thumbnail.desc}`}
+                            src={`/img/projects/${project.id}/${project.thumbnail.photo}`}
+                            alt={`Projek ${project.name}`}
                             width={900}
                             height={700}
                             layout="responsive"
@@ -93,13 +97,14 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             <span className="text-sm font-medium">Tools</span>
                             <div>
                                 {project.tools.map((tool, index) => (
-                                    <span
+                                    <Link
+                                        href={tool.url}
                                         className="text-base font-bold"
-                                        key={tool}
+                                        key={tool.name}
                                     >
-                                        {tool}
+                                        {tool.name}
                                         {index + 1 == lastIndex ? '.' : ', '}
-                                    </span>
+                                    </Link>
                                 ))}
                             </div>
                         </div>
@@ -118,26 +123,6 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                     {/* End Description */}
                 </div>
                 {/* End Thumbnail  */}
-
-                <Modal isOpen={isModalOpen} open={openModal} close={closeModal}>
-                    <div className="w-fit max-w-5xl h-fit flex flex-col gap-3">
-                        <Image
-                            src={`/img/projects/${modalData.photo}`}
-                            alt={`Projek ${modalData.desc}`}
-                            width={900}
-                            height={800}
-                            layout="responsive"
-                            objectFit="contain"
-                            draggable={false}
-                            className={`w-auto h-full shrink-0 shadow-md`}
-                        />
-                        <div className="flex relative w-full h-fit justify-center">
-                            <span className="text-base font-semibold text-black">
-                                {modalData.desc}
-                            </span>
-                        </div>
-                    </div>
-                </Modal>
 
                 {/* Images */}
                 <div className="w-full h-auto flex flex-col gap-2">
@@ -158,8 +143,8 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                 className="w-full relative h-full group cursor-pointer"
                             >
                                 <Image
-                                    src={`/img/projects/${item.photo}`}
-                                    alt={`Projek ${item.desc}`}
+                                    src={`/img/projects/${project.id}/${item.photo}`}
+                                    alt={`${item.desc}`}
                                     width={700}
                                     height={900}
                                     layout="responsive"
@@ -170,6 +155,28 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                     </div>
                 </div>
                 {/* End Images */}
+
+                {/* Modal */}
+                <Modal isOpen={isModalOpen} open={openModal} close={closeModal}>
+                    <div className="w-fit max-w-5xl h-fit flex flex-col gap-3">
+                        <Image
+                            src={`/img/projects/${project.id}/${modalData.photo}`}
+                            alt={`${modalData.desc}`}
+                            width={900}
+                            height={800}
+                            layout="responsive"
+                            objectFit="contain"
+                            draggable={false}
+                            className={`w-auto h-full shrink-0 shadow-md`}
+                        />
+                        <div className="flex relative w-full h-fit justify-center">
+                            <span className="text-base font-semibold text-black">
+                                {modalData.desc}
+                            </span>
+                        </div>
+                    </div>
+                </Modal>
+                {/* End Modal */}
             </section>
         </>
     )

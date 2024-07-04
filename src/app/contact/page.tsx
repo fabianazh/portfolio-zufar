@@ -1,6 +1,6 @@
-import Link from "next/link"
-import Heading from "@/components/Typography/Heading"
-import ContactForm from "@/components/Section/ContactForm"
+import Link from 'next/link'
+import Heading from '@/components/Typography/Heading'
+import ContactForm from '@/components/Section/Landing/ContactForm'
 
 export default function ContactPage() {
     return (
@@ -16,20 +16,20 @@ export default function ContactPage() {
                     </span>
                     <div className="flex gap-2">
                         <Link
-                            target={"_blank"}
+                            target={'_blank'}
                             href={`mailto:zufarsyabana@gmail.com?subject=${encodeURIComponent(
-                                "Subject Anda"
+                                'Subject Anda'
                             )}&body=${encodeURIComponent(
-                                "Halo, saya tertarik untuk mendiskusikan lebih lanjut..."
+                                'Halo, saya tertarik untuk mendiskusikan lebih lanjut...'
                             )}`}
                         >
                             zufarsyabana@gmail.com
                         </Link>
                         <span> | </span>
                         <Link
-                            target={"_blank"}
+                            target={'_blank'}
                             href={`https://wa.me/62895395253663?text=${encodeURIComponent(
-                                "Halo, saya tertarik untuk mendiskusikan lebih lanjut..."
+                                'Halo, saya tertarik untuk mendiskusikan lebih lanjut...'
                             )}`}
                         >
                             +62 895-3952-53663

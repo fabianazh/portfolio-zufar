@@ -4,7 +4,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import bcrypt from 'bcrypt'
 import NextAuth from 'next-auth/next'
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
     session: {
         strategy: 'jwt',
     },
@@ -81,4 +81,4 @@ export const authOptions: NextAuthOptions = {
 }
 
 const handler = NextAuth(authOptions)
-export { handler as GET, handler as POST }
+export { authOptions, handler as GET, handler as POST }

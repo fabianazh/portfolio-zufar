@@ -6,11 +6,11 @@ import { signIn } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { useRouter } from 'next/navigation'
-import { BackgroundBeams } from '../Other/BackgroundBeams'
+import { BackgroundBeams } from '../../Other/BackgroundBeams'
 import Link from 'next/link'
 import { BsGoogle } from 'react-icons/bs'
-import AppIcon from '../Other/AppIcon'
-import Loaders from '../Other/Loader'
+import AppIcon from '../../Other/AppIcon'
+import Loaders from '../../Other/Loader'
 
 type FormData = z.infer<typeof loginSchema>
 

@@ -8,7 +8,7 @@ import {
     query,
     where,
 } from 'firebase/firestore'
-import { app, firestore } from './init'
+import { firestore } from './init'
 
 export async function getData<T>(collectionName: string): Promise<T[]> {
     const snapshot = await getDocs(collection(firestore, collectionName))
@@ -19,12 +19,20 @@ export async function getData<T>(collectionName: string): Promise<T[]> {
     return data
 }
 
-export async function getDataById(collectionName: string, id: string) {
-    const snapshot = await getDoc(
-        doc(collection(firestore, collectionName), id)
-    )
-    const data = snapshot.data()
-    return data
+export async function getDataById<T>(
+    collectionName: string,
+    id: string
+): Promise<T | undefined> {
+    const docRef = doc(collection(firestore, collectionName), id)
+    const snapshot = await getDoc(docRef)
+    if (!snapshot.exists()) {
+        return undefined
+    }
+    const data = {
+        id: snapshot.id,
+        ...snapshot.data(),
+    }
+    return data as T
 }
 
 export async function signIn(email: string) {
