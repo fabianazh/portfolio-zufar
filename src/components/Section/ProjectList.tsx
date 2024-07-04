@@ -1,6 +1,5 @@
 'use client'
 
-import { getAllProjects } from '@/libs/utils/getProjectData'
 import { useEffect, useState } from 'react'
 import ProjectsGridSkeleton from '@/components/Skeleton/ProjectsGridSkeleton'
 import ProjectsGrid from '@/components/Other/ProjectsGrid'
@@ -14,7 +13,7 @@ export default function ProjectList() {
     useEffect(() => {
         async function fetchProjects() {
             try {
-                const projectsData = await getData('projects')
+                const projectsData = await getData<Project>('projects')
                 console.log(projectsData)
                 setProjects(projectsData)
             } catch (error) {

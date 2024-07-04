@@ -1,4 +1,5 @@
 import {
+    QueryDocumentSnapshot,
     collection,
     doc,
     getDoc,
@@ -9,10 +10,11 @@ import {
 } from 'firebase/firestore'
 import { app, firestore } from './init'
 
-export async function getData(collectionName: string) {
+export async function getData<T>(collectionName: string): Promise<T[]> {
     const snapshot = await getDocs(collection(firestore, collectionName))
-    const data = snapshot.docs.map((doc) => ({
-        ...doc.data(),
+    const data: T[] = snapshot.docs.map((doc: QueryDocumentSnapshot) => ({
+        id: doc.id,
+        ...(doc.data() as T),
     }))
     return data
 }
