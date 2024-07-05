@@ -1,6 +1,7 @@
 'use client'
 
 import NotFound from '@/components/Other/NotFound'
+import Table from '@/components/Other/Table'
 import Heading from '@/components/Typography/Heading'
 import contactServices from '@/services/contacts'
 import { useEffect, useState } from 'react'
@@ -46,31 +47,31 @@ export default function ContactInfo() {
                     {loading ? (
                         <div>loading</div>
                     ) : (
-                        <table>
-                            <thead>
-                                <tr className="w-full text-left">
-                                    <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Nama Tampilan</th>
-                                    <th>Link</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                        <Table>
+                            <Table.Head>
+                                <Table.Row>
+                                    <Table.Header>No</Table.Header>
+                                    <Table.Header>Nama</Table.Header>
+                                    <Table.Header>Nama Tampilan</Table.Header>
+                                    <Table.Header>Link</Table.Header>
+                                    <Table.Header>Aksi</Table.Header>
+                                </Table.Row>
+                            </Table.Head>
+                            <Table.Body>
                                 <>
                                     {contacts.map((contact, index) => {
                                         return (
-                                            <tr key={index}>
-                                                <td>{index + 1}</td>
-                                                <td>{contact.name}</td>
-                                                <td>{contact.displayName}</td>
-                                                <td>{contact.link}</td>
-                                            </tr>
+                                            <Table.Row key={index}>
+                                                <div>{index + 1}</div>
+                                                <div>{contact.name}</div>
+                                                <div>{contact.displayName}</div>
+                                                <div>{contact.link}</div>
+                                            </Table.Row>
                                         )
                                     })}
                                 </>
-                            </tbody>
-                        </table>
+                            </Table.Body>
+                        </Table>
                     )}
                 </div>
             </section>
