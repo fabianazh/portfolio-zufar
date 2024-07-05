@@ -8,7 +8,7 @@ import { disableScroll, enableScroll } from '@/libs/utils/controllScroll'
 import AppIcon from '@/components/Icon/AppIcon'
 import Navbar from '@/components/Partials/Navbar'
 import Footer from '@/components/Partials/Footer'
-import DashboardMenu from '@/components/Partials/DashboardMenu'
+import BottomMenu from './BottomMenu'
 
 export const Header = () => {
     const [isNavOpen, setIsNavOpen] = useState<boolean>(false)
@@ -27,12 +27,29 @@ export const Header = () => {
         setIsNavOpen(false)
     }, [pathname])
 
+    const navItems = [
+        {
+            text: 'Overview',
+            href: '/dashboard',
+        },
+        {
+            text: 'About',
+            href: '/dashboard/about',
+        },
+        {
+            text: 'Projects',
+            href: '/dashboard/projects',
+        },
+        {
+            text: 'Contact',
+            href: '/dashboard/contact',
+        },
+    ]
+
     return (
         <>
             <header
-                className={`bg-white fixed items-center w-screen h-14 z-40 top-0 left-0 shadow ${
-                    pathname.startsWith('/auth') ? 'hidden' : 'flex lg:hidden'
-                }`}
+                className={`bg-white fixed items-center w-screen h-14 z-40 top-0 left-0 shadow flex lg:hidden`}
             >
                 <div className="grid grid-cols-2 justify-between w-full relative gap-x-10 top-0 px-6">
                     <AppIcon size="sm" />
@@ -63,11 +80,11 @@ export const Header = () => {
                     <div className="flex flex-col gap-8 w-full">
                         <AppIcon size="lg" />
 
-                        <Navbar />
+                        <Navbar items={navItems} />
 
                         <Footer />
                     </div>
-                    <DashboardMenu />
+                    <BottomMenu />
                 </div>
             </header>
 

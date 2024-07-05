@@ -1,13 +1,13 @@
 'use client'
 
 import { signOut } from 'next-auth/react'
-import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import WarnModal from '@/components/Modal/WarnModal'
+import PrimaryButton from '@/components/Button/PrimaryButton'
+import SecondaryButton from '@/components/Button/SecondaryButton'
 
-export default function DashboardMenu() {
+export default function BottomMenu() {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-    const pathname = usePathname()
 
     function openModal() {
         setIsModalOpen(true)
@@ -20,19 +20,12 @@ export default function DashboardMenu() {
     return (
         <>
             <div
-                className={`${
-                    pathname.startsWith('/dashboard') ? 'flex' : 'hidden'
-                } flex-col gap-4 w-full h-fit place-self-end lg:mt-8`}
+                className={`flex flex-col gap-4 w-full h-fit place-self-end lg:mt-8`}
             >
-                <div className="w-full py-2 px-4 text-sm text-center rounded shadow-sm bg-stone-200">
-                    Akun
-                </div>
-                <button
-                    onClick={openModal}
-                    className="w-full py-2 px-4 text-sm text-center rounded shadow-sm bg-black text-white"
-                >
+                <SecondaryButton type="button">Akun</SecondaryButton>
+                <PrimaryButton type="button" onClick={openModal}>
                     Logout
-                </button>
+                </PrimaryButton>
             </div>
 
             <WarnModal

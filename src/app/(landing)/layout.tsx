@@ -1,5 +1,5 @@
-import Sidebar from '@/components/Partials/Sidebar'
-import { Header } from '@/components/Partials/Header'
+import Sidebar from '@/components/Partials/Landing/Sidebar'
+import { Header } from '@/components/Partials/Landing/Header'
 
 export default function RootLayout({
     children,

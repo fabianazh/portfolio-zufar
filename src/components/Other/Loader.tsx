@@ -1,11 +1,18 @@
-export default function Loaders() {
+export default function Loaders({
+    width = '100%',
+    height = '100%',
+}: {
+    width?: string
+    height?: string
+}) {
     return (
         <>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="1em"
-                height="1em"
+                width={width}
+                height={height}
                 viewBox="0 0 24 24"
+                className={`w-fit h-full aspect-square shrink-0`}
             >
                 <rect width="2.8" height="12" x="1" y="6" fill="currentColor">
                     <animate

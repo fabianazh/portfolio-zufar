@@ -1,8 +1,8 @@
 'use client'
 
 import { SessionProvider } from 'next-auth/react'
-import Sidebar from '@/components/Partials/Sidebar'
-import { Header } from '@/components/Partials/Header'
+import Sidebar from '@/components/Partials/Dashboard/Sidebar'
+import { Header } from '@/components/Partials/Dashboard/Header'
 
 export default function DashboardLayout({
     children,

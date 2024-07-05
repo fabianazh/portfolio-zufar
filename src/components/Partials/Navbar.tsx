@@ -36,70 +36,16 @@ export function NavLink({
     )
 }
 
-export default function Navbar() {
-    const pathname = usePathname()
-
-    const items = [
-        {
-            text: 'Home',
-            href: '/',
-            isDashboardMenu: false,
-        },
-        {
-            text: 'About',
-            href: '/about',
-            isDashboardMenu: false,
-        },
-        {
-            text: 'Projects',
-            href: '/projects',
-            isDashboardMenu: false,
-        },
-        {
-            text: 'Contact',
-            href: '/contact',
-            isDashboardMenu: false,
-        },
-        {
-            text: 'Dashboard',
-            href: '/dashboard',
-            isDashboardMenu: true,
-        },
-        {
-            text: 'About',
-            href: '/dashboard/about',
-            isDashboardMenu: true,
-        },
-        {
-            text: 'Projects',
-            href: '/dashboard/projects',
-            isDashboardMenu: true,
-        },
-        {
-            text: 'Contact',
-            href: '/dashboard/contact',
-            isDashboardMenu: true,
-            isRootPage: true,
-        },
-    ]
-
+export default function Navbar({
+    items,
+}: {
+    items: { href: string; text: string }[]
+}) {
     return (
         <>
             <nav className="w-full h-fit">
                 <ul className="flex flex-col w-fit lg:w-full h-fit gap-4 lg:gap-3 justify-between lg:justify-normal items-start">
                     {items.map((item) => {
-                        if (
-                            pathname.startsWith('/dashboard') &&
-                            item.isDashboardMenu === false
-                        ) {
-                            return
-                        } else if (
-                            !pathname.includes('/dashboard') &&
-                            item.isDashboardMenu === true
-                        ) {
-                            return
-                        }
-
                         return (
                             <li key={item.href} className={`w-fit`}>
                                 <NavLink href={item.href}>{item.text}</NavLink>
