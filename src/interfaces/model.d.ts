@@ -1,4 +1,8 @@
-
+interface Contact {
+    name: string
+    displayName: string
+    link: string
+}
 
 interface Project {
     id: string

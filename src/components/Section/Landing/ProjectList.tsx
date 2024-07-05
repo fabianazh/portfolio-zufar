@@ -17,7 +17,6 @@ export default function ProjectList() {
         async function fetchProjects() {
             try {
                 const { data } = await projectServices.getAllProjects()
-                console.log(data)
                 setProjects(data.data)
             } catch (error) {
                 setError(true)

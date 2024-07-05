@@ -7,6 +7,7 @@ import { getDataById } from '@/libs/firebase/service'
 import Link from 'next/link'
 import ImageDetailModal from '@/components/Modal/ImageDetailModal'
 import NotFound from '@/components/Other/NotFound'
+import projectServices from '@/services/projects'
 
 export default function ProjectDetail({ projectId }: { projectId: string }) {
     const [project, setProject] = useState<Project | null | undefined>(null)
@@ -18,11 +19,8 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
     useEffect(() => {
         async function fetchProject() {
             try {
-                const projectData = await getDataById<Project>(
-                    'projects',
-                    projectId
-                )
-                setProject(projectData)
+                const { data } = await projectServices.getProjectById(projectId)
+                setProject(data.data)
             } catch (error) {
                 setError(true)
             } finally {
@@ -60,7 +58,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             onClick={() => {
                                 openModal()
                                 setModalData({
-                                    photo: project.thumbnail.photo,
+                                    photo: `${project.id}/${project.thumbnail.photo}`,
                                     desc: project.name,
                                 })
                             }}
@@ -136,7 +134,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                 onClick={() => {
                                     openModal()
                                     setModalData({
-                                        photo: item.photo,
+                                        photo: `${project.id}/${item.photo}`,
                                         desc: item.desc,
                                     })
                                 }}
@@ -161,7 +159,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                     isOpen={isModalOpen}
                     open={openModal}
                     close={closeModal}
-                    photo={modalData.photo}
+                    photo={`/img/projects/${modalData.photo}`}
                     desc={modalData.desc}
                 />
                 {/* End Modal */}
