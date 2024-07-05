@@ -6,11 +6,12 @@ import { signIn } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { useRouter } from 'next/navigation'
-import { BackgroundBeams } from '../../Other/BackgroundBeams'
+import { BackgroundBeams } from '@/components/Other/BackgroundBeams'
 import Link from 'next/link'
 import { BsGoogle } from 'react-icons/bs'
-import AppIcon from '../../Icon/AppIcon'
-import Loaders from '../../Other/Loader'
+import AppIcon from '@/components/Icon/AppIcon'
+import Loaders from '@/components/Other/Loader'
+import PrimaryButton from '@/components/Button/PrimaryButton'
 
 type FormData = z.infer<typeof loginSchema>
 
@@ -137,13 +138,13 @@ export default function LoginForm() {
                     {/* Forget Password */}
 
                     {/* Submit Button */}
-                    <button
+                    <PrimaryButton
                         type="submit"
                         disabled={!isDirty || !isValid || isSubmitting}
-                        className="flex justify-center text-center items-center w-full cursor-pointer text-sm rounded bg-black text-white py-2"
+                        className="flex justify-center text-center"
                     >
                         {isSubmitting ? <Loaders /> : 'Login'}
-                    </button>
+                    </PrimaryButton>
                     {/* Submit Button */}
 
                     <div className="w-full h-fit flex justify-center relative items-center py-1">
