@@ -3,7 +3,7 @@
 import Navbar from '@/components/Partials/Navbar'
 import Footer from '@/components/Partials/Footer'
 import DashboardMenu from '@/components/Partials/DashboardMenu'
-import AppIcon from '@/components/Other/AppIcon'
+import AppIcon from '@/components/Icon/AppIcon'
 import { usePathname } from 'next/navigation'
 
 export default function Sidebar() {

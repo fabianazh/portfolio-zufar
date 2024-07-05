@@ -25,7 +25,7 @@ export default function WithAuth(
             }
             if (token) {
                 if (authPage.includes(pathname)) {
-                    return NextResponse.redirect(new URL('/', req.url))
+                    return NextResponse.redirect(new URL('/dashboard', req.url))
                 }
             }
         }

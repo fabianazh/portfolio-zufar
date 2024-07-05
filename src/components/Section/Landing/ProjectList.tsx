@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import GridLayout from '@/components/Layout/GridLayout'
 import projectServices from '@/services/projects'
+import NotFound from '@/components/Other/NotFound'
 
 export default function ProjectList() {
     const [projects, setProjects] = useState<Project[] | undefined>([])
@@ -32,7 +33,7 @@ export default function ProjectList() {
     }
 
     if (error || !projects) {
-        return <div>Projek tidak tersedia.</div>
+        return <NotFound message="Projek tidak tersedia." />
     }
 
     return (

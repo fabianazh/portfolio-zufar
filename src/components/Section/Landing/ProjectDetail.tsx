@@ -2,11 +2,11 @@
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import Modal from '@/components/Other/Modal'
 import ProjectDetailSkeleton from '@/components/Skeleton/ProjectDetailSkeleton'
-import NotFound from '@/app/not-found'
 import { getDataById } from '@/libs/firebase/service'
 import Link from 'next/link'
+import ImageDetailModal from '@/components/Modal/ImageDetailModal'
+import NotFound from '@/components/Other/NotFound'
 
 export default function ProjectDetail({ projectId }: { projectId: string }) {
     const [project, setProject] = useState<Project | null | undefined>(null)
@@ -157,25 +157,13 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                 {/* End Images */}
 
                 {/* Modal */}
-                <Modal isOpen={isModalOpen} open={openModal} close={closeModal}>
-                    <div className="w-fit max-w-5xl h-fit flex flex-col gap-3">
-                        <Image
-                            src={`/img/projects/${project.id}/${modalData.photo}`}
-                            alt={`${modalData.desc}`}
-                            width={900}
-                            height={800}
-                            layout="responsive"
-                            objectFit="contain"
-                            draggable={false}
-                            className={`w-auto h-full shrink-0 shadow-md`}
-                        />
-                        <div className="flex relative w-full h-fit justify-center">
-                            <span className="text-base font-semibold text-black">
-                                {modalData.desc}
-                            </span>
-                        </div>
-                    </div>
-                </Modal>
+                <ImageDetailModal
+                    isOpen={isModalOpen}
+                    open={openModal}
+                    close={closeModal}
+                    photo={modalData.photo}
+                    desc={modalData.desc}
+                />
                 {/* End Modal */}
             </section>
         </>

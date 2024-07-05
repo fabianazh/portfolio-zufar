@@ -1,16 +1,18 @@
-import { Dialog, DialogPanel } from "@headlessui/react"
-import { BiX } from "react-icons/bi"
+import { Dialog, DialogPanel } from '@headlessui/react'
+import { BiX } from 'react-icons/bi'
 
 export default function Modal({
     children,
     isOpen,
     open,
     close,
+    closeButton = false,
 }: {
     children: React.ReactNode
     isOpen: boolean
     open: () => void
     close: () => void
+    closeButton?: boolean
 }) {
     return (
         <>
@@ -22,16 +24,18 @@ export default function Modal({
             >
                 <div className="fixed inset-0 z-50 w-screen h-screen overflow-y-auto bg-black/70">
                     {/* Close Button */}
-                    <div
-                        onClick={close}
-                        className={`absolute w-fit h-fit top-5 right-0 lg:right-5 cursor-pointer transition-all duration-300 ${
-                            isOpen
-                                ? "scale-100 opacity-100"
-                                : "scale-50 opacity-0"
-                        }`}
-                    >
-                        <BiX className="text-4xl lg:text-5xl text-white transition-all duration-300 hover:text-stone-50"></BiX>
-                    </div>
+                    {closeButton && (
+                        <div
+                            onClick={close}
+                            className={`absolute w-fit h-fit top-5 right-0 lg:right-5 cursor-pointer transition-all duration-300 ${
+                                isOpen
+                                    ? 'scale-100 opacity-100'
+                                    : 'scale-50 opacity-0'
+                            }`}
+                        >
+                            <BiX className="text-4xl lg:text-5xl text-white transition-all duration-300 hover:text-stone-50"></BiX>
+                        </div>
+                    )}
                     {/* End Close Button */}
                     <div className="flex min-h-full items-center justify-center p-2 lg:p-4">
                         <DialogPanel

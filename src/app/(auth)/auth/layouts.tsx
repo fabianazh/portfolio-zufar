@@ -6,5 +6,9 @@ export default function DashboardLayout({
 }: Readonly<{
     children: React.ReactNode
 }>) {
-    return <SessionProvider>{children}</SessionProvider>
+    return (
+        <SessionProvider>
+            <main className="w-screen h-screen flex relative">{children}</main>
+        </SessionProvider>
+    )
 }

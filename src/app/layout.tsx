@@ -1,9 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import Sidebar from '@/components/Partials/Sidebar'
 import { urbanist } from './fonts'
-import { Header } from '@/components/Partials/Header'
-
 export const metadata: Metadata = {
     metadataBase: new URL(`${process.env.NEXT_PUBLIC_BASE_URL}`),
     keywords: [
@@ -38,18 +35,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={urbanist.className}>
-                {/* <GradientBackground /> */}
-                <Header />
-                <Sidebar />
-                <main
-                    className={
-                        'min-h-screen relative py-24 lg:py-20 z-10 px-5 lg:pr-10 lg:pl-96'
-                    }
-                >
-                    {children}
-                </main>
-            </body>
+            <body className={urbanist.className}>{children}</body>
         </html>
     )
 }

@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation'
 import { BackgroundBeams } from '../../Other/BackgroundBeams'
 import Link from 'next/link'
 import { BsGoogle } from 'react-icons/bs'
-import AppIcon from '../../Other/AppIcon'
+import AppIcon from '../../Icon/AppIcon'
 import Loaders from '../../Other/Loader'
 
 type FormData = z.infer<typeof loginSchema>
@@ -51,7 +51,7 @@ export default function LoginForm() {
     }
 
     return (
-        <section className="fixed top-0 left-0 h-screen w-full overflow-hidden flex flex-col lg:flex-row">
+        <section className="relative h-screen w-full overflow-hidden flex flex-col lg:flex-row">
             {/* Background */}
             <div className="z-10 absolute bg-white w-screen h-screen top-0 left-0">
                 <BackgroundBeams />
