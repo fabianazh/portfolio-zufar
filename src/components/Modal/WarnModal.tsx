@@ -27,16 +27,16 @@ export default function WarnModal({
             onClose={close}
         >
             <div className="fixed inset-0 z-50 w-screen h-screen overflow-y-auto bg-black/70">
-                <div className="flex min-h-full items-center justify-center p-2 lg:p-4">
+                <div className="flex min-h-full items-center justify-center p-3 lg:p-4">
                     <DialogPanel
                         transition
-                        className="w-fit h-full max-w-2xl relative bg-white/90 p-2 lg:p-5 duration-300 ease-out data-[closed]:opacity-0 rounded"
+                        className="w-fit h-full max-w-2xl relative bg-white/90 p-4 lg:p-5 duration-300 ease-out data-[closed]:opacity-0 rounded"
                     >
                         <div className="w-full flex flex-col gap-2">
                             <h1 className={`text-2xl font-semibold`}>
                                 {title}
                             </h1>
-                            <span className={`font-medium`}>{content}</span>
+                            <span className={`lg:font-medium`}>{content}</span>
                             <div className="w-full flex justify-end items-center gap-2 mt-3">
                                 <button
                                     onClick={close}

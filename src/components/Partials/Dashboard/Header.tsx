@@ -71,7 +71,7 @@ export const Header = () => {
                     </div>
                 </div>
                 <div
-                    className={`transition-all absolute w-8/12 duration-500 h-screen flex flex-col top-0 right-0 bg-white pt-16 pb-24 px-10 justify-between ${
+                    className={`transition-all absolute w-8/12 duration-500 h-screen flex flex-col top-0 right-0 bg-white pt-16 pb-24 px-8 justify-between ${
                         isNavOpen
                             ? '-translate-x-0 opacity-100'
                             : 'translate-x-full opacity-50'
