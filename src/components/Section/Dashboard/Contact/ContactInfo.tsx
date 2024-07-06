@@ -3,6 +3,7 @@
 import Dropdown from '@/components/Other/Dropdown'
 import NotFound from '@/components/Other/NotFound'
 import Table from '@/components/Other/Table'
+import TableSkeleton from '@/components/Skeleton/TableSkeleton'
 import Heading from '@/components/Typography/Heading'
 import contactServices from '@/services/contacts'
 import Link from 'next/link'
@@ -46,7 +47,7 @@ export default function ContactInfo() {
                 </div>
                 <div className="w-full h-fit flex flex-col gap-4">
                     {loading ? (
-                        <div>loading</div>
+                        <TableSkeleton />
                     ) : (
                         <Table>
                             <Table.Head>

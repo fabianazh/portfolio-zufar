@@ -3,7 +3,6 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import ProjectDetailSkeleton from '@/components/Skeleton/ProjectDetailSkeleton'
-import { getDataById } from '@/libs/firebase/service'
 import Link from 'next/link'
 import ImageDetailModal from '@/components/Modal/ImageDetailModal'
 import NotFound from '@/components/Other/NotFound'

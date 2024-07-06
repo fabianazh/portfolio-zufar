@@ -4,6 +4,7 @@ import PrimaryButton from '@/components/Button/PrimaryButton'
 import Dropdown from '@/components/Other/Dropdown'
 import NotFound from '@/components/Other/NotFound'
 import Table from '@/components/Other/Table'
+import TableSkeleton from '@/components/Skeleton/TableSkeleton'
 import Heading from '@/components/Typography/Heading'
 import projectServices from '@/services/projects'
 import Image from 'next/image'
@@ -57,7 +58,7 @@ export default function ProjectList() {
                 </div>
                 <div className="w-full h-fit flex flex-col gap-4">
                     {loading ? (
-                        <div>loading</div>
+                        <TableSkeleton />
                     ) : (
                         <Table>
                             <Table.Head>

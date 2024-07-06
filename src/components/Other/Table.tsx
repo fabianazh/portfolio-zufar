@@ -56,9 +56,7 @@ export function Header({
     children: React.ReactNode
 }) {
     return (
-        <th
-            className={`h-fit justify-between gap-1 flex flex-col text-left ${className}`}
-        >
+        <th className={`h-fit justify-between gap-1 text-left ${className}`}>
             {children}
         </th>
     )
@@ -72,9 +70,7 @@ export function Body({
     children: React.ReactNode
 }) {
     return (
-        <tbody
-            className={`w-full h-fit justify-between gap-2 flex flex-col ${className}`}
-        >
+        <tbody className={`w-full h-fit gap-2 flex flex-col ${className}`}>
             {children}
         </tbody>
     )
