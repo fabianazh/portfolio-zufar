@@ -7,7 +7,6 @@ import { BiX } from 'react-icons/bi'
 import { disableScroll, enableScroll } from '@/libs/utils/controllScroll'
 import AppIcon from '@/components/Icon/AppIcon'
 import Navbar from '@/components/Partials/Navbar'
-import Footer from '@/components/Partials/Footer'
 import BottomMenu from './BottomMenu'
 
 export const Header = () => {
@@ -43,6 +42,10 @@ export const Header = () => {
         {
             text: 'Contact',
             href: '/dashboard/contact',
+        },
+        {
+            text: 'Mailbox',
+            href: '/dashboard/mailbox',
         },
     ]
 
@@ -81,8 +84,6 @@ export const Header = () => {
                         <AppIcon size="lg" />
 
                         <Navbar items={navItems} />
-
-                        <Footer />
                     </div>
                     <BottomMenu />
                 </div>

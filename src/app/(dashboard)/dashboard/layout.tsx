@@ -15,7 +15,7 @@ export default function DashboardLayout({
             <Sidebar />
             <main
                 className={
-                    'min-h-screen relative py-24 lg:py-20 z-10 px-5 lg:pr-10 lg:pl-96'
+                    'min-h-screen relative py-24 lg:py-20 z-10 px-5 lg:pr-6 bg-stone-50/60 lg:pl-96'
                 }
             >
                 {children}

@@ -1,4 +1,5 @@
 interface Contact {
+    id:string
     name: string
     displayName: string
     link: string

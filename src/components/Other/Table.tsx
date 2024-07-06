@@ -7,9 +7,11 @@ export default function Table({
 }) {
     return (
         <>
-            <div className={`w-full h-fit flex flex-col ${className}`}>
+            <table
+                className={`w-full h-fit flex flex-col gap-3 border p-3 rounded-md bg-white ${className}`}
+            >
                 {children}
-            </div>
+            </table>
         </>
     )
 }
@@ -23,7 +25,9 @@ export function Row({
 }) {
     return (
         <>
-            <div className={`w-full h-fit ${className}`}>{children}</div>
+            <tr className={`w-full h-fit flex gap-3 ${className}`}>
+                {children}
+            </tr>
         </>
     )
 }
@@ -36,11 +40,11 @@ export function Head({
     children: React.ReactNode
 }) {
     return (
-        <div
+        <thead
             className={`w-full text-left h-fit flex justify-between gap-3 ${className}`}
         >
             {children}
-        </div>
+        </thead>
     )
 }
 
@@ -52,11 +56,11 @@ export function Header({
     children: React.ReactNode
 }) {
     return (
-        <div
-            className={`w-full h-fit justify-between gap-1 flex flex-col ${className}`}
+        <th
+            className={`h-fit justify-between gap-1 flex flex-col text-left ${className}`}
         >
             {children}
-        </div>
+        </th>
     )
 }
 
@@ -68,11 +72,11 @@ export function Body({
     children: React.ReactNode
 }) {
     return (
-        <div
-            className={`w-full h-fit justify-between gap-1 flex flex-col ${className}`}
+        <tbody
+            className={`w-full h-fit justify-between gap-2 flex flex-col ${className}`}
         >
             {children}
-        </div>
+        </tbody>
     )
 }
 
@@ -83,13 +87,7 @@ export function Data({
     className?: string
     children: React.ReactNode
 }) {
-    return (
-        <div
-            className={`w-full h-fit justify-between gap-1 flex flex-col ${className}`}
-        >
-            {children}
-        </div>
-    )
+    return <td className={`h-auto ${className}`}>{children}</td>
 }
 
 Table.Head = Head
