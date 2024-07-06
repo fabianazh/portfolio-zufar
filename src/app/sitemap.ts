@@ -1,9 +1,12 @@
-import { getAllProjects } from '@/libs/utils/getProjectData'
+import { getData } from '@/libs/firebase/service'
+import projectServices from '@/services/projects'
 
 export default async function sitemap() {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
-    const projects = getAllProjects().map((project: Project) => {
+    const projectsData = await getData<Project>('projects')
+
+    const projects = projectsData.map((project: Project) => {
         return {
             url: `${baseUrl}/projects/${project.id}`,
             lastModified: project.created_at,

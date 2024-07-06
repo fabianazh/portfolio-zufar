@@ -1,5 +1,5 @@
 import ProjectDetail from '@/components/Section/Landing/ProjectDetail'
-import { getProjectById } from '@/libs/utils/getProjectData'
+import projectServices from '@/services/projects'
 import Link from 'next/link'
 import { IoArrowBack } from 'react-icons/io5'
 
@@ -11,9 +11,9 @@ export async function generateMetadata({
     }
 }) {
     try {
-        const project = await getProjectById(params.projectId)
+        const { data } = await projectServices.getProjectById(params.projectId)
 
-        if (project === undefined) {
+        if (data.data === undefined) {
             return {
                 title: 'Projek tidak ditemukan',
                 description: 'Sepertinya projek yang kamu cari tidak ada.',
@@ -21,10 +21,10 @@ export async function generateMetadata({
             }
         }
         return {
-            title: `Projek ${project.name}`,
-            description: project.desc,
-            images: [project.photos],
-            project: project,
+            title: `Projek ${data.data.name}`,
+            description: data.data.desc,
+            images: [data.data.photos],
+            project: data.data,
         }
     } catch (error) {
         return {
