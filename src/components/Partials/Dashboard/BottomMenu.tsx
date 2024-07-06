@@ -22,8 +22,17 @@ export default function BottomMenu() {
             <div
                 className={`flex flex-col gap-4 w-full h-fit place-self-end lg:mt-8`}
             >
-                <SecondaryButton type="button">Akun</SecondaryButton>
-                <PrimaryButton type="button" onClick={openModal}>
+                <SecondaryButton
+                    type="button"
+                    className="w-full grid place-items-center"
+                >
+                    Akun
+                </SecondaryButton>
+                <PrimaryButton
+                    type="button"
+                    onClick={openModal}
+                    className="w-full grid place-items-center"
+                >
                     Logout
                 </PrimaryButton>
             </div>

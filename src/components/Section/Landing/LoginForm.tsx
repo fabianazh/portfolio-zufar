@@ -141,7 +141,7 @@ export default function LoginForm() {
                     <PrimaryButton
                         type="submit"
                         disabled={!isDirty || !isValid || isSubmitting}
-                        className="flex justify-center text-center"
+                        className="w-full grid place-items-center"
                     >
                         {isSubmitting ? <Loaders /> : 'Login'}
                     </PrimaryButton>

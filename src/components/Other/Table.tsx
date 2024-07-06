@@ -25,7 +25,7 @@ export function Row({
 }) {
     return (
         <>
-            <tr className={`w-full h-fit flex gap-3 ${className}`}>
+            <tr className={`w-full h-fit flex items-center gap-4 ${className}`}>
                 {children}
             </tr>
         </>

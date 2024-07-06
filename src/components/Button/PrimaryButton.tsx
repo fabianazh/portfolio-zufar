@@ -17,7 +17,7 @@ export default function PrimaryButton({
                 type={type}
                 onClick={onClick}
                 disabled={disabled}
-                className={`w-full py-2 max-h-9 px-4 text-xs lg:text-sm text-center rounded shadow-sm bg-black text-white ${className}`}
+                className={`w-fit py-2 max-h-9 px-4 text-xs lg:text-sm text-center rounded shadow-sm bg-black text-white ${className}`}
             >
                 {children}
             </button>

@@ -1,47 +1,58 @@
 'use client'
 
+import PrimaryButton from '@/components/Button/PrimaryButton'
 import Dropdown from '@/components/Other/Dropdown'
 import NotFound from '@/components/Other/NotFound'
 import Table from '@/components/Other/Table'
 import Heading from '@/components/Typography/Heading'
-import contactServices from '@/services/contacts'
+import projectServices from '@/services/projects'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { RxDotsVertical } from 'react-icons/rx'
 
-export default function ContactInfo() {
-    const [contacts, setContacts] = useState<Contact[] | null | undefined>([])
+export default function ProjectList() {
+    const [projects, setProjects] = useState<Project[] | null | undefined>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 
     useEffect(() => {
-        async function fetchContacts() {
+        async function fetchProjects() {
             try {
-                const { data } = await contactServices.getAllContacts()
-                setContacts(data.data)
+                const { data } = await projectServices.getAllProjects()
+                setProjects(data.data)
             } catch (error) {
                 setError(true)
             } finally {
                 setLoading(false)
             }
         }
-        fetchContacts()
+        fetchProjects()
     }, [])
 
-    if (error || !contacts) {
-        return <NotFound message="Belum ada data kontak." />
+    if (error || !projects) {
+        return <NotFound message="Belum ada data projek." />
     }
 
     return (
         <>
             <section className="w-full h-auto flex flex-col gap-8 mb-14">
                 <div className="flex flex-col gap-1">
-                    <Heading className="normal-case">Info Kontak</Heading>
-                    <div className="w-full h-fit flex justify-between gap-6">
-                        <span className="w-full">
-                            Anda dapat melihat, dan mengubah informasi kontak
-                            yang akan ditampilkan kepada pengguna.
+                    <Heading className="normal-case">List Projek</Heading>
+                    <div className="w-full h-fit flex justify-between items-end gap-6">
+                        <span className="w-fit block">
+                            Anda dapat melihat, menambahkan, mengubah dan
+                            menghapus informasi projek yang akan ditampilkan
+                            kepada pengguna.
                         </span>
+                        <PrimaryButton type="button" className="flex">
+                            <Link
+                                href={'/dashboard/projects/add'}
+                                className="w-full truncate"
+                            >
+                                Tambah Projek
+                            </Link>
+                        </PrimaryButton>
                     </div>
                 </div>
                 <div className="w-full h-fit flex flex-col gap-4">
@@ -55,13 +66,16 @@ export default function ContactInfo() {
                                         #
                                     </Table.Header>
                                     <Table.Header className="w-2/12">
-                                        Nama
+                                        Pratinjau
                                     </Table.Header>
-                                    <Table.Header className="w-4/12">
-                                        Nama Tampilan
+                                    <Table.Header className="w-5/12">
+                                        Nama Projek
                                     </Table.Header>
-                                    <Table.Header className="w-4/12">
-                                        Link
+                                    <Table.Header className="w-1/12">
+                                        Tahun
+                                    </Table.Header>
+                                    <Table.Header className="w-2/12">
+                                        Kategori
                                     </Table.Header>
                                     <Table.Header className="w-1/12 text-center">
                                         Aksi
@@ -70,20 +84,33 @@ export default function ContactInfo() {
                             </Table.Head>
                             <Table.Body>
                                 <>
-                                    {contacts.map((contact, index) => {
+                                    {projects.map((project, index) => {
                                         return (
                                             <Table.Row key={index}>
                                                 <Table.Data className="w-1/12 text-center">
                                                     {index + 1}
                                                 </Table.Data>
                                                 <Table.Data className="w-2/12">
-                                                    {contact.name}
+                                                    <Image
+                                                        src={`/img/projects/${project.id}/${project.thumbnail.photo}`}
+                                                        alt={
+                                                            project.thumbnail
+                                                                .desc
+                                                        }
+                                                        width="200"
+                                                        height="100"
+                                                        className=""
+                                                    />
                                                 </Table.Data>
-                                                <Table.Data className="w-4/12">
-                                                    {contact.displayName}
+                                                <Table.Data className="w-5/12">
+                                                    {project.name}
                                                 </Table.Data>
-                                                <Table.Data className="w-4/12">
-                                                    {contact.link}
+                                                <Table.Data className="w-1/12">
+                                                    {project.month}
+                                                    {project.year}
+                                                </Table.Data>
+                                                <Table.Data className="w-2/12">
+                                                    {project.category}
                                                 </Table.Data>
                                                 <Table.Data className="w-1/12 grid place-items-center">
                                                     <Dropdown>
@@ -93,9 +120,14 @@ export default function ContactInfo() {
                                                         <Dropdown.Items>
                                                             <Dropdown.Item>
                                                                 <Link
-                                                                    href={`/dashboard/contact/${contact.id}/edit`}
+                                                                    href={`/dashboard/project/${project.id}`}
                                                                 >
-                                                                    Ubah
+                                                                    Detail
+                                                                </Link>
+                                                                <Link
+                                                                    href={`/dashboard/project/${project.id}/edit`}
+                                                                >
+                                                                    Edit
                                                                 </Link>
                                                             </Dropdown.Item>
                                                         </Dropdown.Items>

@@ -17,7 +17,7 @@ export default function SecondaryButton({
                 type={type}
                 onClick={onClick}
                 disabled={disabled}
-                className={`w-full py-2 px-4 text-xs lg:text-sm text-center rounded shadow-sm bg-stone-200 ${className}`}
+                className={`w-fit py-2 max-h-9 px-4 text-xs lg:text-sm text-center rounded shadow-sm bg-stone-200 text-black font-medium ${className}`}
             >
                 {children}
             </button>

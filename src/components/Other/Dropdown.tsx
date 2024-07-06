@@ -18,7 +18,7 @@ export function Items({
     return (
         <MenuItems
             anchor="bottom"
-            className={`z-50 bg-white shadow-sm rounded-md border p-2 ${className}`}
+            className={`z-50 bg-white shadow-sm rounded-md border p-1.5 ${className}`}
         >
             {children}
         </MenuItems>
@@ -35,7 +35,7 @@ export function Item({
     return (
         <MenuItem>
             <div
-                className={`py-1 px-2 w-auto min-w-24 rounded group hover:bg-stone-50 transition-colors duration-300 ${className}`}
+                className={`py-1 px-2 w-auto min-w-24 rounded group hover:bg-stone-50 transition-colors duration-300 text-sm font-medium ${className}`}
             >
                 {children}
             </div>

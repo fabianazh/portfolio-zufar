@@ -35,6 +35,12 @@ export async function getDataById<T>(
     return data as T
 }
 
+export async function getCollectionCount(collectionName: string) {
+    const projectsCollection = collection(firestore, collectionName)
+    const projectsSnapshot = await getDocs(projectsCollection)
+    return projectsSnapshot.size
+}
+
 export async function signIn(email: string) {
     const q = query(collection(firestore, 'users'), where('email', '==', email))
 
