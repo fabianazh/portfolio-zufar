@@ -8,7 +8,7 @@ export default function Table({
     return (
         <>
             <table
-                className={`w-full h-fit flex flex-col gap-3 border p-3 rounded-md bg-white ${className}`}
+                className={`w-full h-fit flex flex-col divide-y-2 border py-3 px-5 rounded-md bg-white ${className}`}
             >
                 {children}
             </table>
@@ -41,7 +41,7 @@ export function Head({
 }) {
     return (
         <thead
-            className={`w-full text-left h-fit flex justify-between gap-3 ${className}`}
+            className={`w-full text-left h-fit flex justify-between gap-3 pb-3 ${className}`}
         >
             {children}
         </thead>
@@ -70,7 +70,7 @@ export function Body({
     children: React.ReactNode
 }) {
     return (
-        <tbody className={`w-full h-fit gap-2 flex flex-col ${className}`}>
+        <tbody className={`w-full h-fit gap-2 flex flex-col pt-3 ${className}`}>
             {children}
         </tbody>
     )

@@ -37,26 +37,24 @@ export default function ProjectList() {
 
     return (
         <>
-            <section className="w-full h-auto flex flex-col gap-8 mb-14">
+            <section className="w-full h-auto flex flex-col gap-6">
                 <div className="flex flex-col gap-1">
                     <Heading className="normal-case">List Projek</Heading>
-                    <div className="w-full h-fit flex justify-between items-end gap-6">
-                        <span className="w-fit block">
-                            Anda dapat melihat, menambahkan, mengubah dan
-                            menghapus informasi projek yang akan ditampilkan
-                            kepada pengguna.
-                        </span>
-                        <PrimaryButton type="button" className="flex">
-                            <Link
-                                href={'/dashboard/projects/add'}
-                                className="w-full truncate"
-                            >
-                                Tambah Projek
-                            </Link>
-                        </PrimaryButton>
-                    </div>
+                    <span className="w-fit block">
+                        Anda dapat melihat, menambahkan, mengubah dan menghapus
+                        informasi projek yang akan ditampilkan kepada pengguna.
+                    </span>
                 </div>
                 <div className="w-full h-fit flex flex-col gap-4">
+                    <div className="w-full h-fit flex justify-end">
+                        <PrimaryButton
+                            href={'/dashboard/projects/add'}
+                            theme={'black'}
+                            className="inline-block w-fit truncate text-[0.5rem] leading-none"
+                        >
+                            Tambah Projek
+                        </PrimaryButton>
+                    </div>
                     {loading ? (
                         <TableSkeleton />
                     ) : (
@@ -107,7 +105,7 @@ export default function ProjectList() {
                                                     {project.name}
                                                 </Table.Data>
                                                 <Table.Data className="w-1/12">
-                                                    {project.month}
+                                                    {project.month}{' '}
                                                     {project.year}
                                                 </Table.Data>
                                                 <Table.Data className="w-2/12">
@@ -119,17 +117,15 @@ export default function ProjectList() {
                                                             <RxDotsVertical />
                                                         </Dropdown.Trigger>
                                                         <Dropdown.Items>
-                                                            <Dropdown.Item>
-                                                                <Link
-                                                                    href={`/dashboard/project/${project.id}`}
-                                                                >
-                                                                    Detail
-                                                                </Link>
-                                                                <Link
-                                                                    href={`/dashboard/project/${project.id}/edit`}
-                                                                >
-                                                                    Edit
-                                                                </Link>
+                                                            <Dropdown.Item
+                                                                href={`/dashboard/projects/${project.id}`}
+                                                            >
+                                                                Detail
+                                                            </Dropdown.Item>
+                                                            <Dropdown.Item
+                                                                href={`/dashboard/projects/${project.id}/edit`}
+                                                            >
+                                                                Edit
                                                             </Dropdown.Item>
                                                         </Dropdown.Items>
                                                     </Dropdown>

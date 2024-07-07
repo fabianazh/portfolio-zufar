@@ -1,4 +1,5 @@
 import { Dialog, DialogPanel } from '@headlessui/react'
+import PrimaryButton from '../Button/PrimaryButton'
 
 export default function WarnModal({
     isOpen,
@@ -38,18 +39,22 @@ export default function WarnModal({
                             </h1>
                             <span className={`lg:font-medium`}>{content}</span>
                             <div className="w-full flex justify-end items-center gap-2 mt-3">
-                                <button
+                                <PrimaryButton
                                     onClick={close}
-                                    className={`w-36 inline-block py-2 px-4 text-sm text-center rounded shadow-sm bg-stone-300 text-black font-semibold`}
+                                    type="button"
+                                    theme="gray"
+                                    className={`w-36 grid place-items-center shrink-0`}
                                 >
                                     {cancelButton}
-                                </button>
-                                <button
+                                </PrimaryButton>
+                                <PrimaryButton
                                     onClick={onSubmit}
-                                    className={`w-36 inline-block py-2 px-4 text-sm text-center rounded shadow-sm bg-black text-white`}
+                                    type="button"
+                                    theme="black"
+                                    className={`w-36 grid place-items-center shrink-0`}
                                 >
                                     {confirmButton}
-                                </button>
+                                </PrimaryButton>
                             </div>
                         </div>
                     </DialogPanel>

@@ -12,7 +12,7 @@ export default function TotalDataCard({
     return (
         <Link
             href={href}
-            className="w-full h-auto border bg-white p-5 rounded-md flex flex-col gap-1"
+            className="w-full h-auto border bg-white p-5 rounded-md flex flex-col gap-1 hover:bg-stone-100 transition-colors duration-300"
         >
             <span className="font-medium">{title}</span>
             <div className="w-full flex">

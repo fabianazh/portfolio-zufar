@@ -92,12 +92,10 @@ export default function ContactInfo() {
                                                             <RxDotsVertical />
                                                         </Dropdown.Trigger>
                                                         <Dropdown.Items>
-                                                            <Dropdown.Item>
-                                                                <Link
-                                                                    href={`/dashboard/contact/${contact.id}/edit`}
-                                                                >
-                                                                    Ubah
-                                                                </Link>
+                                                            <Dropdown.Item
+                                                                href={`/dashboard/contact/${contact.id}/edit`}
+                                                            >
+                                                                Ubah
                                                             </Dropdown.Item>
                                                         </Dropdown.Items>
                                                     </Dropdown>

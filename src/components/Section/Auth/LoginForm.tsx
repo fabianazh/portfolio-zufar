@@ -140,6 +140,7 @@ export default function LoginForm() {
                     {/* Submit Button */}
                     <PrimaryButton
                         type="submit"
+                        theme="black"
                         disabled={!isDirty || !isValid || isSubmitting}
                         className="w-full grid place-items-center"
                     >
@@ -152,12 +153,13 @@ export default function LoginForm() {
                         <div className="absolute w-full bg-stone-400 h-0.5" />
                     </div>
 
-                    <Link
+                    <PrimaryButton
                         href={'/'}
-                        className="flex justify-center items-center gap-2 w-full cursor-pointer text-sm rounded bg-transparent border-2 py-2 font-medium"
+                        theme="white"
+                        className="flex justify-center items-center gap-2 w-full"
                     >
                         <BsGoogle className="text-xs" /> Login dengan Google
-                    </Link>
+                    </PrimaryButton>
                 </form>
             </div>
             {/* Form */}

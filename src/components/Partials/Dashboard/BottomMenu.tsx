@@ -4,7 +4,6 @@ import { signOut } from 'next-auth/react'
 import { useState } from 'react'
 import WarnModal from '@/components/Modal/WarnModal'
 import PrimaryButton from '@/components/Button/PrimaryButton'
-import SecondaryButton from '@/components/Button/SecondaryButton'
 
 export default function BottomMenu() {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
@@ -22,14 +21,9 @@ export default function BottomMenu() {
             <div
                 className={`flex flex-col gap-4 w-full h-fit place-self-end lg:mt-8`}
             >
-                <SecondaryButton
-                    type="button"
-                    className="w-full grid place-items-center"
-                >
-                    Akun
-                </SecondaryButton>
                 <PrimaryButton
                     type="button"
+                    theme="black"
                     onClick={openModal}
                     className="w-full grid place-items-center"
                 >

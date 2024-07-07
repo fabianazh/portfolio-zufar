@@ -1,4 +1,4 @@
-import LoginForm from '@/components/Section/Landing/LoginForm'
+import LoginForm from '@/components/Section/Auth/LoginForm'
 
 export default function SambaladoPage() {
     return (
