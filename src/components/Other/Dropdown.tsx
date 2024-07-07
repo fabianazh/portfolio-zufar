@@ -19,7 +19,7 @@ export function Items({
     return (
         <MenuItems
             anchor="bottom"
-            className={`z-50 bg-white shadow-sm rounded-md divide-y-2 border p-1.5 flex flex-col ${className}`}
+            className={`z-50 bg-white shadow-sm rounded-md divide-y-2 divide-stone-200 border p-1.5 flex flex-col ${className}`}
         >
             {children}
         </MenuItems>

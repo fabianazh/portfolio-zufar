@@ -6,7 +6,6 @@ import Table from '@/components/Other/Table'
 import TableSkeleton from '@/components/Skeleton/TableSkeleton'
 import Heading from '@/components/Typography/Heading'
 import contactServices from '@/services/contacts'
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { RxDotsVertical } from 'react-icons/rx'
 

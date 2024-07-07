@@ -12,6 +12,7 @@ import { BsGoogle } from 'react-icons/bs'
 import AppIcon from '@/components/Icon/AppIcon'
 import Loaders from '@/components/Other/Loader'
 import PrimaryButton from '@/components/Button/PrimaryButton'
+import TextInput from '@/components/Form/TextInput'
 
 type FormData = z.infer<typeof loginSchema>
 
@@ -46,7 +47,6 @@ export default function LoginForm() {
                 })
             }
         } catch (error) {
-            console.log(error)
             reset()
         }
     }
@@ -85,46 +85,32 @@ export default function LoginForm() {
                     )}
                     <div className="flex flex-col gap-6">
                         {/* Email Input */}
-                        <div className="relative h-fit flex flex-col gap-1.5">
-                            <label
-                                htmlFor="email"
-                                className="block text-sm text-gray-600 px-1"
-                            >
-                                Email
-                            </label>
-                            <input
-                                {...register('email', {
-                                    required: true,
-                                })}
+                        <TextInput>
+                            <TextInput.Label id="email">Email</TextInput.Label>
+                            <TextInput.Input
                                 id="email"
                                 type="email"
                                 name="email"
-                                className="peer h-fit w-full bg-stone-50 shadow-sm px-4 py-2.5 rounded text-gray-900 text-sm focus:border-gary-500 focus:outline-none"
                                 placeholder="Masukan Email"
-                                autoComplete="off"
+                                register={register}
+                                required={true}
                             />
-                        </div>
+                        </TextInput>
                         {/* Email Input */}
                         {/* Password Input */}
-                        <div className="relative h-fit flex flex-col gap-1.5">
-                            <label
-                                htmlFor="email"
-                                className="block text-sm text-gray-600 px-1"
-                            >
+                        <TextInput>
+                            <TextInput.Label id="password">
                                 Password
-                            </label>
-                            <input
-                                {...register('password', {
-                                    required: true,
-                                })}
+                            </TextInput.Label>
+                            <TextInput.Input
                                 id="password"
                                 type="password"
                                 name="password"
-                                className="peer h-fit w-full bg-stone-50 shadow-sm px-4 py-2.5 rounded text-gray-900 text-sm focus:border-gary-500 focus:outline-none"
                                 placeholder="Masukan Password"
-                                autoComplete="off"
+                                register={register}
+                                required={true}
                             />
-                        </div>
+                        </TextInput>
                         {/* Password Input */}
                     </div>
 
