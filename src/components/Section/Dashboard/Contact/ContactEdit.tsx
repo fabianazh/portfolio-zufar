@@ -8,6 +8,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { contactSchema } from '@/zodSchema/route'
 import FormLayout from '@/components/Layout/FormLayout'
 import TextInput from '@/components/Form/TextInput'
+import PrimaryButton from '@/components/Button/PrimaryButton'
+import Loaders from '@/components/Other/Loader'
 
 type FormData = z.infer<typeof contactSchema>
 
@@ -18,9 +20,8 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
     const {
         handleSubmit,
         register,
-        reset,
-        setError,
         formState: { errors, isSubmitting, isDirty, isValid },
+        trigger,
     } = useForm<FormData>({
         resolver: zodResolver(contactSchema),
     })
@@ -43,26 +44,13 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
 
     async function onSubmit(data: FormData) {
         try {
-            // const res = await signIn('credentials', {
-            //     redirect: false,
-            //     email: data.email,
-            //     password: data.password,
-            //     callbackUrl: '/dashboard',
-            // })
-            // if (!res?.error) {
-            //     reset()
-            //     redirect('/dashboard')
-            // } else {
-            //     setError('root', {
-            //         message: 'Email atau password salah!',
-            //     })
-            // }
-            console.log(data)
+            const response = contactServices.updateContact(contactId, data)
+            console.log(response)
         } catch (error) {
-            reset()
+            console.log(error)
         }
     }
-
+    console.log(errors)
     return (
         <>
             <FormLayout returnLink={`/dashboard/contact`} loading={loading}>
@@ -80,52 +68,62 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
                             method="POST"
                             onSubmit={handleSubmit(onSubmit)}
                         >
-                            <TextInput>
-                                <TextInput.Label id="name">
-                                    Nama
-                                </TextInput.Label>
-                                <TextInput.Input
-                                    id="name"
-                                    type="text"
-                                    name="name"
-                                    placeholder="Masukan Nama"
-                                    register={register}
-                                    required={true}
-                                    className="bg-stone-200/50"
-                                    value={contact?.name}
-                                    disabled
-                                />
-                            </TextInput>
-                            <TextInput>
-                                <TextInput.Label id="displayName">
-                                    Nama Tampilan
-                                </TextInput.Label>
-                                <TextInput.Input
-                                    id="displayName"
-                                    type="text"
-                                    name="displayName"
-                                    placeholder="Masukan Nama Tampilan"
-                                    register={register}
-                                    required={true}
-                                    className="bg-stone-200/50"
-                                    value={contact?.displayName}
-                                />
-                            </TextInput>
-                            <TextInput>
-                                <TextInput.Label id="link">
-                                    Link
-                                </TextInput.Label>
-                                <TextInput.Input
-                                    id="link"
-                                    type="text"
-                                    name="link"
-                                    placeholder="Masukan Nama Tampilan"
-                                    register={register}
-                                    required={true}
-                                    className="bg-stone-200/50"
-                                    value={contact?.link}
-                                />
-                            </TextInput>
+                            <TextInput
+                                {...register('name')}
+                                label="Nama"
+                                id="name"
+                                type="text"
+                                name="name"
+                                required={true}
+                                inputClassName="bg-stone-200/50"
+                                defaultValue={contact?.name}
+                                error={errors?.name?.message}
+                                disabled
+                            />
+                            <TextInput
+                                {...register('displayName')}
+                                label="Nama Tampilan"
+                                id="displayName"
+                                type="text"
+                                name="displayName"
+                                placeholder="Masukan Nama Tampilan"
+                                required={true}
+                                inputClassName="bg-stone-200/50"
+                                defaultValue={contact?.displayName}
+                                error={errors?.displayName?.message}
+                            />
+                            <TextInput
+                                {...register('link')}
+                                label="Link"
+                                id="link"
+                                type="text"
+                                name="link"
+                                placeholder="Masukan Link Kontak"
+                                required={true}
+                                inputClassName="bg-stone-200/50"
+                                defaultValue={contact?.link}
+                                error={errors?.link?.message}
+                            />
+                            <div className="w-8/12 grid grid-cols-2 gap-6">
+                                <PrimaryButton
+                                    type="reset"
+                                    theme="gray"
+                                    disabled={isSubmitting}
+                                    className="w-full grid place-items-center"
+                                >
+                                    Reset
+                                </PrimaryButton>
+                                <PrimaryButton
+                                    type="submit"
+                                    theme="black"
+                                    disabled={
+                                        isDirty || !isValid || isSubmitting
+                                    }
+                                    className="w-full grid place-items-center"
+                                >
+                                    {isSubmitting ? <Loaders /> : 'Submit'}
+                                </PrimaryButton>
+                            </div>
                         </form>
                     </>
                 </FormLayout.Content>

@@ -1,106 +1,55 @@
 'use client'
 
-import { useState } from 'react'
-import { UseFormRegister } from 'react-hook-form'
+import { forwardRef, InputHTMLAttributes } from 'react'
 
-export default function TextInput({
-    className = '',
-    children,
-}: {
+interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
     className?: string
-    children: React.ReactNode
-}) {
-    return (
-        <div className={`relative h-fit flex flex-col gap-1.5 ${className}`}>
-            {children}
-        </div>
-    )
+    labelClassName?: string
+    descClassName?: string
+    inputClassName?: string
+    label: string
+    desc?: string
+    error?: string
 }
 
-function Label({
-    id,
-    className,
-    children,
-}: {
-    id: string
-    className?: string
-    children: React.ReactNode
-}) {
+export default forwardRef<HTMLInputElement, TextInputProps>(function TextInput(
+    {
+        className,
+        labelClassName,
+        descClassName,
+        inputClassName,
+        id,
+        label,
+        desc,
+        error,
+        ...rest
+    },
+    ref
+) {
     return (
-        <label
-            htmlFor={id}
-            className={`block text-sm lg:text-base text-gray-700 font-medium px-1 ${className}`}
+        <fieldset
+            className={`relative h-fit flex flex-col gap-1.5 ${className}`}
         >
-            {children}
-        </label>
+            <label
+                htmlFor={id}
+                className={`block text-sm lg:text-base text-gray-700 font-medium px-1 ${labelClassName}`}
+            >
+                {label}
+            </label>
+            {desc && (
+                <div className={`w-full h-fit text-xs ${descClassName}`}>
+                    {desc}
+                </div>
+            )}
+            <input
+                ref={ref}
+                id={id}
+                name={id}
+                className={`peer h-fit w-full shadow-sm px-4 py-2.5 rounded text-sm focus:border-gray-500 focus:outline-none text-gray-900 bg-stone-100/80 ${inputClassName}`}
+                autoComplete="off"
+                {...rest}
+            />
+            {error && <span className="text-red-600 text-sm">{error}</span>}
+        </fieldset>
     )
-}
-
-function Desc({
-    className = '',
-    children,
-}: {
-    className?: string
-    children: React.ReactNode
-}) {
-    return <></>
-}
-
-function Input({
-    id,
-    type,
-    name,
-    placeholder,
-    register,
-    required = false,
-    className = '',
-    value,
-    onChange,
-    disabled = false,
-    ...rest
-}: {
-    id: string
-    type: string
-    name: string
-    placeholder: string
-    register: UseFormRegister<any>
-    required?: boolean
-    className?: string
-    value?: any
-    disabled?: boolean
-    [x: string]: any
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-}) {
-    const [inputValue, setInputValue] = useState(value)
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(e.target.value)
-        if (onChange) {
-            onChange(e)
-        }
-    }
-
-    return (
-        <input
-            {...register(name, { required })}
-            id={id}
-            type={type}
-            name={name}
-            onChange={handleChange}
-            value={inputValue}
-            disabled={disabled}
-            className={`peer h-fit w-full shadow-sm px-4 py-2.5 rounded text-gray-900 text-sm focus:border-gray-500 focus:outline-none ${
-                disabled
-                    ? 'cursor-not-allowed'
-                    : 'text-gray-900 bg-stone-100/80'
-            } ${className}`}
-            placeholder={placeholder}
-            autoComplete="off"
-            {...rest}
-        />
-    )
-}
-
-TextInput.Label = Label
-TextInput.Desc = Desc
-TextInput.Input = Input
+})

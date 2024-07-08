@@ -1,5 +1,5 @@
 import Heading from '@/components/Typography/Heading'
-import TableSkeleton from '@/components/Skeleton/TableSkeleton'
+import FormSkeleton from '@/components/Skeleton/FormSkeleton'
 import Link from 'next/link'
 import { IoArrowBack } from 'react-icons/io5'
 
@@ -28,7 +28,7 @@ export default function FormLayout({
                         <span className="font-medium">Kembali</span>
                     </Link>
                 </div>
-                {loading ? <TableSkeleton /> : <>{children}</>}
+                {!loading ? <FormSkeleton /> : <>{children}</>}
             </section>
         </>
     )

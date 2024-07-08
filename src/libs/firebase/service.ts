@@ -6,6 +6,7 @@ import {
     getDocs,
     getFirestore,
     query,
+    updateDoc,
     where,
 } from 'firebase/firestore'
 import { firestore } from './init'
@@ -55,4 +56,13 @@ export async function signIn(email: string) {
     } else {
         return null
     }
+}
+
+export async function updateData(
+    collectionName: string,
+    id: string,
+    data: any
+) {
+    const docRef = doc(firestore, collectionName, id)
+    await updateDoc(docRef, data)
 }

@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { signIn } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import {  useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { BackgroundBeams } from '@/components/Other/BackgroundBeams'
 import Link from 'next/link'
 import { BsGoogle } from 'react-icons/bs'
@@ -85,37 +85,30 @@ export default function LoginForm() {
                     )}
                     <div className="flex flex-col gap-6">
                         {/* Email Input */}
-                        <TextInput>
-                            <TextInput.Label className="lg:text-sm" id="email">
-                                Email
-                            </TextInput.Label>
-                            <TextInput.Input
-                                id="email"
-                                type="email"
-                                name="email"
-                                placeholder="Masukan Email"
-                                register={register}
-                                required={true}
-                            />
-                        </TextInput>
+                        <TextInput
+                            {...register('email', {
+                                required: 'Email harus diisi.',
+                            })}
+                            label="Email"
+                            id="email"
+                            type="email"
+                            name="email"
+                            placeholder="Masukan Email Kontak"
+                            required
+                        />
                         {/* Email Input */}
                         {/* Password Input */}
-                        <TextInput>
-                            <TextInput.Label
-                                className="lg:text-sm"
-                                id="password"
-                            >
-                                Password
-                            </TextInput.Label>
-                            <TextInput.Input
-                                id="password"
-                                type="password"
-                                name="password"
-                                placeholder="Masukan Password"
-                                register={register}
-                                required={true}
-                            />
-                        </TextInput>
+                        <TextInput
+                            {...register('password', {
+                                required: 'Password harus diisi.',
+                            })}
+                            label="Password"
+                            id="password"
+                            type="password"
+                            name="password"
+                            placeholder="Masukan Password Kontak"
+                            required
+                        />
                         {/* Password Input */}
                     </div>
 
@@ -132,7 +125,7 @@ export default function LoginForm() {
                     <PrimaryButton
                         type="submit"
                         theme="black"
-                        disabled={!isDirty || !isValid || isSubmitting}
+                        disabled={isDirty || !isValid || isSubmitting}
                         className="w-full grid place-items-center"
                     >
                         {isSubmitting ? <Loaders /> : 'Login'}

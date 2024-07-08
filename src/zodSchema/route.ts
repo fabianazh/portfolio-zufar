@@ -6,9 +6,9 @@ export const loginSchema = z.object({
 })
 
 export const contactSchema = z.object({
-    name: z.string(),
-    displayName: z.string().min(8),
-    link: z.string().min(8).url(),
+    name: z.string().nonempty('Nama harus diisi.'),
+    displayName: z.string().nonempty('Nama tampilan harus diisi.'),
+    link: z.string().nonempty('Link harus diisi.'),
 })
 
 export type User = z.infer<typeof loginSchema>
