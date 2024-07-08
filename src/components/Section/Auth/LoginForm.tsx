@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { signIn } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { useRouter } from 'next/navigation'
+import {  useRouter } from 'next/navigation'
 import { BackgroundBeams } from '@/components/Other/BackgroundBeams'
 import Link from 'next/link'
 import { BsGoogle } from 'react-icons/bs'
@@ -86,7 +86,9 @@ export default function LoginForm() {
                     <div className="flex flex-col gap-6">
                         {/* Email Input */}
                         <TextInput>
-                            <TextInput.Label id="email">Email</TextInput.Label>
+                            <TextInput.Label className="lg:text-sm" id="email">
+                                Email
+                            </TextInput.Label>
                             <TextInput.Input
                                 id="email"
                                 type="email"
@@ -99,7 +101,10 @@ export default function LoginForm() {
                         {/* Email Input */}
                         {/* Password Input */}
                         <TextInput>
-                            <TextInput.Label id="password">
+                            <TextInput.Label
+                                className="lg:text-sm"
+                                id="password"
+                            >
                                 Password
                             </TextInput.Label>
                             <TextInput.Input

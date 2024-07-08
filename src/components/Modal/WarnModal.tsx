@@ -31,7 +31,7 @@ export default function WarnModal({
                 <div className="flex min-h-full items-center justify-center p-3 lg:p-4">
                     <DialogPanel
                         transition
-                        className="w-fit h-full max-w-2xl relative bg-white/90 p-4 lg:p-5 duration-300 ease-out data-[closed]:opacity-0 rounded"
+                        className="w-fit h-full max-w-2xl relative bg-white p-4 lg:p-5 duration-300 ease-out data-[closed]:opacity-0 rounded"
                     >
                         <div className="w-full flex flex-col gap-2">
                             <h1 className={`text-2xl font-semibold`}>

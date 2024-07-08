@@ -29,7 +29,7 @@ function Label({
     return (
         <label
             htmlFor={id}
-            className={`block text-sm text-gray-700 font-medium px-1 ${className}`}
+            className={`block text-sm lg:text-base text-gray-700 font-medium px-1 ${className}`}
         >
             {children}
         </label>
@@ -56,6 +56,7 @@ function Input({
     className = '',
     value,
     onChange,
+    disabled = false,
     ...rest
 }: {
     id: string
@@ -66,6 +67,7 @@ function Input({
     required?: boolean
     className?: string
     value?: any
+    disabled?: boolean
     [x: string]: any
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }) {
@@ -86,7 +88,12 @@ function Input({
             name={name}
             onChange={handleChange}
             value={inputValue}
-            className={`peer h-fit w-full bg-stone-100/80 shadow-sm px-4 py-2.5 rounded text-gray-900 text-sm focus:border-gray-500 focus:outline-none ${className}`}
+            disabled={disabled}
+            className={`peer h-fit w-full shadow-sm px-4 py-2.5 rounded text-gray-900 text-sm focus:border-gray-500 focus:outline-none ${
+                disabled
+                    ? 'cursor-not-allowed'
+                    : 'text-gray-900 bg-stone-100/80'
+            } ${className}`}
             placeholder={placeholder}
             autoComplete="off"
             {...rest}
