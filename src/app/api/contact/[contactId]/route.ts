@@ -22,20 +22,19 @@ export async function PUT(
     const id = params.contactId
     try {
         const data = await req.json()
-        await updateData('contacts', id, data)
+        await updateData('contacts', id, data.data)
 
         return NextResponse.json({
             status: true,
             statusCode: 200,
-            message: 'success',
+            message: 'Update info kontak berhasil!',
             data: data,
         })
     } catch (error) {
-        console.error('Error updating contact:', error)
         return NextResponse.json({
             status: false,
             statusCode: 500,
-            message: 'Internal Server Error',
+            message: 'Update info kontak gagal!',
         })
     }
 }

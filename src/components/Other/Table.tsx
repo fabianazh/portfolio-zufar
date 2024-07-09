@@ -25,7 +25,9 @@ export function Row({
 }) {
     return (
         <>
-            <tr className={`w-full h-fit flex items-center gap-4 ${className}`}>
+            <tr
+                className={`w-full h-fit flex items-center gap-2 lg:gap-4 ${className}`}
+            >
                 {children}
             </tr>
         </>
@@ -56,9 +58,7 @@ export function Header({
     children: React.ReactNode
 }) {
     return (
-        <th className={`h-fit justify-between gap-1 text-left ${className}`}>
-            {children}
-        </th>
+        <th className={`h-fit shrink-0 text-left ${className}`}>{children}</th>
     )
 }
 
@@ -83,7 +83,7 @@ export function Data({
     className?: string
     children: React.ReactNode
 }) {
-    return <td className={`h-auto ${className}`}>{children}</td>
+    return <td className={`h-auto shrink-0 ${className}`}>{children}</td>
 }
 
 Table.Head = Head

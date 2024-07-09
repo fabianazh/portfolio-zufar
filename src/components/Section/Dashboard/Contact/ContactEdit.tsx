@@ -11,6 +11,7 @@ import PrimaryButton from '@/components/Button/PrimaryButton'
 import Loaders from '@/components/Other/Loader'
 import * as z from 'zod'
 import { useRouter } from 'next/navigation'
+import { useToast } from '@/app/context/ToastContext'
 
 type FormData = z.infer<typeof contactSchema>
 
@@ -19,7 +20,7 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
     const [loading, setLoading] = useState(true)
 
     const router = useRouter()
-
+    const { showToast } = useToast()
     const {
         handleSubmit,
         register,
@@ -32,9 +33,7 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
     useEffect(() => {
         async function getContactDetail() {
             try {
-                const { data } = await contactServices.getContactDetail(
-                    contactId
-                )
+                const { data } = await contactServices.getContactById(contactId)
                 setContact(data.data)
                 reset(data.data)
             } catch (error) {
@@ -53,11 +52,14 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
                 contactId,
                 data
             )
-            if (response.data.status) {
+            if (response.data.status === true) {
+                showToast(response.data.message, { type: 'success' })
                 router.push('/dashboard/contacts')
+            } else {
+                showToast(response.data.message, { type: 'error' })
             }
         } catch (error) {
-            console.error(error)
+            showToast('Error', { type: 'error' })
         }
     }
 

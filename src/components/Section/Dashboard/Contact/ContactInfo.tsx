@@ -4,8 +4,6 @@ import TableLayout from '@/components/Layout/TableLayout'
 import Dropdown from '@/components/Other/Dropdown'
 import NotFound from '@/components/Other/NotFound'
 import Table from '@/components/Other/Table'
-import TableSkeleton from '@/components/Skeleton/TableSkeleton'
-import Heading from '@/components/Typography/Heading'
 import contactServices from '@/services/contacts'
 import { useEffect, useState } from 'react'
 import { RxDotsVertical } from 'react-icons/rx'
@@ -51,7 +49,7 @@ export default function ContactInfo() {
                                 <Table.Header className="w-2/12">
                                     Nama
                                 </Table.Header>
-                                <Table.Header className="w-4/12">
+                                <Table.Header className="w-3/12">
                                     Nama Tampilan
                                 </Table.Header>
                                 <Table.Header className="w-4/12">
@@ -73,7 +71,7 @@ export default function ContactInfo() {
                                             <Table.Data className="w-2/12">
                                                 {contact.name}
                                             </Table.Data>
-                                            <Table.Data className="w-4/12">
+                                            <Table.Data className="w-3/12">
                                                 {contact.displayName}
                                             </Table.Data>
                                             <Table.Data className="w-4/12">

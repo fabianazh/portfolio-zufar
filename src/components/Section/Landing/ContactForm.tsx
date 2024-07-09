@@ -1,30 +1,43 @@
 'use client'
 
+import { useToast } from '@/app/context/ToastContext'
+import messageServices from '@/services/messages'
+import { messageSchema } from '@/zodSchema/route'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import * as z from 'zod'
+
+type FormData = z.infer<typeof messageSchema>
 
 export default function ContactForm() {
-    const { register, handleSubmit, reset } = useForm<FormData>()
+    const { showToast } = useToast()
 
-    function sendEmail(data: FormData) {
-        const apiEndpoint = '/api/email'
+    const {
+        handleSubmit,
+        register,
+        resetField,
+        formState: { errors, isSubmitting, isDirty, isValid },
+    } = useForm<FormData>({
+        resolver: zodResolver(messageSchema),
+    })
 
-        fetch(apiEndpoint, {
-            method: 'POST',
-            body: JSON.stringify(data),
-        })
-            .then((res) => res.json())
-            .then((response) => {
-                alert(response.message)
-                reset()
-            })
-            .catch((err) => {
-                alert(err)
-            })
+    async function onSubmit(data: FormData) {
+        try {
+            const response = await messageServices.sendMessage(data)
+
+            if (response.data.status === true) {
+                showToast(response.data.message, { type: 'success' })
+                resetField('name')
+                resetField('email')
+                resetField('message')
+            } else {
+                showToast(response.data.message, { type: 'error' })
+            }
+        } catch (error) {
+            showToast('Error', { type: 'error' })
+        }
     }
 
-    function onSubmit(data: FormData) {
-        sendEmail(data)
-    }
     return (
         <>
             <form
@@ -38,9 +51,9 @@ export default function ContactForm() {
                                 type="text"
                                 id="name"
                                 className="w-full py-3 px-4 focus:border-0 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500 text-sm lg:text-base"
-                                {...register('name', { required: true })}
-                                autoComplete="false"
+                                {...register('name')}
                                 placeholder="Nama"
+                                required
                             />
                         </div>
                         <div className="w-full border border-black h-fit flex-grow">
@@ -48,9 +61,9 @@ export default function ContactForm() {
                                 type="text"
                                 id="email"
                                 className="w-full py-3 px-4 focus:border-0 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500 text-sm lg:text-base"
-                                {...register('email', { required: true })}
-                                autoComplete="false"
+                                {...register('email')}
                                 placeholder="Email"
+                                required
                             />
                         </div>
                     </div>
@@ -59,14 +72,16 @@ export default function ContactForm() {
                             id="message"
                             rows={6}
                             className="w-full h-fit resize-none py-3 px-4 focus:border-0 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500 text-sm lg:text-base"
-                            {...register('message', { required: true })}
+                            {...register('message')}
                             placeholder="Pesan"
-                            autoComplete="false"
+                            required
                         ></textarea>
                     </div>
                 </div>
                 <div className="border border-black w-fit py-2 px-8">
-                    <button type="submit">Kirim</button>
+                    <button type="submit" disabled={isSubmitting}>
+                        Kirim
+                    </button>
                 </div>
             </form>
         </>

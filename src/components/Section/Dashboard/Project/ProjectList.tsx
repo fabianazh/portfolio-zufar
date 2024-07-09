@@ -62,7 +62,7 @@ export default function ProjectList() {
                                 <Table.Header className="w-2/12">
                                     Pratinjau
                                 </Table.Header>
-                                <Table.Header className="w-5/12">
+                                <Table.Header className="w-4/12">
                                     Nama Projek
                                 </Table.Header>
                                 <Table.Header className="w-1/12">
@@ -93,7 +93,7 @@ export default function ProjectList() {
                                                     className=""
                                                 />
                                             </Table.Data>
-                                            <Table.Data className="w-5/12">
+                                            <Table.Data className="w-4/12">
                                                 {project.name}
                                             </Table.Data>
                                             <Table.Data className="w-1/12">

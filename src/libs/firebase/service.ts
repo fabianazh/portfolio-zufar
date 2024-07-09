@@ -6,6 +6,7 @@ import {
     getDocs,
     getFirestore,
     query,
+    setDoc,
     updateDoc,
     where,
 } from 'firebase/firestore'
@@ -24,7 +25,7 @@ export async function getDataById<T>(
     collectionName: string,
     id: string
 ): Promise<T | undefined> {
-    const docRef = doc(collection(firestore, collectionName), id)
+    const docRef = doc(firestore, collectionName, id)
     const snapshot = await getDoc(docRef)
     if (!snapshot.exists()) {
         return undefined
@@ -58,10 +59,15 @@ export async function signIn(email: string) {
     }
 }
 
+export async function addData(collectionName: string, data: any) {
+    const docRef = doc(collection(firestore, collectionName))
+    await setDoc(docRef, data)
+}
+
 export async function updateData(
     collectionName: string,
     id: string,
-    data: any,
+    data: any
 ) {
     const docRef = doc(firestore, collectionName, id)
     await updateDoc(docRef, data)
