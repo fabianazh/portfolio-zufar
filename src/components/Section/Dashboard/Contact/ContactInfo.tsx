@@ -86,7 +86,7 @@ export default function ContactInfo() {
                                                     </Dropdown.Trigger>
                                                     <Dropdown.Items>
                                                         <Dropdown.Item
-                                                            href={`/dashboard/contact/${contact.id}/edit`}
+                                                            href={`/dashboard/contacts/${contact.id}/edit`}
                                                         >
                                                             Ubah
                                                         </Dropdown.Item>

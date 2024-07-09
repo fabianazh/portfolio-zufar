@@ -61,7 +61,7 @@ export async function signIn(email: string) {
 export async function updateData(
     collectionName: string,
     id: string,
-    data: any
+    data: any,
 ) {
     const docRef = doc(firestore, collectionName, id)
     await updateDoc(docRef, data)

@@ -20,11 +20,22 @@ export async function PUT(
     { params }: { params: { contactId: string } }
 ) {
     const id = params.contactId
-    const contacts = await updateData('contacts', id, req.formData)
-    return NextResponse.json({
-        status: true,
-        statusCode: 200,
-        message: 'success',
-        data: contacts,
-    })
+    try {
+        const data = await req.json()
+        await updateData('contacts', id, data)
+
+        return NextResponse.json({
+            status: true,
+            statusCode: 200,
+            message: 'success',
+            data: data,
+        })
+    } catch (error) {
+        console.error('Error updating contact:', error)
+        return NextResponse.json({
+            status: false,
+            statusCode: 500,
+            message: 'Internal Server Error',
+        })
+    }
 }

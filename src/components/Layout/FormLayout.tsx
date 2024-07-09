@@ -28,7 +28,7 @@ export default function FormLayout({
                         <span className="font-medium">Kembali</span>
                     </Link>
                 </div>
-                {!loading ? <FormSkeleton /> : <>{children}</>}
+                {loading ? <FormSkeleton /> : <>{children}</>}
             </section>
         </>
     )

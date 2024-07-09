@@ -86,9 +86,7 @@ export default function LoginForm() {
                     <div className="flex flex-col gap-6">
                         {/* Email Input */}
                         <TextInput
-                            {...register('email', {
-                                required: 'Email harus diisi.',
-                            })}
+                            {...register('email')}
                             label="Email"
                             id="email"
                             type="email"
@@ -99,9 +97,7 @@ export default function LoginForm() {
                         {/* Email Input */}
                         {/* Password Input */}
                         <TextInput
-                            {...register('password', {
-                                required: 'Password harus diisi.',
-                            })}
+                            {...register('password')}
                             label="Password"
                             id="password"
                             type="password"
