@@ -18,7 +18,7 @@ export default function Sidebar() {
         },
         {
             text: 'Contact',
-            href: '/dashboard/contact',
+            href: '/dashboard/contacts',
         },
         {
             text: 'Mailbox',
