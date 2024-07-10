@@ -40,7 +40,7 @@ export default function MailBox() {
                     desc="Anda dapat melihat dan menghapus pesan yang dikirim dari pengguna."
                 />
                 <TableLayout.Content loading={loading}>
-                    <Table className="py-0 px-0 overflow-hidden">
+                    <Table className="py-0 px-0 overflow-hidden gap-0">
                         <Table.Head className="py-3">
                             <Table.Row>
                                 <Table.Header className="w-1/12 text-center">
@@ -71,8 +71,8 @@ export default function MailBox() {
                                             <Table.Row
                                                 className={`py-2 px-0 transition-colors duration-300 ${
                                                     mail.isUnread
-                                                        ? 'bg-stone-100'
-                                                        : 'hover:bg-stone-100'
+                                                        ? 'hover:bg-stone-100'
+                                                        : 'bg-stone-100'
                                                 }`}
                                             >
                                                 <Table.Data className="w-1/12 text-center">

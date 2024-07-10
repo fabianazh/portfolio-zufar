@@ -10,8 +10,17 @@ interface Mail {
     name: string
     email: string
     message: string
-    created_at: string
+    created_at: {
+        seconds: number
+        nanoseconds: number
+    }
     isUnread: boolean
+}
+
+interface Tool {
+    id: string
+    name: string
+    link: string
 }
 
 interface Project {

@@ -22,6 +22,7 @@ export default function LoginForm() {
         register,
         reset,
         setError,
+        resetField,
         formState: { errors, isSubmitting, isDirty, isValid },
     } = useForm<FormData>({
         resolver: zodResolver(loginSchema),
@@ -45,6 +46,7 @@ export default function LoginForm() {
                 setError('root', {
                     message: 'Email atau password salah!',
                 })
+                resetField('password')
             }
         } catch (error) {
             reset()
@@ -66,7 +68,7 @@ export default function LoginForm() {
             {/* Form */}
             <div className="w-full lg:w-4/12 flex flex-col h-full items-center z-20 bg-transparent lg:backdrop-blur-sm lg:shadow py-24">
                 <div>
-                    <h1 className="block font-extrabold text-4xl">
+                    <h1 className="block font-extrabold text-5xl lg:text-4xl">
                         Welcome Back!
                     </h1>
                 </div>

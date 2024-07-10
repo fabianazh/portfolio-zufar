@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { addData, getData } from '@/libs/firebase/service'
+import { serverTimestamp } from 'firebase/firestore'
 
 export async function GET(req: NextRequest) {
     const mails = await getData<Mail>('mails')
@@ -18,7 +19,7 @@ export async function POST(req: NextRequest) {
             name: data.data.name,
             email: data.data.email,
             message: data.data.message,
-            created_at: new Date(),
+            created_at: serverTimestamp(),
             isUnread: true,
         })
 

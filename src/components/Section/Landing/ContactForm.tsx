@@ -48,7 +48,7 @@ export default function ContactForm() {
                     <fieldset className="w-full h-fit relative flex flex-col gap-1">
                         <label
                             htmlFor="name"
-                            className="absolute -top-2 left-0 bg-white z-10 px-3 text-sm"
+                            className="absolute -top-2 left-0 bg-white z-10 px-2 lg:px-3 text-sm"
                         >
                             Nama
                         </label>
@@ -71,7 +71,7 @@ export default function ContactForm() {
                     <fieldset className="w-full h-fit relative flex flex-col gap-1">
                         <label
                             htmlFor="email"
-                            className="absolute -top-2 left-0 bg-white z-10 px-3 text-sm"
+                            className="absolute -top-2 left-0 bg-white z-10 px-2 lg:px-3 text-sm"
                         >
                             Email
                         </label>
@@ -94,7 +94,7 @@ export default function ContactForm() {
                     <fieldset className="w-full h-fit relative flex flex-col gap-1">
                         <label
                             htmlFor="message"
-                            className="absolute -top-2 left-0 bg-white z-10 px-3 text-sm"
+                            className="absolute -top-2 left-0 bg-white z-10 px-2 lg:px-3 text-sm"
                         >
                             Pesan
                         </label>

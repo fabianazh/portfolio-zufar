@@ -42,8 +42,12 @@ export default function MailDetail({ mailId }: { mailId: string }) {
                             <span>{mail?.email}</span>
                         </div>
                     </div>
-                    <div className="flex gap-4 items center">
-                        <span className="">{mail?.created_at}</span>
+                    <div className="flex gap-4 items-center">
+                        <span className="">
+                            {new Date(
+                                mail?.created_at.seconds ?? 0 * 1000
+                            ).toLocaleString()}
+                        </span>
                         <Dropdown>
                             <Dropdown.Trigger>
                                 <RxDotsVertical />
