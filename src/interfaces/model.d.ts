@@ -1,8 +1,17 @@
 interface Contact {
-    id:string
+    id: string
     name: string
     displayName: string
     link: string
+}
+
+interface Mail {
+    id: string
+    name: string
+    email: string
+    message: string
+    created_at: string
+    isUnread: boolean
 }
 
 interface Project {

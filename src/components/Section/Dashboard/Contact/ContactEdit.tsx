@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { contactSchema } from '@/zodSchema/route'
-import FormLayout from '@/components/Layout/FormLayout'
+import ActionLayout from '@/components/Layout/ActionLayout'
 import TextInput from '@/components/Form/TextInput'
 import PrimaryButton from '@/components/Button/PrimaryButton'
 import Loaders from '@/components/Other/Loader'
@@ -64,14 +64,14 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
     }
 
     return (
-        <FormLayout returnLink={`/dashboard/contacts`} loading={loading}>
-            <FormLayout.Header
+        <ActionLayout returnLink={`/dashboard/contacts`} loading={loading}>
+            <ActionLayout.Header
                 title={`Edit Info ${contact?.name}`}
                 desc="Pastikan perubahan informasi kontak yang akan
                             ditampilkan kepada pengguna telah sesuai dengan yang
                             diinginkan."
             />
-            <FormLayout.Content>
+            <ActionLayout.Content>
                 <form
                     className="w-full lg:w-6/12 h-fit flex flex-col gap-6"
                     onSubmit={handleSubmit(onSubmit)}
@@ -131,7 +131,7 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
                         </PrimaryButton>
                     </div>
                 </form>
-            </FormLayout.Content>
-        </FormLayout>
+            </ActionLayout.Content>
+        </ActionLayout>
     )
 }

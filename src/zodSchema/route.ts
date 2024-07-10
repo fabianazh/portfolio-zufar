@@ -1,6 +1,6 @@
 import z from 'zod'
 
-export const messageSchema = z.object({
+export const mailSchema = z.object({
     name: z
         .string()
         .min(4, 'Nama minmal harus berisi 4 karakter.')

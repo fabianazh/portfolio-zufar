@@ -3,7 +3,7 @@ import FormSkeleton from '@/components/Skeleton/FormSkeleton'
 import Link from 'next/link'
 import { IoArrowBack } from 'react-icons/io5'
 
-export default function FormLayout({
+export default function ActionLayout({
     className,
     children,
     returnLink,
@@ -63,5 +63,5 @@ export function Content({
     )
 }
 
-FormLayout.Header = Header
-FormLayout.Content = Content
+ActionLayout.Header = Header
+ActionLayout.Content = Content

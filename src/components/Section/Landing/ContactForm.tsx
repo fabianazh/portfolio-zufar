@@ -1,13 +1,13 @@
 'use client'
 
 import { useToast } from '@/app/context/ToastContext'
-import messageServices from '@/services/messages'
-import { messageSchema } from '@/zodSchema/route'
+import mailServices from '@/services/mails'
+import { mailSchema } from '@/zodSchema/route'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 
-type FormData = z.infer<typeof messageSchema>
+type FormData = z.infer<typeof mailSchema>
 
 export default function ContactForm() {
     const { showToast } = useToast()
@@ -18,12 +18,12 @@ export default function ContactForm() {
         resetField,
         formState: { errors, isSubmitting, isDirty, isValid },
     } = useForm<FormData>({
-        resolver: zodResolver(messageSchema),
+        resolver: zodResolver(mailSchema),
     })
 
     async function onSubmit(data: FormData) {
         try {
-            const response = await messageServices.sendMessage(data)
+            const response = await mailServices.sendMail(data)
 
             if (response.data.status === true) {
                 showToast(response.data.message, { type: 'success' })

@@ -12,13 +12,15 @@ export function Trigger({ children }: { children: React.ReactNode }) {
 export function Items({
     children,
     className,
+    anchor = 'bottom',
 }: {
     children: React.ReactNode
     className?: string
+    anchor?: 'bottom' | 'bottom start'
 }) {
     return (
         <MenuItems
-            anchor="bottom"
+            anchor={anchor}
             className={`z-50 bg-white shadow-sm rounded-md divide-y-2 divide-stone-200 border p-1.5 flex flex-col ${className}`}
         >
             {children}

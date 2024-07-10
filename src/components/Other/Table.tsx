@@ -1,5 +1,5 @@
 export default function Table({
-    className,
+    className = 'py-3 px-5',
     children,
 }: {
     className?: string
@@ -8,7 +8,7 @@ export default function Table({
     return (
         <>
             <table
-                className={`w-full h-fit flex flex-col divide-y-2 border py-3 px-5 rounded-md bg-white ${className}`}
+                className={`w-full h-fit flex flex-col divide-y-2 border rounded-md bg-white ${className}`}
             >
                 {children}
             </table>
@@ -63,14 +63,14 @@ export function Header({
 }
 
 export function Body({
-    className,
+    className = 'gap-2',
     children,
 }: {
     className?: string
     children: React.ReactNode
 }) {
     return (
-        <tbody className={`w-full h-fit gap-2 flex flex-col pt-3 ${className}`}>
+        <tbody className={`w-full h-fit flex flex-col pt-3 ${className}`}>
             {children}
         </tbody>
     )

@@ -22,7 +22,7 @@ export default function Sidebar() {
         },
         {
             text: 'Mailbox',
-            href: '/dashboard/mailbox',
+            href: '/dashboard/mails',
         },
     ]
     return (

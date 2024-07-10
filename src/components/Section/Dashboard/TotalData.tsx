@@ -15,8 +15,8 @@ export default function TotalData() {
             try {
                 const projectCount = await getCollectionCount('projects')
                 const userCount = await getCollectionCount('users')
-                const contactCount = await getCollectionCount('contacts')
-                setCounts({ projectCount, userCount, contactCount })
+                const mailsCount = await getCollectionCount('mails')
+                setCounts({ projectCount, userCount, mailsCount })
             } catch (error) {
                 setError(true)
             } finally {
@@ -39,13 +39,13 @@ export default function TotalData() {
                         <section className="grid w-full h-auto grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
                             <TotalDataCard
                                 href={`/dashboard/projects`}
-                                title="Total Projek"
+                                title="Total User"
                                 totalData={counts.projectCount}
                             />
                             <TotalDataCard
-                                href={`/dashboard/`}
-                                title="Total Kategori Projek"
-                                totalData={counts.userCount}
+                                href={`/dashboard/projects`}
+                                title="Total Projek"
+                                totalData={counts.projectCount}
                             />
                             <TotalDataCard
                                 href={`/dashboard/`}
@@ -55,7 +55,7 @@ export default function TotalData() {
                             <TotalDataCard
                                 href={`/dashboard/`}
                                 title="Total Pesan"
-                                totalData={counts.contactCount}
+                                totalData={counts.mailsCount}
                             />
                         </section>
                     )}
