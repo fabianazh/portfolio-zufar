@@ -121,7 +121,7 @@ export default function LoginForm() {
                     <PrimaryButton
                         type="submit"
                         theme="black"
-                        disabled={isDirty || !isValid || isSubmitting}
+                        disabled={isSubmitting}
                         className="w-full grid place-items-center"
                     >
                         {isSubmitting ? <Loaders /> : 'Login'}
