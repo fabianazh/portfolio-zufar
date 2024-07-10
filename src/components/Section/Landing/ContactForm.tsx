@@ -44,41 +44,77 @@ export default function ContactForm() {
                 onSubmit={handleSubmit(onSubmit)}
                 className="w-full h-fit flex flex-col gap-4 z-0"
             >
-                <div className="w-full h-fit flex flex-col">
-                    <div className="w-full grid grid-flow-row lg:grid-flow-col h-fit">
-                        <div className="w-full border border-b-0 lg:border-b lg:border-r-0 border-black h-fit flex-grow">
-                            <input
-                                type="text"
-                                id="name"
-                                className="w-full py-3 px-4 focus:border-0 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500 text-sm lg:text-base"
-                                {...register('name')}
-                                placeholder="Nama"
-                                required
-                            />
-                        </div>
-                        <div className="w-full border border-black h-fit flex-grow">
-                            <input
-                                type="text"
-                                id="email"
-                                className="w-full py-3 px-4 focus:border-0 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500 text-sm lg:text-base"
-                                {...register('email')}
-                                placeholder="Email"
-                                required
-                            />
-                        </div>
-                    </div>
-                    <div className="w-full h-fit border border-t-0 border-black">
+                <div className="w-full h-fit flex flex-col gap-6">
+                    <fieldset className="w-full h-fit relative flex flex-col gap-1">
+                        <label
+                            htmlFor="name"
+                            className="absolute -top-2 left-0 bg-white z-10 px-3 text-sm"
+                        >
+                            Nama
+                        </label>
+                        <input
+                            type="text"
+                            id="name"
+                            className="w-full bg-white valid:bg-white py-3 px-4 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500 text-sm lg:text-sm border border-black autofill:bg-white"
+                            {...register('name')}
+                            placeholder="Masukan nama anda"
+                            required
+                            autoComplete={'off'}
+                        />
+                        {errors?.name?.message && (
+                            <span className="text-red-600 text-sm">
+                                {errors?.name?.message}
+                            </span>
+                        )}
+                    </fieldset>
+
+                    <fieldset className="w-full h-fit relative flex flex-col gap-1">
+                        <label
+                            htmlFor="email"
+                            className="absolute -top-2 left-0 bg-white z-10 px-3 text-sm"
+                        >
+                            Email
+                        </label>
+                        <input
+                            type="text"
+                            id="email"
+                            className="w-full bg-white valid:bg-white py-3 px-4 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500 text-sm lg:text-sm border border-black autofill:bg-white"
+                            {...register('email')}
+                            placeholder="Masukan email anda"
+                            required
+                            autoComplete={'off'}
+                        />
+                        {errors?.email?.message && (
+                            <span className="text-red-600 text-sm">
+                                {errors?.email?.message}
+                            </span>
+                        )}
+                    </fieldset>
+
+                    <fieldset className="w-full h-fit relative flex flex-col gap-1">
+                        <label
+                            htmlFor="message"
+                            className="absolute -top-2 left-0 bg-white z-10 px-3 text-sm"
+                        >
+                            Pesan
+                        </label>
                         <textarea
                             id="message"
                             rows={6}
-                            className="w-full h-fit resize-none py-3 px-4 focus:border-0 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500 text-sm lg:text-base"
+                            className="w-full bg-white valid:bg-white py-3 px-4 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500 text-sm lg:text-sm border border-black autofill:bg-white resize-none"
                             {...register('message')}
-                            placeholder="Pesan"
+                            placeholder="Masukan pesan anda"
                             required
+                            autoComplete={'off'}
                         ></textarea>
-                    </div>
+                        {errors?.message?.message && (
+                            <span className="text-red-600 text-sm">
+                                {errors?.message?.message}
+                            </span>
+                        )}
+                    </fieldset>
                 </div>
-                <div className="border border-black w-fit py-2 px-8">
+                <div className="border border-black w-fit py-2 px-16">
                     <button type="submit" disabled={isSubmitting}>
                         Kirim
                     </button>

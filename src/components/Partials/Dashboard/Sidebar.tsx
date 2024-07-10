@@ -13,6 +13,10 @@ export default function Sidebar() {
             href: '/dashboard/about',
         },
         {
+            text: 'Tools',
+            href: '/dashboard/tools',
+        },
+        {
             text: 'Projects',
             href: '/dashboard/projects',
         },

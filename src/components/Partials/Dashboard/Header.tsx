@@ -36,6 +36,10 @@ export const Header = () => {
             href: '/dashboard/about',
         },
         {
+            text: 'Tools',
+            href: '/dashboard/tools',
+        },
+        {
             text: 'Projects',
             href: '/dashboard/projects',
         },
