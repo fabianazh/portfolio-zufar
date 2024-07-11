@@ -23,7 +23,7 @@ export default function PrimaryButton({
             bgColor = 'bg-stone-200 text-black font-medium border-stone-200'
             break
         case 'white':
-            bgColor = 'bg-white text-black font-medium'
+            bgColor = 'bg-white text-black font-medium border-stone-200'
             break
         case 'red':
             bgColor = 'bg-red-500 text-white border-red-500'
@@ -48,7 +48,7 @@ export default function PrimaryButton({
                     type={type}
                     onClick={onClick}
                     disabled={disabled}
-                    className={`py-2 max-h-9 px-4 text-xs lg:text-sm text-center rounded transition-all duration-300 shadow-sm ${bgColor} ${className} ${
+                    className={`py-2 max-h-9 px-4 text-xs lg:text-sm text-center rounded transition-all duration-300 shadow-sm border-2 ${bgColor} ${className} ${
                         disabled ? 'opacity-80' : 'opacity-100'
                     }`}
                 >

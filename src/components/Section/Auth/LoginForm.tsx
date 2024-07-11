@@ -136,9 +136,15 @@ export default function LoginForm() {
                     </div>
 
                     <PrimaryButton
-                        onClick={() => signIn('google')}
+                        type="button"
+                        onClick={() =>
+                            signIn('google', {
+                                callbackUrl: '/dashboard',
+                                redirect: false,
+                            })
+                        }
                         theme="white"
-                        className="flex justify-center items-center gap-2 w-full"
+                        className="flex justify-center border-2 items-center gap-2 w-full"
                     >
                         <BsGoogle className="text-xs" /> Login dengan Google
                     </PrimaryButton>

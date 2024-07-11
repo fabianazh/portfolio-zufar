@@ -34,7 +34,7 @@ export function Divider({ className }: { className?: string }) {
 
 export function Item({
     children,
-    className,
+    className='hover:bg-stone-100',
     href,
     onClick,
 }: {
@@ -48,7 +48,7 @@ export function Item({
             {href ? (
                 <Link
                     href={href}
-                    className={`py-1 px-2 w-auto min-w-24 rounded group hover:bg-stone-100 transition-colors duration-300 text-sm font-medium ${className}`}
+                    className={`py-1 px-2 w-auto min-w-24 rounded group transition-colors duration-300 text-sm font-medium ${className}`}
                 >
                     {children}
                 </Link>
@@ -56,7 +56,7 @@ export function Item({
                 <button
                     type="button"
                     onClick={onClick}
-                    className={`py-1 px-2 w-auto min-w-24 rounded group hover:bg-stone-100 transition-colors duration-300 text-sm font-medium flex justify-start ${className}`}
+                    className={`py-1 px-2 w-auto min-w-24 rounded group transition-colors duration-300 text-sm font-medium flex justify-start ${className}`}
                 >
                     {children}
                 </button>

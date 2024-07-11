@@ -44,7 +44,7 @@ export default function ProjectList() {
                 <GridLayout.Items loading={loading}>
                     <Link
                         href={`/dashboard/projects/add`}
-                        className="w-full relative aspect-video flex-col flex items-center justify-center bg-stone-100 rounded overflow-hidden transition-all duration-300 hover:bg-stone-200/80 shadow-sm"
+                        className="w-full relative aspect-video flex-col flex items-center justify-center hover:bg-stone-100 rounded overflow-hidden transition-all duration-300 bg-white border"
                     >
                         <BsPlus className="text-4xl font-medium" />
                         <span className="text-base lg:text-lg font-semibold">
@@ -92,7 +92,7 @@ export default function ProjectList() {
                                                 Edit
                                             </Dropdown.Item>
                                             <Dropdown.Divider />
-                                            <Dropdown.Item className="bg-red-500 hover:bg-red-400 text-white">
+                                            <Dropdown.Item className="bg-red-500 hover:bg-red-400 text-white font-normal">
                                                 Hapus
                                             </Dropdown.Item>
                                         </Dropdown.Items>
