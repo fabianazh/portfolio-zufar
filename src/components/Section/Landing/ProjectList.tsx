@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import ProjectsGridSkeleton from '@/components/Skeleton/ProjectsGridSkeleton'
 import Image from 'next/image'
 import Link from 'next/link'
 import GridLayout from '@/components/Layout/GridLayout'
@@ -27,17 +26,13 @@ export default function ProjectList() {
         fetchProjects()
     }, [])
 
-    if (loading) {
-        return <ProjectsGridSkeleton />
-    }
-
     if (error || !projects) {
         return <NotFound message="Projek tidak tersedia." />
     }
 
     return (
-        <section className="w-full min-h-screen flex flex-col">
-            <GridLayout>
+        <GridLayout>
+            <GridLayout.Items loading={loading}>
                 {projects.map((project) => (
                     <Link
                         href={`/projects/${project.id}`}
@@ -62,7 +57,7 @@ export default function ProjectList() {
                         </div>
                     </Link>
                 ))}
-            </GridLayout>
-        </section>
+            </GridLayout.Items>
+        </GridLayout>
     )
 }

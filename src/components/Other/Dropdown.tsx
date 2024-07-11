@@ -21,11 +21,15 @@ export function Items({
     return (
         <MenuItems
             anchor={anchor}
-            className={`z-50 bg-white shadow-sm rounded-md divide-y-2 divide-stone-200 border p-1.5 flex flex-col ${className}`}
+            className={`z-50 bg-white shadow-sm rounded-md gap-0.5 divide-stone-200 border p-1.5 flex flex-col ${className}`}
         >
             {children}
         </MenuItems>
     )
+}
+
+export function Divider({ className }: { className?: string }) {
+    return <div className={`w-full h-0.5 bg-stone-50 ${className}`} />
 }
 
 export function Item({
@@ -52,7 +56,7 @@ export function Item({
                 <button
                     type="button"
                     onClick={onClick}
-                    className={`py-1 px-2 w-auto min-w-24 rounded group hover:bg-stone-100 transition-colors duration-300 text-sm font-medium ${className}`}
+                    className={`py-1 px-2 w-auto min-w-24 rounded group hover:bg-stone-100 transition-colors duration-300 text-sm font-medium flex justify-start ${className}`}
                 >
                     {children}
                 </button>
@@ -63,4 +67,5 @@ export function Item({
 
 Dropdown.Trigger = Trigger
 Dropdown.Items = Items
+Dropdown.Divider = Divider
 Dropdown.Item = Item

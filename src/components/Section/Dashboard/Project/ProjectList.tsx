@@ -1,13 +1,13 @@
 'use client'
 
-import PrimaryButton from '@/components/Button/PrimaryButton'
-import TableLayout from '@/components/Layout/TableLayout'
+import GridLayout from '@/components/Layout/GridLayout'
 import Dropdown from '@/components/Other/Dropdown'
 import NotFound from '@/components/Other/NotFound'
-import Table from '@/components/Other/Table'
 import projectServices from '@/services/projects'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { BsPlus } from 'react-icons/bs'
 import { RxDotsVertical } from 'react-icons/rx'
 
 export default function ProjectList() {
@@ -35,100 +35,116 @@ export default function ProjectList() {
 
     return (
         <>
-            <TableLayout>
-                <TableLayout.Header
+            <GridLayout>
+                <GridLayout.Header
                     title="List Projek"
                     desc="Anda dapat melihat, menambahkan, mengubah dan menghapus
                         informasi projek yang akan ditampilkan kepada pengguna."
                 />
-
-                <TableLayout.Buttons>
-                    <PrimaryButton
-                        href={'/dashboard/projects/add'}
-                        theme={'black'}
-                        className="inline-block w-fit truncate text-[0.5rem] leading-none"
+                <GridLayout.Items loading={loading}>
+                    <Link
+                        href={`/dashboard/projects/add`}
+                        className="w-full relative aspect-video flex-col flex items-center justify-center bg-stone-100 rounded overflow-hidden transition-all duration-300 hover:bg-stone-200/80 shadow-sm"
                     >
-                        Tambah Projek
-                    </PrimaryButton>
-                </TableLayout.Buttons>
+                        <BsPlus className="text-5xl font-medium" />
+                        <span className="text-base lg:text-lg font-semibold">
+                            Tambah Projek
+                        </span>
+                    </Link>
 
-                <TableLayout.Content loading={loading}>
-                    <Table>
-                        <Table.Head>
-                            <Table.Row>
-                                <Table.Header className="w-1/12 text-center">
-                                    #
-                                </Table.Header>
-                                <Table.Header className="w-2/12">
-                                    Pratinjau
-                                </Table.Header>
-                                <Table.Header className="w-4/12">
-                                    Nama Projek
-                                </Table.Header>
-                                <Table.Header className="w-1/12">
-                                    Tahun
-                                </Table.Header>
-                                <Table.Header className="w-2/12">
-                                    Kategori
-                                </Table.Header>
-                                <Table.Header className="w-1/12 text-center">
-                                    Aksi
-                                </Table.Header>
-                            </Table.Row>
-                        </Table.Head>
-                        <Table.Body>
-                            <>
-                                {projects.map((project, index) => {
-                                    return (
-                                        <Table.Row key={index}>
-                                            <Table.Data className="w-1/12 text-center">
-                                                {index + 1}
-                                            </Table.Data>
-                                            <Table.Data className="w-2/12">
-                                                <Image
-                                                    src={`/img/projects/${project.id}/${project.thumbnail.photo}`}
-                                                    alt={project.thumbnail.desc}
-                                                    width="200"
-                                                    height="100"
-                                                    className=""
-                                                />
-                                            </Table.Data>
-                                            <Table.Data className="w-4/12">
-                                                {project.name}
-                                            </Table.Data>
-                                            <Table.Data className="w-1/12">
-                                                {project.month} {project.year}
-                                            </Table.Data>
-                                            <Table.Data className="w-2/12">
-                                                {project.category}
-                                            </Table.Data>
-                                            <Table.Data className="w-1/12 grid place-items-center">
-                                                <Dropdown>
-                                                    <Dropdown.Trigger>
-                                                        <RxDotsVertical />
-                                                    </Dropdown.Trigger>
-                                                    <Dropdown.Items>
-                                                        <Dropdown.Item
-                                                            href={`/dashboard/projects/${project.id}`}
-                                                        >
-                                                            Detail
-                                                        </Dropdown.Item>
-                                                        <Dropdown.Item
-                                                            href={`/dashboard/projects/${project.id}/edit`}
-                                                        >
-                                                            Edit
-                                                        </Dropdown.Item>
-                                                    </Dropdown.Items>
-                                                </Dropdown>
-                                            </Table.Data>
-                                        </Table.Row>
-                                    )
-                                })}
-                            </>
-                        </Table.Body>
-                    </Table>
-                </TableLayout.Content>
-            </TableLayout>
+                    {projects.map((project) => {
+                        return (
+                            <div
+                                key={project.id}
+                                className="w-full relative h-fit flex-col flex gap-3 pb-8 mb-8 lg:mb-4"
+                            >
+                                <Link
+                                    href={`/dashboard/projects/${project.id}`}
+                                    className="w-full flex h-fit overflow-hidden group"
+                                >
+                                    <Image
+                                        src={`/img/projects/${project.id}/${project.thumbnail.photo}`}
+                                        alt={`Projek ${project.name}`}
+                                        width={300}
+                                        height={400}
+                                        layout="responsive"
+                                        draggable={false}
+                                        className={`w-full h-full group-hover:opacity-80 transition-all`}
+                                    />
+                                </Link>
+                                <div className="flex w-full text-sm gap-2 text-black font-semibold absolute bottom-0 left-0 jusifty-between items-center">
+                                    <div className="truncate w-11/12">
+                                        {project.name}
+                                    </div>
+                                    <Dropdown>
+                                        <Dropdown.Trigger>
+                                            <RxDotsVertical />
+                                        </Dropdown.Trigger>
+                                        <Dropdown.Items>
+                                            <Dropdown.Item
+                                                href={`/dashboard/projects/${project.id}`}
+                                            >
+                                                Detail
+                                            </Dropdown.Item>
+                                            <Dropdown.Item
+                                                href={`/dashboard/projects/${project.id}/edit`}
+                                            >
+                                                Edit
+                                            </Dropdown.Item>
+                                            <Dropdown.Divider />
+                                            <Dropdown.Item className="bg-red-400 text-white">
+                                                Hapus
+                                            </Dropdown.Item>
+                                        </Dropdown.Items>
+                                    </Dropdown>
+                                </div>
+                            </div>
+                            // <Table.Row key={index}>
+                            //     <Table.Data className="w-1/12 text-center">
+                            //         {index + 1}
+                            //     </Table.Data>
+                            //     <Table.Data className="w-2/12">
+                            //         <Image
+                            //             src={`/img/projects/${project.id}/${project.thumbnail.photo}`}
+                            //             alt={project.thumbnail.desc}
+                            //             width="200"
+                            //             height="100"
+                            //             className=""
+                            //         />
+                            //     </Table.Data>
+                            //     <Table.Data className="w-4/12">
+                            //         {project.name}
+                            //     </Table.Data>
+                            //     <Table.Data className="w-1/12">
+                            //         {project.month} {project.year}
+                            //     </Table.Data>
+                            //     <Table.Data className="w-2/12">
+                            //         {project.category}
+                            //     </Table.Data>
+                            //     <Table.Data className="w-1/12 grid place-items-center">
+                            //         <Dropdown>
+                            //             <Dropdown.Trigger>
+                            //                 <RxDotsVertical />
+                            //             </Dropdown.Trigger>
+                            //             <Dropdown.Items>
+                            //                 <Dropdown.Item
+                            //                     href={`/dashboard/projects/${project.id}`}
+                            //                 >
+                            //                     Detail
+                            //                 </Dropdown.Item>
+                            //                 <Dropdown.Item
+                            //                     href={`/dashboard/projects/${project.id}/edit`}
+                            //                 >
+                            //                     Edit
+                            //                 </Dropdown.Item>
+                            //             </Dropdown.Items>
+                            //         </Dropdown>
+                            //     </Table.Data>
+                            // </Table.Row>
+                        )
+                    })}
+                </GridLayout.Items>
+            </GridLayout>
         </>
     )
 }
