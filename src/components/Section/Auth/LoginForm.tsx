@@ -136,7 +136,7 @@ export default function LoginForm() {
                     </div>
 
                     <PrimaryButton
-                        href={'/'}
+                        onClick={() => signIn('google')}
                         theme="white"
                         className="flex justify-center items-center gap-2 w-full"
                     >

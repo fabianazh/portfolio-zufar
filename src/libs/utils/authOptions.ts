@@ -1,8 +1,11 @@
 // /libs/auth-options.ts
-import { signIn } from '@/libs/firebase/service'
+import { signIn, signInWithGoogle } from '@/libs/firebase/service'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import GoogleProvider from 'next-auth/providers/google'
 import bcrypt from 'bcrypt'
 import { AuthOptions } from 'next-auth'
+
+const allowedEmails = ['zufarms@gmail.com', 'fabianazhar726@gmail.com']
 
 export const authOptions: AuthOptions = {
     session: {
@@ -46,8 +49,22 @@ export const authOptions: AuthOptions = {
                 }
             },
         }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_OAUTH_CLIENT_ID || '',
+            clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET || '',
+        }),
     ],
     callbacks: {
+        async signIn({ user, account, profile }) {
+            if (account?.provider === 'google') {
+                if (allowedEmails.includes(user.email)) {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            return true
+        },
         async jwt({ token, profile, account, user }) {
             if (account?.provider === 'credentials') {
                 token.user = user
@@ -56,6 +73,22 @@ export const authOptions: AuthOptions = {
                 token.fullname = user.fullname
                 token.username = user.username
             }
+
+            if (account?.provider === 'google') {
+                const data = {
+                    email: user.email,
+                    phone: user.phone,
+                    fullname: user.fullname,
+                    username: user.username,
+                    type: 'google',
+                }
+
+                await signInWithGoogle(data, (data: any) => {
+                    token.email = data.email
+                    token.fullname = data.fullname
+                })
+            }
+
             return token
         },
         async session({ session, token }: any) {

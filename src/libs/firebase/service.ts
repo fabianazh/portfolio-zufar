@@ -72,3 +72,22 @@ export async function updateData(
     const docRef = doc(firestore, collectionName, id)
     await updateDoc(docRef, data)
 }
+
+export async function signInWithGoogle(data: any, callback: Function) {
+    const q = query(
+        collection(firestore, 'users'),
+        where('email', '==', data.email)
+    )
+
+    const querySnapshot = await getDocs(q)
+    const user = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+    }))
+
+    if (user.length > 0) {
+        callback(user[0])
+    } else {
+        return null
+    }
+}
