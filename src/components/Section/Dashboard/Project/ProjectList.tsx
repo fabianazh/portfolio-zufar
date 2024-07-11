@@ -46,7 +46,7 @@ export default function ProjectList() {
                         href={`/dashboard/projects/add`}
                         className="w-full relative aspect-video flex-col flex items-center justify-center bg-stone-100 rounded overflow-hidden transition-all duration-300 hover:bg-stone-200/80 shadow-sm"
                     >
-                        <BsPlus className="text-5xl font-medium" />
+                        <BsPlus className="text-4xl font-medium" />
                         <span className="text-base lg:text-lg font-semibold">
                             Tambah Projek
                         </span>
@@ -92,55 +92,13 @@ export default function ProjectList() {
                                                 Edit
                                             </Dropdown.Item>
                                             <Dropdown.Divider />
-                                            <Dropdown.Item className="bg-red-400 text-white">
+                                            <Dropdown.Item className="bg-red-500 hover:bg-red-400 text-white">
                                                 Hapus
                                             </Dropdown.Item>
                                         </Dropdown.Items>
                                     </Dropdown>
                                 </div>
                             </div>
-                            // <Table.Row key={index}>
-                            //     <Table.Data className="w-1/12 text-center">
-                            //         {index + 1}
-                            //     </Table.Data>
-                            //     <Table.Data className="w-2/12">
-                            //         <Image
-                            //             src={`/img/projects/${project.id}/${project.thumbnail.photo}`}
-                            //             alt={project.thumbnail.desc}
-                            //             width="200"
-                            //             height="100"
-                            //             className=""
-                            //         />
-                            //     </Table.Data>
-                            //     <Table.Data className="w-4/12">
-                            //         {project.name}
-                            //     </Table.Data>
-                            //     <Table.Data className="w-1/12">
-                            //         {project.month} {project.year}
-                            //     </Table.Data>
-                            //     <Table.Data className="w-2/12">
-                            //         {project.category}
-                            //     </Table.Data>
-                            //     <Table.Data className="w-1/12 grid place-items-center">
-                            //         <Dropdown>
-                            //             <Dropdown.Trigger>
-                            //                 <RxDotsVertical />
-                            //             </Dropdown.Trigger>
-                            //             <Dropdown.Items>
-                            //                 <Dropdown.Item
-                            //                     href={`/dashboard/projects/${project.id}`}
-                            //                 >
-                            //                     Detail
-                            //                 </Dropdown.Item>
-                            //                 <Dropdown.Item
-                            //                     href={`/dashboard/projects/${project.id}/edit`}
-                            //                 >
-                            //                     Edit
-                            //                 </Dropdown.Item>
-                            //             </Dropdown.Items>
-                            //         </Dropdown>
-                            //     </Table.Data>
-                            // </Table.Row>
                         )
                     })}
                 </GridLayout.Items>

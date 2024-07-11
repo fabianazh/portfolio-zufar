@@ -21,7 +21,7 @@ export function Items({
     return (
         <MenuItems
             anchor={anchor}
-            className={`z-50 bg-white shadow-sm rounded-md gap-0.5 divide-stone-200 border p-1.5 flex flex-col ${className}`}
+            className={`z-50 bg-white shadow-sm rounded-md divide-stone-200 border p-1.5 flex flex-col ${className}`}
         >
             {children}
         </MenuItems>
@@ -29,7 +29,7 @@ export function Items({
 }
 
 export function Divider({ className }: { className?: string }) {
-    return <div className={`w-full h-0.5 bg-stone-50 ${className}`} />
+    return <div className={`w-full h-0.5 bg-stone-200 my-1 ${className}`} />
 }
 
 export function Item({

@@ -1,13 +1,18 @@
 'use client'
 
 import TableLayout from '@/components/Layout/TableLayout'
-import Dropdown from '@/components/Other/Dropdown'
 import NotFound from '@/components/Other/NotFound'
 import Table from '@/components/Other/Table'
 import mailServices from '@/services/mails'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { RxDotsVertical } from 'react-icons/rx'
+import {
+    format,
+    isToday,
+    isThisYear,
+    isSameYear,
+    differenceInHours,
+} from 'date-fns'
 
 export default function MailBox() {
     const [mails, setMails] = useState<Mail[] | null | undefined>([])
@@ -32,6 +37,21 @@ export default function MailBox() {
         return <NotFound message="Belum ada data pesan." />
     }
 
+    function formatDate(timestamp: { seconds: number; nanoseconds: number }) {
+        const date = new Date(timestamp.seconds * 1000)
+        const now = new Date()
+
+        if (isToday(date)) {
+            return format(date, 'HH:mm')
+        } else if (isThisYear(date) && differenceInHours(now, date) >= 24) {
+            return format(date, 'd MMM')
+        } else if (isSameYear(date, now)) {
+            return format(date, 'd MMM')
+        } else {
+            return format(date, 'dd/MM/yyyy')
+        }
+    }
+
     return (
         <>
             <TableLayout>
@@ -52,12 +72,12 @@ export default function MailBox() {
                                 <Table.Header className="w-2/12">
                                     Email
                                 </Table.Header>
-                                <Table.Header className="w-6/12">
+                                <Table.Header className="w-4/12">
                                     Pesan
                                 </Table.Header>
-                                {/* <Table.Header className="w-1/12 text-center">
-                                    Aksi
-                                </Table.Header> */}
+                                <Table.Header className="w-2/12">
+                                    Tanggal
+                                </Table.Header>
                             </Table.Row>
                         </Table.Head>
                         <Table.Body className="gap-0 pt-0">
@@ -69,7 +89,7 @@ export default function MailBox() {
                                             href={`/dashboard/mails/${mail.id}`}
                                         >
                                             <Table.Row
-                                                className={`py-2 px-0 transition-colors duration-300 ${
+                                                className={`py-2 transition-colors duration-300 ${
                                                     mail.isUnread
                                                         ? 'hover:bg-stone-100'
                                                         : 'bg-stone-100'
@@ -84,8 +104,13 @@ export default function MailBox() {
                                                 <Table.Data className="w-2/12 truncate">
                                                     {mail.email}
                                                 </Table.Data>
-                                                <Table.Data className="w-6/12 truncate">
+                                                <Table.Data className="w-4/12 truncate">
                                                     {mail.message}
+                                                </Table.Data>
+                                                <Table.Data className="w-2/12 shrink-0">
+                                                    {formatDate(
+                                                        mail.created_at
+                                                    )}
                                                 </Table.Data>
                                             </Table.Row>
                                         </Link>

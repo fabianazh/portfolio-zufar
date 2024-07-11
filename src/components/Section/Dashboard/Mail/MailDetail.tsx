@@ -5,6 +5,16 @@ import { useEffect, useState } from 'react'
 import ActionLayout from '@/components/Layout/ActionLayout'
 import Dropdown from '@/components/Other/Dropdown'
 import { RxDotsVertical } from 'react-icons/rx'
+import {
+    format,
+    isToday,
+    isThisYear,
+    isSameYear,
+    differenceInHours,
+    differenceInDays,
+} from 'date-fns'
+import { id } from 'date-fns/locale'
+import Image from 'next/image'
 
 export default function MailDetail({ mailId }: { mailId: string }) {
     const [mail, setMail] = useState<Mail | null | undefined>(null)
@@ -25,6 +35,27 @@ export default function MailDetail({ mailId }: { mailId: string }) {
         getMailDetail()
     }, [mailId])
 
+    function formatDate(seconds: number) {
+        const date = new Date(seconds * 1000)
+        const now = new Date()
+        const dayDifference = differenceInDays(now, date)
+        const hourDifference = differenceInHours(now, date)
+
+        if (dayDifference < 30) {
+            if (hourDifference < 24) {
+                return `${format(date, 'eee, dd MMM yyyy, HH:mm', {
+                    locale: id,
+                })} (${hourDifference} jam yang lalu)`
+            } else {
+                return `${format(date, 'eee, dd MMM yyyy, HH:mm', {
+                    locale: id,
+                })} (${dayDifference} hari yang lalu)`
+            }
+        } else {
+            return format(date, 'eee, dd MMM yyyy, HH:mm', { locale: id })
+        }
+    }
+
     return (
         <ActionLayout returnLink={`/dashboard/mails`} loading={loading}>
             <ActionLayout.Header
@@ -33,20 +64,30 @@ export default function MailDetail({ mailId }: { mailId: string }) {
                             ditampilkan kepada pengguna telah sesuai dengan yang
                             diinginkan."
             />
-            <ActionLayout.Content className="bg-white rounded-md w-full h-fit shadow-sm p-6 pb-10">
+            <ActionLayout.Content className="bg-white rounded-md w-full h-fit shadow-sm px-6 pt-4 pb-8">
                 <div className="w-full flex justify-between h-fit">
-                    <div className="h-fit w-fit flex gap-1">
-                        <div className="flex flex-grow aspect-square"></div>
-                        <div className="flex flex-col text-xs lg:text-sm font-medium">
-                            <span>{mail?.name}</span>
-                            <span>{mail?.email}</span>
+                    <div className="h-fit w-fit flex gap-2.5">
+                        <div className="flex flex-grow aspect-square items-center justify-center">
+                            <Image
+                                src={'/img/avatar/default.png'}
+                                alt="Default Avatar"
+                                height={100}
+                                width={100}
+                                className="w-full h-fit aspect-square rounded-full"
+                            />
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-sm lg:text-base font-semibold text-black">
+                                {mail?.name}
+                            </span>
+                            <span className="text-xs lg:text-sm font-medium text-stone-700">
+                                {mail?.email}
+                            </span>
                         </div>
                     </div>
                     <div className="flex gap-4 items-center">
-                        <span className="">
-                            {new Date(
-                                mail?.created_at.seconds ?? 0 * 1000
-                            ).toLocaleString()}
+                        <span className="text-sm">
+                            {formatDate(mail?.created_at.seconds ?? 0)}
                         </span>
                         <Dropdown>
                             <Dropdown.Trigger>
