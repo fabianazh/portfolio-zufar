@@ -14,7 +14,7 @@ import {
 } from 'date-fns'
 import { id } from 'date-fns/locale'
 import Image from 'next/image'
-import MailSkeleton from '@/components/Skeleton/MailSkeleton'
+import MailDetailSkeleton from '@/components/Skeleton/MailDetailSkeleton'
 
 export default function MailDetail({ mailId }: { mailId: string }) {
     const [mail, setMail] = useState<Mail | null | undefined>(null)
@@ -74,7 +74,7 @@ export default function MailDetail({ mailId }: { mailId: string }) {
         <ActionLayout
             returnLink={`/dashboard/mails`}
             loading={loading}
-            loadingSkeleton={<MailSkeleton />}
+            loadingSkeleton={<MailDetailSkeleton />}
         >
             <ActionLayout.Header
                 title={`Pesan dari ${mail?.name}`}
