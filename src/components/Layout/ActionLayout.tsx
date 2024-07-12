@@ -8,11 +8,13 @@ export default function ActionLayout({
     children,
     returnLink,
     loading,
+    loadingSkeleton = <FormSkeleton />,
 }: {
     className?: string
     children: React.ReactNode
     returnLink: string
     loading: boolean
+    loadingSkeleton?: React.ReactNode
 }) {
     return (
         <>
@@ -28,7 +30,7 @@ export default function ActionLayout({
                         <span className="font-medium">Kembali</span>
                     </Link>
                 </div>
-                {loading ? <FormSkeleton /> : <>{children}</>}
+                {!loading ? loadingSkeleton : children}
             </section>
         </>
     )

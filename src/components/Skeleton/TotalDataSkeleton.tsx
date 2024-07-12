@@ -3,7 +3,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 export default function TotalDataSkeleton() {
     return (
-        <section className="grid w-full h-auto grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+        <section className="grid w-full h-auto grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-4 lg:mb-6">
             {Array.from({ length: 4 }, (_, index) => (
                 <div
                     key={index}

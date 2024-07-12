@@ -83,7 +83,11 @@ export function Data({
     className?: string
     children: React.ReactNode
 }) {
-    return <td className={`h-auto shrink-0 ${className}`}>{children}</td>
+    return (
+        <td className={`h-auto text-sm lg:text-base shrink-0 ${className}`}>
+            {children}
+        </td>
+    )
 }
 
 Table.Head = Head

@@ -61,7 +61,7 @@ export default function MailBox() {
                 />
                 <TableLayout.Content loading={loading}>
                     <Table className="py-0 px-0 overflow-hidden gap-0">
-                        <Table.Head className="py-3">
+                        <Table.Head className="py-3 px-2">
                             <Table.Row>
                                 <Table.Header className="w-1/12 text-center">
                                     #
@@ -69,7 +69,7 @@ export default function MailBox() {
                                 <Table.Header className="w-2/12">
                                     Nama
                                 </Table.Header>
-                                <Table.Header className="w-2/12">
+                                <Table.Header className="w-2/12 hidden lg:flex">
                                     Email
                                 </Table.Header>
                                 <Table.Header className="w-4/12">
@@ -89,10 +89,10 @@ export default function MailBox() {
                                             href={`/dashboard/mails/${mail.id}`}
                                         >
                                             <Table.Row
-                                                className={`py-2 transition-colors duration-300 ${
+                                                className={`py-2 px-2 transition-colors duration-300 ${
                                                     mail.isUnread
-                                                        ? 'hover:bg-stone-100'
-                                                        : 'bg-stone-100'
+                                                        ? 'hover:bg-stone-50'
+                                                        : 'bg-stone-100 hover:bg-stone-50'
                                                 }`}
                                             >
                                                 <Table.Data className="w-1/12 text-center">
@@ -101,7 +101,7 @@ export default function MailBox() {
                                                 <Table.Data className="w-2/12 truncate">
                                                     {mail.name}
                                                 </Table.Data>
-                                                <Table.Data className="w-2/12 truncate">
+                                                <Table.Data className="w-2/12 truncate hidden lg:flex">
                                                     {mail.email}
                                                 </Table.Data>
                                                 <Table.Data className="w-4/12 truncate">

@@ -1,4 +1,5 @@
 import TotalData from '@/components/Section/Dashboard/TotalData'
+import UnreadMails from '@/components/Section/Dashboard/UnreadMails'
 import { authOptions } from '@/libs/utils/authOptions'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
@@ -8,8 +9,8 @@ export default async function DashboardPage() {
 
     return (
         <>
-            <section className="w-full flex flex-col gap-1 mb-6">
-                <h1 className="text-3xl font-semibold">
+            <section className="w-full flex flex-col gap-1 mb-4 lg:mb-6">
+                <h1 className="text-3xl lg:text-4xl font-semibold lg:font-bold">
                     Selamat datang, {session?.user?.name}!
                 </h1>
                 <span className="text-base font-medium">
@@ -19,6 +20,7 @@ export default async function DashboardPage() {
                 </span>
             </section>
             <TotalData />
+            <UnreadMails />
         </>
     )
 }

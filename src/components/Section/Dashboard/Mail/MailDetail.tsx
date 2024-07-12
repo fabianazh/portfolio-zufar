@@ -7,14 +7,14 @@ import Dropdown from '@/components/Other/Dropdown'
 import { RxDotsVertical } from 'react-icons/rx'
 import {
     format,
-    isToday,
-    isThisYear,
-    isSameYear,
+    differenceInMinutes,
+    differenceInSeconds,
     differenceInHours,
     differenceInDays,
 } from 'date-fns'
 import { id } from 'date-fns/locale'
 import Image from 'next/image'
+import MailSkeleton from '@/components/Skeleton/MailSkeleton'
 
 export default function MailDetail({ mailId }: { mailId: string }) {
     const [mail, setMail] = useState<Mail | null | undefined>(null)
@@ -40,12 +40,26 @@ export default function MailDetail({ mailId }: { mailId: string }) {
         const now = new Date()
         const dayDifference = differenceInDays(now, date)
         const hourDifference = differenceInHours(now, date)
+        const minuteDifference = differenceInMinutes(now, date)
+        const secondDifference = differenceInSeconds(now, date)
 
         if (dayDifference < 30) {
             if (hourDifference < 24) {
-                return `${format(date, 'eee, dd MMM yyyy, HH:mm', {
-                    locale: id,
-                })} (${hourDifference} jam yang lalu)`
+                if (minuteDifference < 60) {
+                    if (secondDifference < 60) {
+                        return `${format(date, 'eee, dd MMM yyyy, HH:mm', {
+                            locale: id,
+                        })} (${secondDifference} detik yang lalu)`
+                    } else {
+                        return `${format(date, 'eee, dd MMM yyyy, HH:mm', {
+                            locale: id,
+                        })} (${minuteDifference} menit yang lalu)`
+                    }
+                } else {
+                    return `${format(date, 'eee, dd MMM yyyy, HH:mm', {
+                        locale: id,
+                    })} (${hourDifference} jam yang lalu)`
+                }
             } else {
                 return `${format(date, 'eee, dd MMM yyyy, HH:mm', {
                     locale: id,
@@ -57,7 +71,11 @@ export default function MailDetail({ mailId }: { mailId: string }) {
     }
 
     return (
-        <ActionLayout returnLink={`/dashboard/mails`} loading={loading}>
+        <ActionLayout
+            returnLink={`/dashboard/mails`}
+            loading={loading}
+            loadingSkeleton={<MailSkeleton />}
+        >
             <ActionLayout.Header
                 title={`Pesan dari ${mail?.name}`}
                 desc="Pastikan perubahan informasi kontak yang akan

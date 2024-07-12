@@ -46,7 +46,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                     ref={ref}
                     id={id}
                     name={id}
-                    className={`peer h-fit w-full shadow-sm px-4 py-2.5 rounded text-sm focus:border-gray-500 focus:outline-none text-gray-900 bg-stone-100/80 ${inputClassName}`}
+                    className={`peer h-fit w-full px-4 py-2.5 rounded text-sm focus:border-gray-400 focus:outline-none border text-gray-900 bg-white disabled:bg-stone-100/80 ${inputClassName}`}
                     autoComplete="off"
                     {...rest}
                 />

@@ -94,6 +94,7 @@ export default function LoginForm() {
                             type="email"
                             name="email"
                             placeholder="Masukan Email Kontak"
+                            inputClassName="text-gray-900 bg-stone-100/80 focus:border-gray-500 shadow-sm"
                             required
                         />
                         {/* Email Input */}
@@ -105,6 +106,7 @@ export default function LoginForm() {
                             type="password"
                             name="password"
                             placeholder="Masukan Password Kontak"
+                            inputClassName="text-gray-900 bg-stone-100/80 focus:border-gray-500 shadow-sm"
                             required
                         />
                         {/* Password Input */}

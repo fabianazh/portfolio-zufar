@@ -15,6 +15,7 @@ export default function TotalData() {
             try {
                 const projectCount = await getCollectionCount('projects')
                 const userCount = await getCollectionCount('users')
+                const toolCount = await getCollectionCount('tools')
                 const mailsCount = await getCollectionCount('mails')
                 setCounts({ projectCount, userCount, mailsCount })
             } catch (error) {
@@ -36,9 +37,9 @@ export default function TotalData() {
                     {loading ? (
                         <TotalDataSkeleton />
                     ) : (
-                        <section className="grid w-full h-auto grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+                        <section className="grid w-full h-auto grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-4 lg:mb-6">
                             <TotalDataCard
-                                href={`/dashboard/projects`}
+                                href={`/dashboard`}
                                 title="Total User"
                                 totalData={counts.projectCount}
                             />
@@ -48,12 +49,12 @@ export default function TotalData() {
                                 totalData={counts.projectCount}
                             />
                             <TotalDataCard
-                                href={`/dashboard/`}
+                                href={`/dashboard/tools`}
                                 title="Total Tools"
-                                totalData={1000}
+                                totalData={counts.toolCount}
                             />
                             <TotalDataCard
-                                href={`/dashboard/`}
+                                href={`/dashboard/mails`}
                                 title="Total Pesan"
                                 totalData={counts.mailsCount}
                             />
