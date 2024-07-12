@@ -30,7 +30,7 @@ export default function ActionLayout({
                         <span className="font-medium">Kembali</span>
                     </Link>
                 </div>
-                {!loading ? loadingSkeleton : children}
+                {loading ? loadingSkeleton : children}
             </section>
         </>
     )
