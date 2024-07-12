@@ -2,17 +2,33 @@
 
 import PrimaryButton from '@/components/Button/PrimaryButton'
 import TableLayout from '@/components/Layout/TableLayout'
+import WarnModal from '@/components/Modal/WarnModal'
 import Dropdown from '@/components/Other/Dropdown'
 import NotFound from '@/components/Other/NotFound'
 import Table from '@/components/Other/Table'
 import toolServices from '@/services/tools'
 import { useEffect, useState } from 'react'
 import { RxDotsVertical } from 'react-icons/rx'
+import { useToast } from '@/app/context/ToastContext'
 
 export default function ToolList() {
     const [tools, setTools] = useState<Tool[] | null | undefined>([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(false)
+    const [loading, setLoading] = useState<boolean>(true)
+    const [error, setError] = useState<boolean>(false)
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+    const [modalData, setModalData] = useState({ id: '', name: '' })
+    const [submitLoading, setSubmitLoading] = useState<boolean>(false)
+
+    const { showToast } = useToast()
+
+    function openModal(tool: Tool) {
+        setModalData(tool)
+        setIsModalOpen(true)
+    }
+
+    function closeModal() {
+        setIsModalOpen(false)
+    }
 
     useEffect(() => {
         async function fetchTools() {
@@ -26,7 +42,25 @@ export default function ToolList() {
             }
         }
         fetchTools()
-    }, [])
+    }, [tools])
+
+    async function deleteTool(id: string) {
+        try {
+            setSubmitLoading(true)
+            const response = await toolServices.deleteTool(id)
+            if (response.data.status === true) {
+                showToast(response.data.message, { type: 'success' })
+                // router.push('/dashboard/tools')
+            } else {
+                showToast(response.data.message, { type: 'error' })
+            }
+        } catch (error) {
+            showToast('Error', { type: 'error' })
+        } finally {
+            setSubmitLoading(false)
+            closeModal()
+        }
+    }
 
     if (error || !tools) {
         return <NotFound message="Belum ada data tool." />
@@ -36,9 +70,9 @@ export default function ToolList() {
         <>
             <TableLayout>
                 <TableLayout.Header
-                    title="List Tool"
+                    title="List Perangkat"
                     desc="Anda dapat melihat, menambahkan, mengubah dan menghapus
-                        informasi tool."
+                        informasi perangkat."
                 />
 
                 <TableLayout.Buttons>
@@ -47,7 +81,7 @@ export default function ToolList() {
                         theme={'black'}
                         className="inline-block w-fit truncate text-[0.5rem] leading-none"
                     >
-                        Tambah Tool
+                        Tambah Perangkat
                     </PrimaryButton>
                 </TableLayout.Buttons>
 
@@ -58,14 +92,11 @@ export default function ToolList() {
                                 <Table.Header className="w-1/12 text-center">
                                     #
                                 </Table.Header>
-                                <Table.Header className="w-4/12">
-                                    Nama Tool
+                                <Table.Header className="w-3/12">
+                                    Nama Perangkat
                                 </Table.Header>
-                                <Table.Header className="w-1/12">
-                                    Tahun
-                                </Table.Header>
-                                <Table.Header className="w-2/12">
-                                    Kategori
+                                <Table.Header className="w-6/12">
+                                    Link
                                 </Table.Header>
                                 <Table.Header className="w-1/12 text-center">
                                     Aksi
@@ -80,13 +111,10 @@ export default function ToolList() {
                                             <Table.Data className="w-1/12 text-center">
                                                 {index + 1}
                                             </Table.Data>
-                                            <Table.Data className="w-4/12">
+                                            <Table.Data className="w-3/12">
                                                 {tool.name}
                                             </Table.Data>
-                                            <Table.Data className="w-1/12">
-                                                {tool.name}
-                                            </Table.Data>
-                                            <Table.Data className="w-2/12">
+                                            <Table.Data className="w-6/12">
                                                 {tool.link}
                                             </Table.Data>
                                             <Table.Data className="w-1/12 grid place-items-center">
@@ -105,6 +133,13 @@ export default function ToolList() {
                                                         >
                                                             Edit
                                                         </Dropdown.Item>
+                                                        <Dropdown.Item
+                                                            onClick={() => {
+                                                                openModal(tool)
+                                                            }}
+                                                        >
+                                                            Hapus
+                                                        </Dropdown.Item>
                                                     </Dropdown.Items>
                                                 </Dropdown>
                                             </Table.Data>
@@ -115,6 +150,15 @@ export default function ToolList() {
                         </Table.Body>
                     </Table>
                 </TableLayout.Content>
+                <WarnModal
+                    isOpen={isModalOpen}
+                    close={closeModal}
+                    confirmButtonColor="red"
+                    title={`Apakah kamu yakin ingin menghapus perangkat ${modalData.name}?`}
+                    content={`Dengan menghapus perangkat ${modalData.name}, seluruh data dan aset dari perangkat ${modalData.name} akan dihapus permanen dan tidak dapat dikembalikan.`}
+                    onSubmit={() => deleteTool(modalData.id)}
+                    loading={submitLoading}
+                />
             </TableLayout>
         </>
     )

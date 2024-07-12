@@ -13,6 +13,17 @@ export const mailSchema = z.object({
         .nonempty('Pesan harus diisi.'),
 })
 
+export const toolSchema = z.object({
+    name: z
+        .string()
+        .min(4, 'Nama perangkat minmal harus berisi 4 karakter.')
+        .max(20, 'Nama perangkat maksimal berisi 20 karakter.'),
+    link: z
+        .string()
+        .url('Link tidak valid.')
+        .nonempty('Link tampilan harus diisi.'),
+})
+
 export const loginSchema = z.object({
     email: z.string().email(),
     password: z.string().min(8),

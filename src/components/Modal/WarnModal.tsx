@@ -1,24 +1,27 @@
 import { Dialog, DialogPanel } from '@headlessui/react'
 import PrimaryButton from '../Button/PrimaryButton'
+import Loaders from '../Other/Loader'
 
 export default function WarnModal({
     isOpen,
-    open,
     close,
     title,
     content,
     onSubmit,
-    cancelButton = 'Tidak',
+    cancelButton = 'Batal',
     confirmButton = 'Ya, Saya Yakin',
+    confirmButtonColor = 'black',
+    loading,
 }: {
     isOpen: boolean
-    open: () => void
     close: () => void
     title: string
     content: string
     onSubmit: () => void
     cancelButton?: string
     confirmButton?: string
+    confirmButtonColor?: 'black' | 'red' | 'gray'
+    loading?: boolean
 }) {
     return (
         <Dialog
@@ -33,7 +36,7 @@ export default function WarnModal({
                         transition
                         className="w-fit h-full max-w-2xl relative bg-white p-4 lg:p-5 duration-300 ease-out data-[closed]:opacity-0 rounded"
                     >
-                        <div className="w-full flex flex-col gap-2">
+                        <form className="w-full flex flex-col gap-2">
                             <h1 className={`text-2xl font-semibold`}>
                                 {title}
                             </h1>
@@ -44,19 +47,21 @@ export default function WarnModal({
                                     type="button"
                                     theme="gray"
                                     className={`w-36 grid place-items-center shrink-0`}
+                                    disabled={loading}
                                 >
                                     {cancelButton}
                                 </PrimaryButton>
                                 <PrimaryButton
                                     onClick={onSubmit}
                                     type="button"
-                                    theme="black"
+                                    theme={confirmButtonColor}
                                     className={`w-36 grid place-items-center shrink-0`}
+                                    disabled={loading}
                                 >
-                                    {confirmButton}
+                                    {loading ? <Loaders /> : confirmButton}
                                 </PrimaryButton>
                             </div>
-                        </div>
+                        </form>
                     </DialogPanel>
                 </div>
             </div>

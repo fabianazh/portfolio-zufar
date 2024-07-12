@@ -1,6 +1,7 @@
 import {
     QueryDocumentSnapshot,
     collection,
+    deleteDoc,
     doc,
     getDoc,
     getDocs,
@@ -59,8 +60,19 @@ export async function signIn(email: string) {
     }
 }
 
-export async function addData(collectionName: string, data: any) {
-    const docRef = doc(collection(firestore, collectionName))
+export async function addData(collectionName: string, data: any, id?: string) {
+    let docRef
+
+    if (id) {
+        docRef = doc(collection(firestore, collectionName), id)
+        const docSnapshot = await getDoc(docRef)
+        if (docSnapshot.exists()) {
+            throw new Error(`Data dengan ID : ${id} sudah ada.`)
+        }
+    } else {
+        docRef = doc(collection(firestore, collectionName))
+    }
+
     await setDoc(docRef, data)
 }
 
@@ -71,6 +83,11 @@ export async function updateData(
 ) {
     const docRef = doc(firestore, collectionName, id)
     await updateDoc(docRef, data)
+}
+
+export async function deleteData(collectionName: string, id: string) {
+    const docRef = doc(firestore, collectionName, id)
+    await deleteDoc(docRef)
 }
 
 export async function signInWithGoogle(data: any, callback: Function) {

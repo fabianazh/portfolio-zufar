@@ -16,7 +16,9 @@ export default function TotalDataCard({
         >
             <span className="font-medium">{title}</span>
             <div className="w-full flex">
-                <span className="font-bold text-3xl block">{totalData}</span>
+                <span className="font-bold text-3xl block">
+                    {totalData ?? 0}
+                </span>
             </div>
         </Link>
     )

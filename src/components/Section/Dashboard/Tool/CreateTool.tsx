@@ -1,10 +1,9 @@
 'use client'
 
-import contactServices from '@/services/contacts'
-import { useEffect, useState } from 'react'
+import toolServices from '@/services/tools'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { contactSchema } from '@/zodSchema/route'
+import { toolSchema } from '@/zodSchema/route'
 import ActionLayout from '@/components/Layout/ActionLayout'
 import TextInput from '@/components/Form/TextInput'
 import PrimaryButton from '@/components/Button/PrimaryButton'
@@ -13,12 +12,9 @@ import * as z from 'zod'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/app/context/ToastContext'
 
-type FormData = z.infer<typeof contactSchema>
+type FormData = z.infer<typeof toolSchema>
 
-export default function ContactEdit({ contactId }: { contactId: string }) {
-    const [contact, setContact] = useState<Contact | null | undefined>(null)
-    const [loading, setLoading] = useState(true)
-
+export default function CreateTool() {
     const router = useRouter()
     const { showToast } = useToast()
     const {
@@ -27,34 +23,15 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
         reset,
         formState: { errors, isSubmitting, isDirty, isValid },
     } = useForm<FormData>({
-        resolver: zodResolver(contactSchema),
+        resolver: zodResolver(toolSchema),
     })
-
-    useEffect(() => {
-        async function getContactDetail() {
-            try {
-                const { data } = await contactServices.getContactById(contactId)
-                setContact(data.data)
-                reset(data.data)
-            } catch (error) {
-                console.error(error)
-            } finally {
-                setLoading(false)
-            }
-        }
-
-        getContactDetail()
-    }, [contactId, reset])
 
     async function onSubmit(data: FormData) {
         try {
-            const response = await contactServices.updateContact(
-                contactId,
-                data
-            )
+            const response = await toolServices.createTool(data)
             if (response.data.status === true) {
                 showToast(response.data.message, { type: 'success' })
-                router.push('/dashboard/contacts')
+                router.push('/dashboard/tools')
             } else {
                 showToast(response.data.message, { type: 'error' })
             }
@@ -64,10 +41,10 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
     }
 
     return (
-        <ActionLayout returnLink={`/dashboard/contacts`} loading={loading}>
+        <ActionLayout returnLink={`/dashboard/tools`}>
             <ActionLayout.Header
-                title={`Edit Info ${contact?.name}`}
-                desc="Pastikan perubahan informasi kontak yang akan
+                title={`Tambah Perangkat`}
+                desc="Pastikan informasi perangkat yang akan
                             ditampilkan kepada pengguna telah sesuai dengan yang
                             diinginkan."
             />
@@ -82,23 +59,10 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
                         id="name"
                         type="text"
                         name="name"
+                        placeholder="Masukan nama perangkat"
                         required
                         inputClassName="bg-stone-200/50"
-                        defaultValue={contact?.name}
                         error={errors?.name?.message}
-                        disabled
-                    />
-                    <TextInput
-                        {...register('displayName')}
-                        label="Nama Tampilan"
-                        id="displayName"
-                        type="text"
-                        name="displayName"
-                        placeholder="Masukan Nama Tampilan"
-                        required
-                        inputClassName="bg-stone-200/50"
-                        defaultValue={contact?.displayName}
-                        error={errors?.displayName?.message}
                     />
                     <TextInput
                         {...register('link')}
@@ -106,10 +70,9 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
                         id="link"
                         type="text"
                         name="link"
-                        placeholder="Masukan Link Kontak"
+                        placeholder="Masukan link kontak"
                         required
                         inputClassName="bg-stone-200/50"
-                        defaultValue={contact?.link}
                         error={errors?.link?.message}
                     />
                     <div className="w-full lg:w-8/12 grid grid-cols-2 gap-6">

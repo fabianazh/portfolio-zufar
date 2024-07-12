@@ -25,7 +25,7 @@ export default function BottomMenu() {
                     type="button"
                     theme="black"
                     onClick={openModal}
-                    className="w-full grid place-items-center"
+                    className="w-full grid place-items-center py-0"
                 >
                     Logout
                 </PrimaryButton>
@@ -33,7 +33,6 @@ export default function BottomMenu() {
 
             <WarnModal
                 isOpen={isModalOpen}
-                open={openModal}
                 close={closeModal}
                 title={'Apakah kamu yakin ingin logout?'}
                 content="Dengan logout, Anda akan keluar dari akun Anda dan perlu login kembali untuk mengakses fitur yang memerlukan autentikasi."

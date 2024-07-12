@@ -7,13 +7,13 @@ export default function ActionLayout({
     className,
     children,
     returnLink,
-    loading,
+    loading = false,
     loadingSkeleton = <FormSkeleton />,
 }: {
     className?: string
     children: React.ReactNode
     returnLink: string
-    loading: boolean
+    loading?: boolean
     loadingSkeleton?: React.ReactNode
 }) {
     return (
