@@ -8,7 +8,7 @@ import projectServices from '@/services/projects'
 import NotFound from '@/components/Other/NotFound'
 
 export default function ProjectList() {
-    const [projects, setProjects] = useState<Project[] | undefined>([])
+    const [projects, setProjects] = useState<Project[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 
@@ -26,13 +26,17 @@ export default function ProjectList() {
         fetchProjects()
     }, [])
 
-    if (error || !projects) {
+    if (error) {
         return <NotFound message="Projek tidak tersedia." />
     }
 
     return (
         <GridLayout>
-            <GridLayout.Items loading={loading}>
+            <GridLayout.Items
+                isLoading={loading}
+                isEmpty={projects.length < 1}
+                emptyMessage="Belum ada projek,"
+            >
                 {projects.map((project) => (
                     <Link
                         href={`/projects/${project.id}`}

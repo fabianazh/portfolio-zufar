@@ -11,7 +11,7 @@ import { BsPlus } from 'react-icons/bs'
 import { RxDotsVertical } from 'react-icons/rx'
 
 export default function ProjectList() {
-    const [projects, setProjects] = useState<Project[] | null | undefined>([])
+    const [projects, setProjects] = useState<Project[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 
@@ -29,7 +29,7 @@ export default function ProjectList() {
         fetchProjects()
     }, [])
 
-    if (error || !projects) {
+    if (error) {
         return <NotFound message="Belum ada data projek." />
     }
 
@@ -41,7 +41,7 @@ export default function ProjectList() {
                     desc="Anda dapat melihat, menambahkan, mengubah dan menghapus
                         informasi projek yang akan ditampilkan kepada pengguna."
                 />
-                <GridLayout.Items loading={loading}>
+                <GridLayout.Items isLoading={loading}>
                     <Link
                         href={`/dashboard/projects/add`}
                         className="w-full relative aspect-video flex-col flex items-center justify-center hover:bg-stone-100 rounded overflow-hidden transition-all duration-300 bg-white border"

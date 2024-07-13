@@ -15,7 +15,7 @@ import {
 } from 'date-fns'
 
 export default function MailBox() {
-    const [mails, setMails] = useState<Mail[] | null | undefined>([])
+    const [mails, setMails] = useState<Mail[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 
@@ -33,7 +33,7 @@ export default function MailBox() {
         fetchMails()
     }, [])
 
-    if (error || !mails) {
+    if (error) {
         return <NotFound message="Belum ada data pesan." />
     }
 
@@ -59,7 +59,11 @@ export default function MailBox() {
                     title="Pesan Masuk"
                     desc="Anda dapat melihat dan menghapus pesan yang dikirim dari pengguna."
                 />
-                <TableLayout.Content loading={loading}>
+                <TableLayout.Content
+                    isLoading={loading}
+                    isEmpty={mails.length < 1}
+                    emptyMessage="Belum ada pesan."
+                >
                     <Table className="py-0 px-0 overflow-hidden gap-0">
                         <Table.Head className="py-3 px-2">
                             <Table.Row>

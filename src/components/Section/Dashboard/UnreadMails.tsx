@@ -1,6 +1,5 @@
 'use client'
 
-import TableLayout from '@/components/Layout/TableLayout'
 import NotFound from '@/components/Other/NotFound'
 import Table from '@/components/Other/Table'
 import mailServices from '@/services/mails'
@@ -14,10 +13,10 @@ import {
     differenceInHours,
 } from 'date-fns'
 import TableSkeleton from '@/components/Skeleton/TableSkeleton'
-import PrimaryButton from '@/components/Button/PrimaryButton'
+import Empty from '@/components/Other/Empty'
 
 export default function UnreadMails() {
-    const [mails, setMails] = useState<Mail[] | null | undefined>([])
+    const [mails, setMails] = useState<Mail[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 
@@ -35,7 +34,7 @@ export default function UnreadMails() {
         fetchMails()
     }, [])
 
-    if (error || !mails) {
+    if (error) {
         return <NotFound message="Semua pesan telah dibaca." />
     }
 
@@ -53,6 +52,10 @@ export default function UnreadMails() {
             return format(date, 'dd/MM/yyyy')
         }
     }
+
+    const unreadMails = mails
+        .filter((mail) => mail.isUnread === true)
+        .slice(0, 5)
 
     return (
         <>
@@ -75,6 +78,8 @@ export default function UnreadMails() {
                 </div>
                 {loading ? (
                     <TableSkeleton />
+                ) : unreadMails.length < 1 ? (
+                    <Empty message="Semua pesan telah dibaca." />
                 ) : (
                     <Table className="py-0 px-0 overflow-hidden gap-0">
                         <Table.Head className="py-3 px-2">
@@ -98,43 +103,40 @@ export default function UnreadMails() {
                         </Table.Head>
                         <Table.Body className="gap-0 pt-0">
                             <>
-                                {mails
-                                    .filter((mail) => mail.isUnread === true)
-                                    .slice(0, 5)
-                                    .map((mail, index) => {
-                                        return (
-                                            <Link
-                                                key={index}
-                                                href={`/dashboard/mails/${mail.id}`}
+                                {unreadMails.map((mail, index) => {
+                                    return (
+                                        <Link
+                                            key={index}
+                                            href={`/dashboard/mails/${mail.id}`}
+                                        >
+                                            <Table.Row
+                                                className={`py-2 px-2 transition-colors duration-300 ${
+                                                    mail.isUnread
+                                                        ? 'hover:bg-stone-50'
+                                                        : 'bg-stone-100 hover:bg-stone-50'
+                                                }`}
                                             >
-                                                <Table.Row
-                                                    className={`py-2 px-2 transition-colors duration-300 ${
-                                                        mail.isUnread
-                                                            ? 'hover:bg-stone-50'
-                                                            : 'bg-stone-100 hover:bg-stone-50'
-                                                    }`}
-                                                >
-                                                    <Table.Data className="w-1/12 text-center">
-                                                        {index + 1}
-                                                    </Table.Data>
-                                                    <Table.Data className="w-2/12 truncate">
-                                                        {mail.name}
-                                                    </Table.Data>
-                                                    <Table.Data className="w-2/12 truncate hidden lg:flex">
-                                                        {mail.email}
-                                                    </Table.Data>
-                                                    <Table.Data className="w-4/12 truncate">
-                                                        {mail.message}
-                                                    </Table.Data>
-                                                    <Table.Data className="w-2/12 shrink-0">
-                                                        {formatDate(
-                                                            mail.created_at
-                                                        )}
-                                                    </Table.Data>
-                                                </Table.Row>
-                                            </Link>
-                                        )
-                                    })}
+                                                <Table.Data className="w-1/12 text-center">
+                                                    {index + 1}
+                                                </Table.Data>
+                                                <Table.Data className="w-2/12 truncate">
+                                                    {mail.name}
+                                                </Table.Data>
+                                                <Table.Data className="w-2/12 truncate hidden lg:flex">
+                                                    {mail.email}
+                                                </Table.Data>
+                                                <Table.Data className="w-4/12 truncate">
+                                                    {mail.message}
+                                                </Table.Data>
+                                                <Table.Data className="w-2/12 shrink-0">
+                                                    {formatDate(
+                                                        mail.created_at
+                                                    )}
+                                                </Table.Data>
+                                            </Table.Row>
+                                        </Link>
+                                    )
+                                })}
                             </>
                         </Table.Body>
                     </Table>

@@ -33,7 +33,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
         return <ProjectDetailSkeleton />
     }
 
-    if (error || !project) {
+    if (error) {
         return <NotFound message="Tidak dapat menemukan projek yang dicari." />
     }
 
@@ -45,7 +45,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
         setIsModalOpen(false)
     }
 
-    const lastIndex = project.tools.length
+    const lastIndex = project?.tools.length
 
     return (
         <>
@@ -57,12 +57,12 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             onClick={() => {
                                 openModal()
                                 setModalData({
-                                    photo: `${project.id}/${project.thumbnail.photo}`,
-                                    desc: project.name,
+                                    photo: `${project?.id}/${project?.thumbnail.photo}`,
+                                    desc: `${project?.name}`,
                                 })
                             }}
-                            src={`/img/projects/${project.id}/${project.thumbnail.photo}`}
-                            alt={`Projek ${project.name}`}
+                            src={`/img/projects/${project?.id}/${project?.thumbnail.photo}`}
+                            alt={`Projek ${project?.name}`}
                             width={900}
                             height={700}
                             layout="responsive"
@@ -77,7 +77,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                 Nama Projek
                             </span>
                             <span className="text-base font-bold">
-                                {project.name}
+                                {project?.name}
                             </span>
                         </div>
 
@@ -86,14 +86,14 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                 Kategori
                             </span>
                             <span className="text-base font-bold">
-                                {project.category}
+                                {project?.category}
                             </span>
                         </div>
 
                         <div className="w-full lg:w-3/12 flex flex-col">
                             <span className="text-sm font-medium">Tools</span>
                             <div>
-                                {project.tools.map((tool, index) => (
+                                {project?.tools.map((tool, index) => (
                                     <Link
                                         href={tool.url}
                                         className="text-base font-bold"
@@ -109,13 +109,13 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                         <div className="w-full lg:w-fit flex flex-col">
                             <span className="text-sm font-medium">Tahun</span>
                             <span className="text-base font-bold">
-                                {project.month} {project.year}
+                                {project?.month} {project?.year}
                             </span>
                         </div>
                     </div>
                     {/* Description */}
                     <div className="w-full h-fit flex flex-col">
-                        <span className="font-medium">{project.desc}</span>
+                        <span className="font-medium">{project?.desc}</span>
                     </div>
                     {/* End Description */}
                 </div>
@@ -127,13 +127,13 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                         Gambar Lainnya
                     </span>
                     <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 h-fit">
-                        {project.photos.map((item, index) => (
+                        {project?.photos.map((item, index) => (
                             <div
                                 key={index}
                                 onClick={() => {
                                     openModal()
                                     setModalData({
-                                        photo: `${project.id}/${item.photo}`,
+                                        photo: `${project?.id}/${item.photo}`,
                                         desc: item.desc,
                                     })
                                 }}

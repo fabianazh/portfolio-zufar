@@ -12,7 +12,7 @@ import { RxDotsVertical } from 'react-icons/rx'
 import { useToast } from '@/app/context/ToastContext'
 
 export default function ToolList() {
-    const [tools, setTools] = useState<Tool[] | null | undefined>([])
+    const [tools, setTools] = useState<Tool[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<boolean>(false)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
@@ -50,7 +50,6 @@ export default function ToolList() {
             const response = await toolServices.deleteTool(id)
             if (response.data.status === true) {
                 showToast(response.data.message, { type: 'success' })
-                // router.push('/dashboard/tools')
             } else {
                 showToast(response.data.message, { type: 'error' })
             }
@@ -62,7 +61,7 @@ export default function ToolList() {
         }
     }
 
-    if (error || !tools) {
+    if (error) {
         return <NotFound message="Belum ada data tool." />
     }
 
@@ -85,7 +84,11 @@ export default function ToolList() {
                     </PrimaryButton>
                 </TableLayout.Buttons>
 
-                <TableLayout.Content loading={loading}>
+                <TableLayout.Content
+                    isLoading={loading}
+                    isEmpty={tools?.length < 1}
+                    emptyMessage="Belum ada data perangkat."
+                >
                     <Table>
                         <Table.Head>
                             <Table.Row>

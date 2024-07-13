@@ -2,7 +2,6 @@
 
 import toolServices from '@/services/tools'
 import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
 import ActionLayout from '@/components/Layout/ActionLayout'
 import TextInput from '@/components/Form/TextInput'
 import PrimaryButton from '@/components/Button/PrimaryButton'
@@ -10,6 +9,7 @@ import Loaders from '@/components/Other/Loader'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/app/context/ToastContext'
 import WarnModal from '@/components/Modal/WarnModal'
+import Empty from '@/components/Other/Empty'
 
 export default function ToolDetail({ toolId }: { toolId: string }) {
     const [tool, setTool] = useState<Tool | null>(null)
@@ -27,18 +27,12 @@ export default function ToolDetail({ toolId }: { toolId: string }) {
 
     const router = useRouter()
     const { showToast } = useToast()
-    // const {
-    //     handleSubmit,
-    //     reset,
-    //     formState: { isSubmitting },
-    // } = useForm()
 
     useEffect(() => {
         async function getToolDetail() {
             try {
                 const { data } = await toolServices.getToolById(toolId)
                 setTool(data.data)
-                // reset(data.data)
             } catch (error) {
             } finally {
                 setLoading(false)
@@ -67,7 +61,12 @@ export default function ToolDetail({ toolId }: { toolId: string }) {
     }
 
     return (
-        <ActionLayout returnLink={`/dashboard/tools`} loading={loading}>
+        <ActionLayout
+            returnLink={`/dashboard/tools`}
+            isLoading={loading}
+            isEmpty={!tool}
+            emptyMessage="Tidak dapat menemukan data perangkat."
+        >
             <ActionLayout.Header
                 title={`Detail Perangkat ${tool?.name}`}
                 desc="Anda dapat merubah dan menghapus informasi perangkat yang akan
@@ -99,7 +98,7 @@ export default function ToolDetail({ toolId }: { toolId: string }) {
                     <div className="w-full lg:w-8/12 grid grid-cols-2 gap-6">
                         <PrimaryButton
                             theme="gray"
-                            href={`/dashboard/tools/${tool?.id}`}
+                            href={`/dashboard/tools/${tool?.id}/edit`}
                             className="w-full grid place-items-center"
                         >
                             Edit

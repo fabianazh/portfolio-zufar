@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 import { RxDotsVertical } from 'react-icons/rx'
 
 export default function ContactInfo() {
-    const [contacts, setContacts] = useState<Contact[] | null | undefined>([])
+    const [contacts, setContacts] = useState<Contact[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 
@@ -27,7 +27,7 @@ export default function ContactInfo() {
         fetchContacts()
     }, [])
 
-    if (error || !contacts) {
+    if (error) {
         return <NotFound message="Belum ada data kontak." />
     }
 
@@ -39,7 +39,11 @@ export default function ContactInfo() {
                     desc="Anda dapat melihat, dan mengubah informasi kontak
                             yang akan ditampilkan kepada pengguna."
                 />
-                <TableLayout.Content loading={loading}>
+                <TableLayout.Content
+                    isLoading={loading}
+                    isEmpty={contacts.length < 1}
+                    emptyMessage="Belum ada data kontak."
+                >
                     <Table>
                         <Table.Head>
                             <Table.Row>

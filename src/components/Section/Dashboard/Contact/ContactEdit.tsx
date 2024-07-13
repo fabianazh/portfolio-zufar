@@ -64,7 +64,12 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
     }
 
     return (
-        <ActionLayout returnLink={`/dashboard/contacts`} loading={loading}>
+        <ActionLayout
+            returnLink={`/dashboard/contacts`}
+            isLoading={loading}
+            isEmpty={!contact}
+            emptyMessage="Tidak dapat menemukan kontak."
+        >
             <ActionLayout.Header
                 title={`Edit Info ${contact?.name}`}
                 desc="Pastikan perubahan informasi kontak yang akan

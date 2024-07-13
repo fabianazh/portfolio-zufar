@@ -61,7 +61,12 @@ export default function EditTool({ toolId }: { toolId: string }) {
     }
 
     return (
-        <ActionLayout returnLink={`/dashboard/tools`} loading={loading}>
+        <ActionLayout
+            returnLink={`/dashboard/tools`}
+            isLoading={loading}
+            isEmpty={!tool}
+            emptyMessage="Tidak dapat menemukan data perangkat."
+        >
             <ActionLayout.Header
                 title={`Edit Info Perangkat ${tool?.name}`}
                 desc="Pastikan perubahan informasi perangkat yang akan

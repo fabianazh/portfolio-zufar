@@ -1,5 +1,6 @@
 import GridSkeleton from '@/components/Skeleton/GridSkeleton'
 import Heading from '@/components/Typography/Heading'
+import Empty from '@/components/Other/Empty'
 
 export default function GridLayout({
     className,
@@ -33,16 +34,26 @@ export function Header({ title, desc }: { title: string; desc: string }) {
 function Items({
     className = 'columns-1 lg:columns-3 gap-x-5 gap-y-5 lg:gap-y-0',
     children,
-    loading,
+    isLoading,
+    isEmpty,
+    emptyMessage = 'Belum ada data.',
 }: {
     className?: string
     children: React.ReactNode
-    loading: boolean
+    isLoading?: boolean
+    isEmpty?: boolean
+    emptyMessage?: string
 }) {
     return (
         <>
             <div className={`w-full h-full ${className}`}>
-                {loading ? <GridSkeleton /> : <>{children}</>}
+                {isLoading ? (
+                    <GridSkeleton />
+                ) : isEmpty ? (
+                    <Empty message={emptyMessage} />
+                ) : (
+                    children
+                )}
             </div>
         </>
     )

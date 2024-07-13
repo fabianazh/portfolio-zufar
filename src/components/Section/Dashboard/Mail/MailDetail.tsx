@@ -73,7 +73,9 @@ export default function MailDetail({ mailId }: { mailId: string }) {
     return (
         <ActionLayout
             returnLink={`/dashboard/mails`}
-            loading={loading}
+            isLoading={loading}
+            isEmpty={!mail}
+            emptyMessage={'Tidak dapat menemukan pesan.'}
             loadingSkeleton={<MailDetailSkeleton />}
         >
             <ActionLayout.Header

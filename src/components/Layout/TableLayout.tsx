@@ -1,5 +1,6 @@
 import Heading from '@/components/Typography/Heading'
 import TableSkeleton from '@/components/Skeleton/TableSkeleton'
+import Empty from '@/components/Other/Empty'
 
 export default function TableLayout({
     className,
@@ -49,16 +50,26 @@ export function Buttons({
 export function Content({
     className,
     children,
-    loading,
+    isLoading,
+    isEmpty,
+    emptyMessage = 'Belum ada data.',
 }: {
     className?: string
     children: React.ReactNode
-    loading: boolean
+    isLoading: boolean
+    isEmpty: boolean
+    emptyMessage: string
 }) {
     return (
         <>
             <div className={`w-full h-fit flex flex-col gap-4 ${className}`}>
-                {loading ? <TableSkeleton /> : <>{children}</>}
+                {isLoading ? (
+                    <TableSkeleton />
+                ) : isEmpty ? (
+                    <Empty message={emptyMessage} />
+                ) : (
+                    children
+                )}
             </div>
         </>
     )
