@@ -7,9 +7,8 @@ import TextInput from '@/components/Form/TextInput'
 import PrimaryButton from '@/components/Button/PrimaryButton'
 import Loaders from '@/components/Other/Loader'
 import { useRouter } from 'next/navigation'
-import { useToast } from '@/app/context/ToastContext'
+import { useToast } from '@/context/ToastContext'
 import WarnModal from '@/components/Modal/WarnModal'
-import Empty from '@/components/Other/Empty'
 
 export default function ToolDetail({ toolId }: { toolId: string }) {
     const [tool, setTool] = useState<Tool | null>(null)

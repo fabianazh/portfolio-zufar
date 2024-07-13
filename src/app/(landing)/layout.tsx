@@ -4,7 +4,7 @@ import Sidebar from '@/components/Partials/Landing/Sidebar'
 import { Header } from '@/components/Partials/Landing/Header'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { ToastProvider } from '@/app/context/ToastContext'
+import { ToastProvider } from '@/context/ToastContext'
 import { urbanist } from '@/app/fonts'
 
 export default function RootLayout({

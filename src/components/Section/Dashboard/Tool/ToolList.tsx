@@ -9,7 +9,7 @@ import Table from '@/components/Other/Table'
 import toolServices from '@/services/tools'
 import { useEffect, useState } from 'react'
 import { RxDotsVertical } from 'react-icons/rx'
-import { useToast } from '@/app/context/ToastContext'
+import { useToast } from '@/context/ToastContext'
 
 export default function ToolList() {
     const [tools, setTools] = useState<Tool[]>([])

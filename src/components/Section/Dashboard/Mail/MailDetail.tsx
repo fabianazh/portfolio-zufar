@@ -15,10 +15,26 @@ import {
 import { id } from 'date-fns/locale'
 import Image from 'next/image'
 import MailDetailSkeleton from '@/components/Skeleton/MailDetailSkeleton'
+import { useRouter } from 'next/navigation'
+import { useToast } from '@/context/ToastContext'
+import WarnModal from '@/components/Modal/WarnModal'
 
 export default function MailDetail({ mailId }: { mailId: string }) {
     const [mail, setMail] = useState<Mail | null | undefined>(null)
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState<boolean>(true)
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+    const [submitLoading, setSubmitLoading] = useState<boolean>(false)
+
+    const router = useRouter()
+    const { showToast } = useToast()
+
+    function openModal() {
+        setIsModalOpen(true)
+    }
+
+    function closeModal() {
+        setIsModalOpen(false)
+    }
 
     useEffect(() => {
         async function getMailDetail() {
@@ -70,6 +86,24 @@ export default function MailDetail({ mailId }: { mailId: string }) {
         }
     }
 
+    async function handleDelete(id: string) {
+        try {
+            setSubmitLoading(true)
+            const response = await mailServices.deleteMail(id)
+            if (response.data.status === true) {
+                showToast(response.data.message, { type: 'success' })
+                router.push('/dashboard/mails')
+            } else {
+                showToast(response.data.message, { type: 'error' })
+            }
+        } catch (error) {
+            showToast('Error', { type: 'error' })
+        } finally {
+            setSubmitLoading(false)
+            closeModal()
+        }
+    }
+
     return (
         <ActionLayout
             returnLink={`/dashboard/mails`}
@@ -114,7 +148,14 @@ export default function MailDetail({ mailId }: { mailId: string }) {
                                 <RxDotsVertical />
                             </Dropdown.Trigger>
                             <Dropdown.Items>
-                                <Dropdown.Item>Hapus</Dropdown.Item>
+                                <Dropdown.Item>Tandai</Dropdown.Item>
+                                <Dropdown.Divider />
+                                <Dropdown.Item
+                                    as="delete"
+                                    onClick={() => openModal()}
+                                >
+                                    Hapus
+                                </Dropdown.Item>
                             </Dropdown.Items>
                         </Dropdown>
                     </div>
@@ -123,6 +164,15 @@ export default function MailDetail({ mailId }: { mailId: string }) {
                     <span>{mail?.message}</span>
                 </div>
             </ActionLayout.Content>
+            <WarnModal
+                isOpen={isModalOpen}
+                close={closeModal}
+                confirmButtonColor="red"
+                title={`Apakah kamu yakin ingin menghapus pesan dari ${mail?.name}?`}
+                content={`Dengan menghapus pesan ini, seluruh data dan aset dari pesan ini akan dihapus permanen dan tidak dapat dikembalikan.`}
+                onSubmit={() => handleDelete(mail?.id ?? '')}
+                loading={submitLoading}
+            />
         </ActionLayout>
     )
 }

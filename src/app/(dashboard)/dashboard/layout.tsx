@@ -5,7 +5,7 @@ import Sidebar from '@/components/Partials/Dashboard/Sidebar'
 import { Header } from '@/components/Partials/Dashboard/Header'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { ToastProvider } from '@/app/context/ToastContext'
+import { ToastProvider } from '@/context/ToastContext'
 import { urbanist } from '@/app/fonts'
 
 export default function DashboardLayout({
