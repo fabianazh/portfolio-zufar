@@ -17,7 +17,7 @@ export default function TotalData() {
                 const userCount = await getCollectionCount('users')
                 const toolCount = await getCollectionCount('tools')
                 const mailsCount = await getCollectionCount('mails')
-                setCounts({ projectCount, userCount, mailsCount })
+                setCounts({ projectCount, userCount, toolCount, mailsCount })
             } catch (error) {
                 setError(true)
             } finally {

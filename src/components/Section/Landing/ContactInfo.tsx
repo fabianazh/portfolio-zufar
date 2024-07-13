@@ -7,7 +7,7 @@ import contactServices from '@/services/contacts'
 
 export default function ContactInfo() {
     const [contacts, setContacts] = useState<Contact[]>([])
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         async function fetchContacts() {
@@ -24,7 +24,7 @@ export default function ContactInfo() {
     }, [])
 
     const email = contacts.find((contact) => contact.id === 'email')
-    const telp = contacts.find((contact) => contact.id === 'no-tel')
+    const whatsapp = contacts.find((contact) => contact.id === 'whatsapp')
 
     return (
         <section className="w-full flex flex-col px-0 lg:px-24 items-start gap-3 mb-10">
@@ -46,14 +46,14 @@ export default function ContactInfo() {
                 >
                     {email?.displayName}
                 </Link>
-                <span> | </span>
+                {!loading && <span> | </span>}
                 <Link
                     target={'_blank'}
-                    href={`${telp?.link}?text=${encodeURIComponent(
+                    href={`${whatsapp?.link}?text=${encodeURIComponent(
                         'Halo, saya tertarik untuk mendiskusikan lebih lanjut...'
                     )}`}
                 >
-                    {telp?.displayName}
+                    {whatsapp?.displayName}
                 </Link>
             </div>
         </section>

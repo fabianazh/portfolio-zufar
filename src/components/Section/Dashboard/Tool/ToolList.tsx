@@ -136,10 +136,12 @@ export default function ToolList() {
                                                         >
                                                             Edit
                                                         </Dropdown.Item>
+                                                        <Dropdown.Divider />
                                                         <Dropdown.Item
-                                                            onClick={() => {
+                                                            as="delete"
+                                                            onClick={() =>
                                                                 openModal(tool)
-                                                            }}
+                                                            }
                                                         >
                                                             Hapus
                                                         </Dropdown.Item>

@@ -34,7 +34,7 @@ export function Divider({ className }: { className?: string }) {
 
 export function Item({
     children,
-    className = 'hover:bg-stone-100',
+    className,
     href,
     onClick,
     as = 'link',
