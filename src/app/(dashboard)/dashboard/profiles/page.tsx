@@ -1,4 +1,4 @@
-import ProfileList from '@/components/Section/Dashboard/About/ProfileList'
+import ProfileList from '@/components/Section/Dashboard/Profile/ProfileList'
 
 export default function CreateProjectPage() {
     return (

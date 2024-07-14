@@ -4,7 +4,7 @@ import NotFound from '@/components/Other/NotFound'
 import Article from '@/components/Typography/Article'
 import Link from 'next/link'
 import Heading from '@/components/Typography/Heading'
-import { FaRegPenToSquare } from 'react-icons/fa6'
+import { RiImageEditLine } from 'react-icons/ri'
 import LinkText from '@/components/Typography/LinkText'
 import Record from '@/components/Typography/Record'
 import profileServices from '@/services/profiles'
@@ -49,7 +49,7 @@ export default function ProfileList() {
                 <div className="w-full flex flex-col gap-10 lg:gap-16">
                     <div className="w-full h-auto flex flex-col lg:flex-row gap-10">
                         <Link
-                            href={`/dashboard/profiles/${photo?.id}/edit` ?? ''}
+                            href={`/dashboard/profiles/${photo?.id}` ?? ''}
                             className="w-full lg:w-3/12 overflow-hidden shrink-0 relative group grid place-items-center h-fit"
                         >
                             <Image
@@ -59,12 +59,12 @@ export default function ProfileList() {
                                 height={200}
                                 className="w-full h-fit group-hover:brightness-[.8]"
                             />
-                            <FaRegPenToSquare className="text-xl lg:text-2xl text-white opacity-0 transition-all duration-200 group-hover:opacity-100 absolute inset-0 left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2" />
+                            <RiImageEditLine className="text-2xl lg:text-4xl text-white opacity-0 transition-all duration-200 group-hover:opacity-100 absolute inset-0 left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2" />
                         </Link>
                         <Article className="w-full lg:w-9/12">
                             <Article.Title
                                 editButton
-                                editHref={`/dashboard/profiles/$/edit`}
+                                editHref={`/dashboard/profiles/$`}
                             >
                                 Biodata
                             </Article.Title>
@@ -126,7 +126,7 @@ export default function ProfileList() {
                         <Article className="w-full">
                             <Article.Title
                                 editButton
-                                editHref={`/dashboard/profiles/$/edit`}
+                                editHref={`/dashboard/profiles/$`}
                             >
                                 Keterampilan
                             </Article.Title>
@@ -173,7 +173,7 @@ export default function ProfileList() {
                         <Article className="w-full">
                             <Article.Title
                                 editButton
-                                editHref={`/dashboard/profiles/$/edit`}
+                                editHref={`/dashboard/profiles/$`}
                             >
                                 Pengalaman
                             </Article.Title>
@@ -236,7 +236,7 @@ export default function ProfileList() {
                         <Article className="w-full">
                             <Article.Title
                                 editButton
-                                editHref={`/dashboard/profiles/$/edit`}
+                                editHref={`/dashboard/profiles/$`}
                             >
                                 Pendidikan
                             </Article.Title>
@@ -258,7 +258,7 @@ export default function ProfileList() {
                         <Article className="w-full">
                             <Article.Title
                                 editButton
-                                editHref={`/dashboard/profiles/$/edit`}
+                                editHref={`/dashboard/profiles/$`}
                             >
                                 Sertifikasi
                             </Article.Title>

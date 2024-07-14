@@ -50,7 +50,7 @@ export default function TotalData() {
                             />
                             <TotalDataCard
                                 href={`/dashboard/tools`}
-                                title="Total Tools"
+                                title="Total Perangkat"
                                 totalData={counts.toolCount}
                             />
                             <TotalDataCard

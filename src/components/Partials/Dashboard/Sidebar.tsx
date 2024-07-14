@@ -9,8 +9,8 @@ export default function Sidebar() {
             href: '/dashboard',
         },
         {
-            text: 'About',
-            href: '/dashboard/about',
+            text: 'Profiles',
+            href: '/dashboard/profiles',
         },
         {
             text: 'Tools',

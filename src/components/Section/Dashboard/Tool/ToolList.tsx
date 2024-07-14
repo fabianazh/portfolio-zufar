@@ -30,19 +30,20 @@ export default function ToolList() {
         setIsModalOpen(false)
     }
 
-    useEffect(() => {
-        async function fetchTools() {
-            try {
-                const { data } = await toolServices.getAllTools()
-                setTools(data.data)
-            } catch (error) {
-                setError(true)
-            } finally {
-                setLoading(false)
-            }
+    async function fetchTools() {
+        try {
+            const { data } = await toolServices.getAllTools()
+            setTools(data.data)
+        } catch (error) {
+            setError(true)
+        } finally {
+            setLoading(false)
         }
+    }
+
+    useEffect(() => {
         fetchTools()
-    }, [tools])
+    }, [])
 
     async function deleteTool(id: string) {
         try {
@@ -53,6 +54,7 @@ export default function ToolList() {
             } else {
                 showToast(response.data.message, { type: 'error' })
             }
+            fetchTools()
         } catch (error) {
             showToast('Error', { type: 'error' })
         } finally {

@@ -42,4 +42,16 @@ export const contactSchema = z.object({
         .nonempty('Link harus diisi.'),
 })
 
+export const photoSchema = z.object({
+    path: z
+        .string()
+        .min(4, 'Nama tampilan minimal harus 4 karakter.')
+        .max(28, 'Nama tampilan maksimal berisi 28 karakter.')
+        .nonempty('Nama tampilan harus diisi.'),
+    alt: z
+        .string()
+        .min(4, 'Alt minimal harus 4 karakter.')
+        .nonempty('Alt harus diisi.'),
+})
+
 export type User = z.infer<typeof loginSchema>
