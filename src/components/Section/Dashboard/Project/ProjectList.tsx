@@ -69,7 +69,7 @@ export default function ProjectList() {
                                         height={400}
                                         layout="responsive"
                                         draggable={false}
-                                        className={`w-full h-full group-hover:opacity-80 transition-all`}
+                                        className={`w-full h-full group-hover:brightness-80 transition-all`}
                                     />
                                 </Link>
                                 <div className="flex w-full text-sm gap-2 text-black font-semibold absolute bottom-0 left-0 jusifty-between items-center">

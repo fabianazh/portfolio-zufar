@@ -23,6 +23,11 @@ interface Tool {
     link: string
 }
 
+interface Profile {
+    id: string
+    [key: string]: any
+}
+
 interface Project {
     id: string
     thumbnail: {

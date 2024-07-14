@@ -5,7 +5,7 @@ import GoogleProvider from 'next-auth/providers/google'
 import bcrypt from 'bcrypt'
 import { AuthOptions } from 'next-auth'
 
-const allowedEmails = ['zufarms@gmail.com', 'fabianazhar726@gmail.com']
+const allowedEmails = ['zufarali321@gmail.com', 'fabianazhar726@gmail.com']
 
 export const authOptions: AuthOptions = {
     session: {
