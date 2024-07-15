@@ -6,7 +6,7 @@ export default function Dropdown({ children }: { children: React.ReactNode }) {
 }
 
 export function Trigger({ children }: { children: React.ReactNode }) {
-    return <MenuButton>{children}</MenuButton>
+    return <MenuButton className={'z-50'}>{children}</MenuButton>
 }
 
 export function Items({

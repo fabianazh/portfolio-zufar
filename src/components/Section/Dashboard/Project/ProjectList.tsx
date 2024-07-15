@@ -92,7 +92,7 @@ export default function ProjectList() {
                                                 Edit
                                             </Dropdown.Item>
                                             <Dropdown.Divider />
-                                            <Dropdown.Item className="bg-red-500 hover:bg-red-400 text-white font-normal">
+                                            <Dropdown.Item as="delete">
                                                 Hapus
                                             </Dropdown.Item>
                                         </Dropdown.Items>

@@ -25,6 +25,21 @@ interface Tool {
 
 interface Profile {
     id: string
+    versionName: string
+    language: string
+    photo: {
+        path: string
+        alt: string
+    }
+    isShowed: boolean
+    created_at: {
+        seconds: number
+        nanoseconds: number
+    }
+    updated_at: {
+        seconds: number
+        nanoseconds: number
+    }
     [key: string]: any
 }
 

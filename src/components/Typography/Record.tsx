@@ -16,7 +16,7 @@ export default function Record({
     )
 }
 
-export function Description({
+export function Content({
     children,
     className,
 }: {
@@ -25,7 +25,7 @@ export function Description({
 }) {
     return (
         <>
-            <div className={`flex flex-col gap-2 ${className}`}>{children}</div>
+            <div className={`flex flex-col gap-1 ${className}`}>{children}</div>
         </>
     )
 }
@@ -46,5 +46,67 @@ export function Year({
     )
 }
 
+export function Title({
+    children,
+    className,
+}: {
+    children: React.ReactNode
+    className?: string
+}) {
+    return (
+        <>
+            <span className={`font-semibold ${className}`}>{children}</span>
+        </>
+    )
+}
+
+export function Description({
+    children,
+    className,
+}: {
+    children: React.ReactNode
+    className?: string
+}) {
+    return (
+        <>
+            <span className={`${className}`}>{children}</span>
+        </>
+    )
+}
+
+export function List({
+    children,
+    className,
+}: {
+    children: React.ReactNode
+    className?: string
+}) {
+    return (
+        <>
+            <ul className={`flex flex-col gap-1 ${className}`}>{children}</ul>
+        </>
+    )
+}
+
+export function ListItem({
+    children,
+    className,
+}: {
+    children: React.ReactNode
+    className?: string
+}) {
+    return (
+        <>
+            <li className={`text-base list-disc list-inside ${className}`}>
+                {children}
+            </li>
+        </>
+    )
+}
+
+Record.Content = Content
+Record.Title = Title
 Record.Description = Description
+Record.List = List
+Record.ListItem = ListItem
 Record.Year = Year
