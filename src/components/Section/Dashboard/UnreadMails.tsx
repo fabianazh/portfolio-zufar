@@ -60,7 +60,7 @@ export default function UnreadMails() {
     return (
         <>
             <section className="w-full flex flex-col gap-3 h-fit">
-                <div className="w-full flex justify-between items-end gap-6">
+                <div className="w-full flex justify-between lg:items-end gap-6">
                     <div className="w-full flex flex-col">
                         <h2 className="text-2xl font-semibold">
                             Pesan belum dibaca

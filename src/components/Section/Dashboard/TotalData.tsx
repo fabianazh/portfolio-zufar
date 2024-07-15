@@ -13,11 +13,11 @@ export default function TotalData() {
     useEffect(() => {
         async function getAllCounts() {
             try {
-                const projectCount = await getCollectionCount('projects')
-                const userCount = await getCollectionCount('users')
+                const profileCount = await getCollectionCount('profiles')
                 const toolCount = await getCollectionCount('tools')
+                const projectCount = await getCollectionCount('projects')
                 const mailsCount = await getCollectionCount('mails')
-                setCounts({ projectCount, userCount, toolCount, mailsCount })
+                setCounts({ projectCount, profileCount, toolCount, mailsCount })
             } catch (error) {
                 setError(true)
             } finally {
@@ -40,18 +40,18 @@ export default function TotalData() {
                         <section className="grid w-full h-auto grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-4 lg:mb-6">
                             <TotalDataCard
                                 href={`/dashboard`}
-                                title="Total User"
-                                totalData={counts.projectCount}
-                            />
-                            <TotalDataCard
-                                href={`/dashboard/projects`}
-                                title="Total Projek"
+                                title="Total Profil"
                                 totalData={counts.projectCount}
                             />
                             <TotalDataCard
                                 href={`/dashboard/tools`}
                                 title="Total Perangkat"
                                 totalData={counts.toolCount}
+                            />
+                            <TotalDataCard
+                                href={`/dashboard/projects`}
+                                title="Total Projek"
+                                totalData={counts.projectCount}
                             />
                             <TotalDataCard
                                 href={`/dashboard/mails`}
