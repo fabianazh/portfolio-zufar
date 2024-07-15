@@ -28,7 +28,7 @@ export default function ContactInfo() {
     }, [])
 
     if (error) {
-        return <NotFound message="Belum ada data kontak." />
+        return <></>
     }
 
     return (

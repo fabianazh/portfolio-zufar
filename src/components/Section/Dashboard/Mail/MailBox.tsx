@@ -34,7 +34,7 @@ export default function MailBox() {
     }, [])
 
     if (error) {
-        return <NotFound message="Belum ada data pesan." />
+        return <></>
     }
 
     function formatDate(timestamp: { seconds: number; nanoseconds: number }) {

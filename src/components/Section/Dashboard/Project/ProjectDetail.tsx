@@ -34,7 +34,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
     }
 
     if (error) {
-        return <NotFound message="Tidak dapat menemukan projek yang dicari." />
+        return <></>
     }
 
     function openModal() {

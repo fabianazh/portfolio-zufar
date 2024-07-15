@@ -64,7 +64,7 @@ export default function ToolList() {
     }
 
     if (error) {
-        return <NotFound message="Belum ada data tool." />
+        return <></>
     }
 
     return (

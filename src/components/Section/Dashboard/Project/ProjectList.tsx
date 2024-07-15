@@ -30,7 +30,7 @@ export default function ProjectList() {
     }, [])
 
     if (error) {
-        return <NotFound message="Belum ada data projek." />
+        return <></>
     }
 
     return (
