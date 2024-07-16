@@ -31,7 +31,7 @@ interface Profile {
         path: string
         alt: string
     }
-    isShowed: boolean
+    isUsed: boolean
     created_at: {
         seconds: number
         nanoseconds: number

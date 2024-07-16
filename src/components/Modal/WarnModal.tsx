@@ -1,6 +1,6 @@
 import { Dialog, DialogPanel } from '@headlessui/react'
-import PrimaryButton from '../Button/PrimaryButton'
-import Loaders from '../Other/Loader'
+import PrimaryButton from '@/components/Button/PrimaryButton'
+import Loaders from '@/components/Other/Loader'
 
 export default function WarnModal({
     isOpen,

@@ -11,7 +11,7 @@ export default function ProfileCard({
     href: string
     profile: Profile
 }) {
-    const { simpleFormatDate } = FormatDate()
+    const { relativeFormatDate } = FormatDate()
     return (
         <div className="w-full relative">
             <Link
@@ -33,7 +33,7 @@ export default function ProfileCard({
                 <div className="w-6/12 flex flex-col h-full justify-between">
                     <div className="w-full flex flex-col">
                         <span className="text-xl font-semibold">
-                            {profile.versionName}
+                            Profil {profile.versionName}
                         </span>
                         <span className="text-stone-700 font-medium">
                             {profile.language}
@@ -44,13 +44,13 @@ export default function ProfileCard({
                             Terakhir diubah
                         </span>
                         <span className="font-medium text-sm">
-                            {simpleFormatDate(profile.updated_at.seconds)}
+                            {relativeFormatDate(profile.updated_at.seconds)}
                         </span>
                     </div>
                     <div className="w-full flex flex-col">
                         <span className="font-medium text-xs">Status </span>
                         <span className="font-medium text-sm">
-                            {profile.isShowed
+                            {profile.isUsed
                                 ? 'Sedang Digunakan'
                                 : 'Tidak Digunakan'}
                         </span>

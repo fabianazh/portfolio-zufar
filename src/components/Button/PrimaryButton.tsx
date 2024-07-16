@@ -24,7 +24,8 @@ export default function PrimaryButton({
                 'bg-stone-200 text-black font-medium border-stone-200 hover:bg-stone-300 hover:border-stone-300'
             break
         case 'white':
-            bgColor = 'bg-white text-black font-medium border-stone-200'
+            bgColor =
+                'bg-white text-black font-medium border-stone-200 hover:bg-stone-100'
             break
         case 'red':
             bgColor =
@@ -39,7 +40,7 @@ export default function PrimaryButton({
             {href ? (
                 <Link
                     href={href}
-                    className={`py-2 max-h-9 px-4 text-xs lg:text-sm text-center rounded transition-all duration-300 shadow-sm border-2 opacity-100 disabled:opacity-80 ${bgColor} ${className}`}
+                    className={`py-2 max-h-9 px-4 text-xs lg:text-sm text-center rounded transition-all duration-300 shadow-sm border opacity-100 disabled:opacity-80 ${bgColor} ${className}`}
                 >
                     {children}
                 </Link>
@@ -48,7 +49,7 @@ export default function PrimaryButton({
                     type={type}
                     onClick={onClick}
                     disabled={disabled}
-                    className={`py-2 max-h-9 px-4 text-xs lg:text-sm text-center rounded transition-all duration-300 shadow-sm border-2 opacity-100 disabled:opacity-80 ${bgColor} ${className}`}
+                    className={`py-2 max-h-9 px-4 text-xs lg:text-sm text-center rounded transition-all duration-300 shadow-sm border opacity-100 disabled:opacity-80 ${bgColor} ${className}`}
                 >
                     {children}
                 </button>

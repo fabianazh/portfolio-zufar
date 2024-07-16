@@ -53,7 +53,7 @@ export function Item({
                     className={`py-1 px-2 w-full truncate min-w-24 rounded group transition-colors duration-300 text-sm font-medium ${
                         as === 'link'
                             ? 'bg-transparent hover:bg-stone-100'
-                            : 'bg-red-400 text-white hover:bg-red-500'
+                            : 'bg-red-500 text-white hover:bg-red-600'
                     } ${className}`}
                 >
                     {children}
@@ -65,7 +65,7 @@ export function Item({
                     className={`py-1 px-2 w-full truncate min-w-24 rounded group transition-colors duration-300 text-sm font-medium flex justify-start ${
                         as === 'link'
                             ? 'bg-transparent hover:bg-stone-100'
-                            : 'bg-red-400 text-white hover:bg-red-500'
+                            : 'bg-red-500 text-white hover:bg-red-600'
                     } ${className}`}
                 >
                     {children}

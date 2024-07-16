@@ -1,7 +1,6 @@
 'use client'
 
 import TableLayout from '@/components/Layout/TableLayout'
-import NotFound from '@/components/Other/NotFound'
 import Table from '@/components/Other/Table'
 import mailServices from '@/services/mails'
 import Link from 'next/link'

@@ -79,8 +79,8 @@ export default function ToolList() {
                 <TableLayout.Buttons>
                     <PrimaryButton
                         href={'/dashboard/tools/add'}
-                        theme={'black'}
-                        className="inline-block w-fit truncate text-[0.5rem] leading-none"
+                        theme={'white'}
+                        className="shrink-0 truncate text-[0.5rem] leading-none"
                     >
                         Tambah Perangkat
                     </PrimaryButton>

@@ -58,11 +58,7 @@ export default function ProfileList() {
                                 href={`/dashboard/profiles/${profile.id}`}
                                 key={profile.id}
                                 profile={profile}
-                            />
-                            <ProfileCard
-                                href={`/dashboard/profiles/${profile.id}`}
-                                profile={profile}
-                            />
+                            /> 
                         </>
                     ))}
                 </GridLayout.Items>

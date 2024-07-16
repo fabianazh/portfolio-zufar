@@ -59,5 +59,31 @@ export function FormatDate() {
                 return format(date, 'dd/MM/yyyy')
             }
         },
+        relativeFormatDate: (seconds: number) => {
+            const date = new Date(seconds * 1000)
+            const now = new Date()
+            const dayDifference = differenceInDays(now, date)
+            const hourDifference = differenceInHours(now, date)
+            const minuteDifference = differenceInMinutes(now, date)
+            const secondDifference = differenceInSeconds(now, date)
+
+            if (dayDifference < 30) {
+                if (hourDifference < 24) {
+                    if (minuteDifference < 60) {
+                        if (secondDifference < 60) {
+                            return `${secondDifference} detik yang lalu`
+                        } else {
+                            return `${minuteDifference} menit yang lalu`
+                        }
+                    } else {
+                        return `${hourDifference} jam yang lalu`
+                    }
+                } else {
+                    return `${dayDifference} hari yang lalu`
+                }
+            } else {
+                return format(date, 'd MMM yyyy')
+            }
+        },
     }
 }

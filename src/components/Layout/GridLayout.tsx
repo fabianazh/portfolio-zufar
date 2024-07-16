@@ -32,7 +32,7 @@ export function Header({ title, desc }: { title: string; desc: string }) {
 }
 
 function Items({
-    className = 'columns-1 lg:columns-3 gap-x-5 gap-y-5 lg:gap-y-0',
+    className = 'columns-1 lg:columns-3 gap-x-5 gap-y-10 lg:gap-y-0',
     children,
     isLoading,
     isEmpty,

@@ -14,6 +14,7 @@ import {
 } from 'date-fns'
 import TableSkeleton from '@/components/Skeleton/TableSkeleton'
 import Empty from '@/components/Other/Empty'
+import PrimaryButton from '@/components/Button/PrimaryButton'
 
 export default function UnreadMails() {
     const [mails, setMails] = useState<Mail[]>([])
@@ -69,12 +70,13 @@ export default function UnreadMails() {
                             Periksa pesan yang belum terbaca dari pengguna.
                         </span>
                     </div>
-                    <Link
+                    <PrimaryButton
+                        theme="white"
                         href={`/dashboard/mails`}
-                        className="text-[0.65rem] lg:text-xs h-fit py-2 px-4 bg-black text-white hover:bg-opacity-80 transition-all duration-300 rounded shrink-0 w-fit truncate inline-block"
+                        className="shrink-0 truncate shadow-none"
                     >
                         Lihat Semua
-                    </Link>
+                    </PrimaryButton>
                 </div>
                 {loading ? (
                     <TableSkeleton />
