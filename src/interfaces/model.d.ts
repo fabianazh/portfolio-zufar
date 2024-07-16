@@ -40,7 +40,18 @@ interface Profile {
         seconds: number
         nanoseconds: number
     }
-    [key: string]: any
+    education: {
+        title: string
+        desc?: string
+        yearStart: string
+        yearEnd: string
+    }[]
+    certifications: {
+        title: string
+        month: string
+        year: string
+    }[]
+    // [key: string]: any
 }
 
 interface Project {

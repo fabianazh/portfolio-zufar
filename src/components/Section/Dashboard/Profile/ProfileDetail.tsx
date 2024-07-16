@@ -244,68 +244,44 @@ export default function ProfileDetail({ profileId }: { profileId: string }) {
                         <Article className="w-full">
                             <Article.Title>Pendidikan</Article.Title>
                             <Article.Content className="gap-2.5">
-                                <Record>
-                                    <Record.Content>
-                                        <Record.Title>
-                                            SMKN 1 Kota Sukabumi
-                                        </Record.Title>
+                                {profile?.education.map((item, index) => (
+                                    <Record key={index}>
+                                        <Record.Content>
+                                            <Record.Title>
+                                                {item.title}
+                                            </Record.Title>
 
-                                        <Record.Description>
-                                            Bidang Desain Pemodelan dan
-                                            Informasi Bangunan (DPIB).
-                                        </Record.Description>
-                                    </Record.Content>
-                                    <Record.Year>2021 - 2024</Record.Year>
-                                </Record>
-                                <Record>
-                                    <Record.Content>
-                                        <Record.Title>
-                                            SMPN 2 Kota Sukabumi
-                                        </Record.Title>
-                                    </Record.Content>
-                                    <Record.Year>2018 - 2021</Record.Year>
-                                </Record>
+                                            {item.desc && (
+                                                <Record.Description>
+                                                    {item.desc}
+                                                </Record.Description>
+                                            )}
+                                        </Record.Content>
+                                        <Record.Year>
+                                            {item.yearStart} - {item.yearEnd}
+                                        </Record.Year>
+                                    </Record>
+                                ))}
                             </Article.Content>
                         </Article>
                         <Article className="w-full">
                             <Article.Title>Sertifikasi</Article.Title>
                             <Article.Content className="gap-2.5">
-                                <Record>
-                                    <Record.Content>
-                                        <Record.Title>
-                                            KKNI level II - Desain Pemodelan dan
-                                            Informasi Bangunan (LSP-P1)
-                                        </Record.Title>
-                                    </Record.Content>
-                                    <Record.Year>April 2024</Record.Year>
-                                </Record>
-                                <Record>
-                                    <Record.Content>
-                                        <Record.Title>
-                                            Praktik Kerja Lapangan - (PT. WYN
-                                            KARYA PERKASA)
-                                        </Record.Title>
-                                    </Record.Content>
-                                    <Record.Year>Desember 2023</Record.Year>
-                                </Record>
-                                <Record>
-                                    <Record.Content>
-                                        <Record.Title>
-                                            Juru gambar/draftman - Arsitektur -
-                                            Kelas III (LPJK)
-                                        </Record.Title>
-                                    </Record.Content>
-                                    <Record.Year>Desember 2023</Record.Year>
-                                </Record>
-                                <Record>
-                                    <Record.Content>
-                                        <Record.Title>
-                                            Kursus Dasar Autocad 2D dan 3D -
-                                            (Ketua Program Keahlian DPIB)
-                                        </Record.Title>
-                                    </Record.Content>
-                                    <Record.Year>September 2022</Record.Year>
-                                </Record>
+                                {profile?.certifications.map(
+                                    (certification, index) => (
+                                        <Record key={index}>
+                                            <Record.Content>
+                                                <Record.Title>
+                                                    {certification.title}
+                                                </Record.Title>
+                                            </Record.Content>
+                                            <Record.Year>
+                                                {certification.month}{' '}
+                                                {certification.year}
+                                            </Record.Year>
+                                        </Record>
+                                    )
+                                )}
                             </Article.Content>
                         </Article>
                     </div>
