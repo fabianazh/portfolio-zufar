@@ -11,6 +11,7 @@ import Loaders from '@/components/Other/Loader'
 import * as z from 'zod'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/context/ToastContext'
+import BackButton from '@/components/Button/BackButton'
 
 type FormData = z.infer<typeof toolSchema>
 
@@ -41,7 +42,10 @@ export default function CreateTool() {
     }
 
     return (
-        <ActionLayout returnLink={`/dashboard/tools`}>
+        <ActionLayout>
+            <ActionLayout.Buttons>
+                <BackButton href={'/dashboard/tools'} />
+            </ActionLayout.Buttons>
             <ActionLayout.Header
                 title={`Tambah Perangkat`}
                 desc="Pastikan informasi perangkat yang akan

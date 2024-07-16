@@ -44,7 +44,7 @@ export const Header = () => {
             href: '/dashboard/projects',
         },
         {
-            text: 'Contact',
+            text: 'Contacts',
             href: '/dashboard/contacts',
         },
         {

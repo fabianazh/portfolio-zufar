@@ -1,13 +1,10 @@
 import Heading from '@/components/Typography/Heading'
 import FormSkeleton from '@/components/Skeleton/FormSkeleton'
-import Link from 'next/link'
-import { IoArrowBack } from 'react-icons/io5'
 import Empty from '@/components/Other/Empty'
 
 export default function ActionLayout({
     className,
     children,
-    returnLink,
     isLoading,
     isEmpty,
     emptyMessage = 'Belum ada data.',
@@ -15,7 +12,6 @@ export default function ActionLayout({
 }: {
     className?: string
     children: React.ReactNode
-    returnLink: string
     isLoading?: boolean
     isEmpty?: boolean
     emptyMessage?: string
@@ -26,15 +22,6 @@ export default function ActionLayout({
             <section
                 className={`w-full h-auto flex flex-col gap-8 mb-14 ${className}`}
             >
-                <div className="w-full h-fit items-center justify-between flex z-50">
-                    <Link
-                        href={returnLink}
-                        className="flex w-fit h-fit gap-2 items-center text-lg"
-                    >
-                        <IoArrowBack />
-                        <span className="font-medium">Kembali</span>
-                    </Link>
-                </div>
                 {isLoading ? (
                     loadingSkeleton
                 ) : isEmpty ? (
@@ -47,7 +34,23 @@ export default function ActionLayout({
     )
 }
 
-export function Header({ title, desc }: { title: string; desc: string }) {
+function Buttons({
+    children,
+    className,
+}: {
+    children: React.ReactNode
+    className?: string
+}) {
+    return (
+        <div
+            className={`w-full h-fit items-center justify-between flex z-50 ${className}`}
+        >
+            {children}
+        </div>
+    )
+}
+
+function Header({ title, desc }: { title: string; desc: string }) {
     return (
         <>
             <div className="flex flex-col gap-1">
@@ -60,7 +63,7 @@ export function Header({ title, desc }: { title: string; desc: string }) {
     )
 }
 
-export function Content({
+function Content({
     className,
     children,
 }: {
@@ -76,5 +79,6 @@ export function Content({
     )
 }
 
+ActionLayout.Buttons = Buttons
 ActionLayout.Header = Header
 ActionLayout.Content = Content

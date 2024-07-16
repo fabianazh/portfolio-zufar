@@ -39,9 +39,9 @@ export default function TotalData() {
                     ) : (
                         <section className="grid w-full h-auto grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-8 lg:mb-6">
                             <TotalDataCard
-                                href={`/dashboard`}
+                                href={`/dashboard/profiles`}
                                 title="Total Profil"
-                                totalData={counts.projectCount}
+                                totalData={counts.profileCount}
                             />
                             <TotalDataCard
                                 href={`/dashboard/tools`}

@@ -12,6 +12,7 @@ import Loaders from '@/components/Other/Loader'
 import * as z from 'zod'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/context/ToastContext'
+import BackButton from '@/components/Button/BackButton'
 
 type FormData = z.infer<typeof contactSchema>
 
@@ -65,11 +66,13 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
 
     return (
         <ActionLayout
-            returnLink={`/dashboard/contacts`}
             isLoading={loading}
             isEmpty={!contact}
             emptyMessage="Tidak dapat menemukan kontak."
         >
+            <ActionLayout.Buttons>
+                <BackButton href={'/dashboard/contacts'} />
+            </ActionLayout.Buttons>
             <ActionLayout.Header
                 title={`Edit Info ${contact?.name}`}
                 desc="Pastikan perubahan informasi kontak yang akan

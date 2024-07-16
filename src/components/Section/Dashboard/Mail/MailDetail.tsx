@@ -18,6 +18,7 @@ import MailDetailSkeleton from '@/components/Skeleton/MailDetailSkeleton'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/context/ToastContext'
 import WarnModal from '@/components/Modal/WarnModal'
+import BackButton from '@/components/Button/BackButton'
 
 export default function MailDetail({ mailId }: { mailId: string }) {
     const [mail, setMail] = useState<Mail | null | undefined>(null)
@@ -106,12 +107,14 @@ export default function MailDetail({ mailId }: { mailId: string }) {
 
     return (
         <ActionLayout
-            returnLink={`/dashboard/mails`}
             isLoading={loading}
             isEmpty={!mail}
             emptyMessage={'Tidak dapat menemukan pesan.'}
             loadingSkeleton={<MailDetailSkeleton />}
         >
+            <ActionLayout.Buttons>
+                <BackButton href={'/dashboard/mails'} />
+            </ActionLayout.Buttons>
             <ActionLayout.Header
                 title={`Pesan dari ${mail?.name}`}
                 desc="Pastikan perubahan informasi kontak yang akan

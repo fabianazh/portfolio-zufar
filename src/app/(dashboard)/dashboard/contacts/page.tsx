@@ -1,9 +1,9 @@
-import ContactInfo from '@/components/Section/Dashboard/Contact/ContactInfo'
+import ContactList from '@/components/Section/Dashboard/Contact/ContactList'
 
 export default function ContactPage() {
     return (
         <>
-            <ContactInfo />
+            <ContactList />
         </>
     )
 }

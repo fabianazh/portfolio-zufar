@@ -12,6 +12,7 @@ import Loaders from '@/components/Other/Loader'
 import * as z from 'zod'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/context/ToastContext'
+import BackButton from '@/components/Button/BackButton'
 
 type FormData = z.infer<typeof toolSchema>
 
@@ -62,11 +63,13 @@ export default function EditTool({ toolId }: { toolId: string }) {
 
     return (
         <ActionLayout
-            returnLink={`/dashboard/tools`}
             isLoading={loading}
             isEmpty={!tool}
             emptyMessage="Tidak dapat menemukan data perangkat."
         >
+            <ActionLayout.Buttons>
+                <BackButton href={'/dashboard/tools'} />
+            </ActionLayout.Buttons>
             <ActionLayout.Header
                 title={`Edit Info Perangkat ${tool?.name}`}
                 desc="Pastikan perubahan informasi perangkat yang akan

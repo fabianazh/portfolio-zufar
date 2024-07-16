@@ -9,6 +9,7 @@ import Loaders from '@/components/Other/Loader'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/context/ToastContext'
 import WarnModal from '@/components/Modal/WarnModal'
+import BackButton from '@/components/Button/BackButton'
 
 export default function ToolDetail({ toolId }: { toolId: string }) {
     const [tool, setTool] = useState<Tool | null>(null)
@@ -61,11 +62,13 @@ export default function ToolDetail({ toolId }: { toolId: string }) {
 
     return (
         <ActionLayout
-            returnLink={`/dashboard/tools`}
             isLoading={loading}
             isEmpty={!tool}
             emptyMessage="Tidak dapat menemukan data perangkat."
         >
+            <ActionLayout.Buttons>
+                <BackButton href={'/dashboard/tools'} />
+            </ActionLayout.Buttons>
             <ActionLayout.Header
                 title={`Detail Perangkat ${tool?.name}`}
                 desc="Anda dapat merubah dan menghapus informasi perangkat yang akan

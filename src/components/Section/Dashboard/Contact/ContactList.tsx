@@ -8,7 +8,7 @@ import contactServices from '@/services/contacts'
 import { useEffect, useState } from 'react'
 import { RxDotsVertical } from 'react-icons/rx'
 
-export default function ContactInfo() {
+export default function ContactList() {
     const [contacts, setContacts] = useState<Contact[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
@@ -35,7 +35,7 @@ export default function ContactInfo() {
         <>
             <TableLayout>
                 <TableLayout.Header
-                    title="Info Kontak"
+                    title="List Kontak"
                     desc="Anda dapat melihat, dan mengubah informasi kontak
                             yang akan ditampilkan kepada pengguna."
                 />

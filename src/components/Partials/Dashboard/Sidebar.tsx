@@ -21,7 +21,7 @@ export default function Sidebar() {
             href: '/dashboard/projects',
         },
         {
-            text: 'Contact',
+            text: 'Contacts',
             href: '/dashboard/contacts',
         },
         {
