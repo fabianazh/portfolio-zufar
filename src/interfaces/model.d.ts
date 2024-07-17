@@ -51,6 +51,14 @@ interface Profile {
         month: string
         year: string
     }[]
+    experience: {
+        title: string
+        desc: string[]
+        monthStart: string
+        monthEnd: string
+        yearStart?: string
+        yearEnd: string
+    }[]
     // [key: string]: any
 }
 

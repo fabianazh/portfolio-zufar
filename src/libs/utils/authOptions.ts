@@ -4,6 +4,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import GoogleProvider from 'next-auth/providers/google'
 import bcrypt from 'bcrypt'
 import { AuthOptions } from 'next-auth'
+import jwt from 'jsonwebtoken'
 
 const allowedEmails = ['zufarali321@gmail.com', 'fabianazhar726@gmail.com']
 
@@ -104,6 +105,16 @@ export const authOptions: AuthOptions = {
             if ('username' in token) {
                 session.user.username = token.username
             }
+
+            const accessToken = jwt.sign(
+                token,
+                process.env.NEXTAUTH_SECRET ?? '',
+                {
+                    algorithm: 'HS256',
+                }
+            )
+
+            session.accessToken = accessToken
 
             return session
         },

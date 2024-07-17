@@ -1,6 +1,7 @@
 import Heading from '@/components/Typography/Heading'
 import FormSkeleton from '@/components/Skeleton/FormSkeleton'
 import Empty from '@/components/Other/Empty'
+import BackButton from '@/components/Button/BackButton'
 
 export default function ActionLayout({
     className,
@@ -9,6 +10,7 @@ export default function ActionLayout({
     isEmpty,
     emptyMessage = 'Belum ada data.',
     loadingSkeleton = <FormSkeleton />,
+    returnLink,
 }: {
     className?: string
     children: React.ReactNode
@@ -16,16 +18,27 @@ export default function ActionLayout({
     isEmpty?: boolean
     emptyMessage?: string
     loadingSkeleton?: React.ReactNode
+    returnLink: string
 }) {
     return (
         <>
             <section
                 className={`w-full h-auto flex flex-col gap-8 mb-14 ${className}`}
             >
-                {isLoading ? (
-                    loadingSkeleton
+                {!isLoading ? (
+                    <>
+                        <Buttons>
+                            <BackButton href={returnLink} />
+                        </Buttons>
+                        {loadingSkeleton}
+                    </>
                 ) : isEmpty ? (
-                    <Empty fullPage message={emptyMessage} />
+                    <>
+                        <Buttons>
+                            <BackButton href={returnLink} />
+                        </Buttons>
+                        <Empty fullPage message={emptyMessage} />
+                    </>
                 ) : (
                     children
                 )}
@@ -38,7 +51,7 @@ function Buttons({
     children,
     className,
 }: {
-    children: React.ReactNode
+    children?: React.ReactNode
     className?: string
 }) {
     return (

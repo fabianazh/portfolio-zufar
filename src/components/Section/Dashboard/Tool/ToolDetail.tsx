@@ -65,6 +65,7 @@ export default function ToolDetail({ toolId }: { toolId: string }) {
             isLoading={loading}
             isEmpty={!tool}
             emptyMessage="Tidak dapat menemukan data perangkat."
+            returnLink="/dashboard/tools"
         >
             <ActionLayout.Buttons>
                 <BackButton href={'/dashboard/tools'} />

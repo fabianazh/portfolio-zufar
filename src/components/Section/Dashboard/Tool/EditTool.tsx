@@ -13,6 +13,7 @@ import * as z from 'zod'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/context/ToastContext'
 import BackButton from '@/components/Button/BackButton'
+import { useSession } from 'next-auth/react'
 
 type FormData = z.infer<typeof toolSchema>
 
@@ -22,6 +23,10 @@ export default function EditTool({ toolId }: { toolId: string }) {
 
     const router = useRouter()
     const { showToast } = useToast()
+    const session = useSession()
+
+    console.log(session)
+
     const {
         handleSubmit,
         register,
@@ -66,6 +71,7 @@ export default function EditTool({ toolId }: { toolId: string }) {
             isLoading={loading}
             isEmpty={!tool}
             emptyMessage="Tidak dapat menemukan data perangkat."
+            returnLink="/dashboard/tools"
         >
             <ActionLayout.Buttons>
                 <BackButton href={'/dashboard/tools'} />

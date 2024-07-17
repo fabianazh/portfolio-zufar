@@ -42,7 +42,7 @@ export default function CreateTool() {
     }
 
     return (
-        <ActionLayout>
+        <ActionLayout returnLink="/dashboard/tools">
             <ActionLayout.Buttons>
                 <BackButton href={'/dashboard/tools'} />
             </ActionLayout.Buttons>

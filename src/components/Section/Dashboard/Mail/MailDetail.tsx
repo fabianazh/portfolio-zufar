@@ -111,6 +111,7 @@ export default function MailDetail({ mailId }: { mailId: string }) {
             isEmpty={!mail}
             emptyMessage={'Tidak dapat menemukan pesan.'}
             loadingSkeleton={<MailDetailSkeleton />}
+            returnLink="/dashboard/mails"
         >
             <ActionLayout.Buttons>
                 <BackButton href={'/dashboard/mails'} />

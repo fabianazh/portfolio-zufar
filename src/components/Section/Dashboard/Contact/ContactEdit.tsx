@@ -69,6 +69,7 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
             isLoading={loading}
             isEmpty={!contact}
             emptyMessage="Tidak dapat menemukan kontak."
+            returnLink="/dashboard/contacts"
         >
             <ActionLayout.Buttons>
                 <BackButton href={'/dashboard/contacts'} />

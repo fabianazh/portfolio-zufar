@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation'
 import { useToast } from '@/context/ToastContext'
 import ActionLayout from '@/components/Layout/ActionLayout'
 import BackButton from '@/components/Button/BackButton'
+import ProfileDetailSkeleton from '@/components/Skeleton/ProfileDetailSkeleton'
 
 export default function ProfileDetail({ profileId }: { profileId: string }) {
     const [profile, setProfile] = useState<Profile | null | undefined>(null)
@@ -41,13 +42,22 @@ export default function ProfileDetail({ profileId }: { profileId: string }) {
     }
 
     return (
-        <ActionLayout className="w-full flex flex-col gap-6">
+        <ActionLayout
+            isLoading={loading}
+            className="w-full flex flex-col gap-6"
+            returnLink="/dashboard/profiles"
+            isEmpty={!profile}
+            emptyMessage="Tidak dapat menemukan data profil."
+            loadingSkeleton={<ProfileDetailSkeleton />}
+        >
             <ActionLayout.Buttons>
                 <BackButton href={'/dashboard/profiles'} />
 
                 <Dropdown>
                     <Dropdown.Trigger>
-                        <RxDotsVertical />
+                        <div className="w-8 h-8 grid place-items-center rounded-full bg-stone-200/50 transition-all duration-300 bg-stone-100 shadow-sm">
+                            <RxDotsVertical />
+                        </div>
                     </Dropdown.Trigger>
                     <Dropdown.Items>
                         {!profile?.isUsed && (
@@ -72,7 +82,6 @@ export default function ProfileDetail({ profileId }: { profileId: string }) {
                 desc="Anda dapat menggunakan, mengubah dan menghapus informasi profil yang akan ditampilkan kepada pengguna."
             />
             <ActionLayout.Content>
-                <div></div>
                 <div className="w-full flex flex-col gap-10 lg:gap-16 min-h-screen">
                     <div className="w-full h-auto flex flex-col lg:flex-row gap-10">
                         <div className="w-full lg:w-3/12 shrink-0">
@@ -186,57 +195,54 @@ export default function ProfileDetail({ profileId }: { profileId: string }) {
                         <Article className="w-full">
                             <Article.Title>Pengalaman</Article.Title>
                             <Article.Content className="gap-4">
-                                <Record>
-                                    <Record.Content>
-                                        <Record.Title>
-                                            Visualisasi 3D Model Sekolah - SMKN
-                                            1 Sukabumi Kota Sukabumi
-                                        </Record.Title>
-                                        <Record.Description>
-                                            Melakukan pengukuran dan observasi
-                                            lingkungan sekitar untuk mendukung
-                                            visualisasi dan detail model 3D yang
-                                            akurat.
-                                        </Record.Description>
-                                    </Record.Content>
-                                    <Record.Year>
-                                        Januari / April 2024
-                                    </Record.Year>
-                                </Record>
-                                <Record>
-                                    <Record.Content>
-                                        <Record.Title>
-                                            Drafter (PKL) - PT. WYN KARYA
-                                            PERKASA
-                                        </Record.Title>
-                                        <Record.List>
-                                            <Record.ListItem>
-                                                Membuat desain layout dengan
-                                                mengonsep gambar sesuai
-                                                permintaan klien dan
-                                                memvisualisasikan konsep
-                                                tersebut dalam bentuk 3D.
-                                            </Record.ListItem>
-                                            <Record.ListItem>
-                                                Menggambar as-built drawing
-                                                dengan melakukan pengukuran
-                                                lokasi pembangunan dan
-                                                menyesuaikan gambar dengan
-                                                kondisi lokasi.
-                                            </Record.ListItem>
-                                            <Record.ListItem>
-                                                Melakukan survei lapangan,
-                                                termasuk membuat sketsa lahan,
-                                                mengukur lahan, dan menyalin
-                                                sketsa tersebut ke dalam
-                                                software AutoCAD.
-                                            </Record.ListItem>
-                                        </Record.List>
-                                    </Record.Content>
-                                    <Record.Year>
-                                        Agustus / November 2023
-                                    </Record.Year>
-                                </Record>
+                                {profile?.experience.map((item, index) => (
+                                    <Record key={index}>
+                                        <Record.Content>
+                                            <Record.Title>
+                                                {item.title}
+                                            </Record.Title>
+                                            {item.desc.length < 2 ? (
+                                                <Record.Description>
+                                                    Melakukan pengukuran dan
+                                                    observasi lingkungan sekitar
+                                                    untuk mendukung visualisasi
+                                                    dan detail model 3D yang
+                                                    akurat.
+                                                </Record.Description>
+                                            ) : (
+                                                <>
+                                                    {item?.desc.map(
+                                                        (desc, index) => (
+                                                            <Record.List
+                                                                key={index}
+                                                            >
+                                                                <Record.ListItem>
+                                                                    {desc}
+                                                                </Record.ListItem>
+                                                            </Record.List>
+                                                        )
+                                                    )}
+                                                </>
+                                            )}
+                                        </Record.Content>
+                                        <Record.Year>
+                                            {item.yearStart === item.yearEnd ? (
+                                                <>
+                                                    {item.monthStart}{' '}
+                                                    {item.yearStart} /{' '}
+                                                    {item.monthEnd}{' '}
+                                                    {item.yearEnd}
+                                                </>
+                                            ) : (
+                                                <>
+                                                    {item.monthStart} /{' '}
+                                                    {item.monthEnd}{' '}
+                                                    {item.yearEnd}
+                                                </>
+                                            )}
+                                        </Record.Year>
+                                    </Record>
+                                ))}
                             </Article.Content>
                         </Article>
                     </div>
