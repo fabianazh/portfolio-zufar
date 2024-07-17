@@ -25,7 +25,7 @@ export default function ActionLayout({
             <section
                 className={`w-full h-auto flex flex-col gap-8 mb-14 ${className}`}
             >
-                {!isLoading ? (
+                {isLoading ? (
                     <>
                         <Buttons>
                             <BackButton href={returnLink} />
