@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import GridLayout from '@/components/Layout/GridLayout'
 import projectServices from '@/services/projects'
-import NotFound from '@/components/Other/NotFound'
+import ProjectsCardSkeleton from '@/components/Skeleton/ProjectsCardSkeleton'
 
 export default function ProjectList() {
     const [projects, setProjects] = useState<Project[]>([])
@@ -27,7 +27,7 @@ export default function ProjectList() {
     }, [])
 
     if (error) {
-        return <NotFound message="Projek tidak tersedia." />
+        return <></>
     }
 
     return (
@@ -36,6 +36,7 @@ export default function ProjectList() {
                 isLoading={loading}
                 isEmpty={projects.length < 1}
                 emptyMessage="Belum ada projek,"
+                loadingSkeleton={<ProjectsCardSkeleton />}
             >
                 {projects.map((project) => (
                     <Link

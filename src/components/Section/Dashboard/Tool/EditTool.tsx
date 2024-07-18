@@ -25,8 +25,6 @@ export default function EditTool({ toolId }: { toolId: string }) {
     const { showToast } = useToast()
     const session = useSession()
 
-    console.log(session)
-
     const {
         handleSubmit,
         register,

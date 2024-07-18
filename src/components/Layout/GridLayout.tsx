@@ -1,4 +1,4 @@
-import GridSkeleton from '@/components/Skeleton/GridSkeleton'
+import ProjectsCardSkeleton from '@/components/Skeleton/ProjectsCardSkeleton'
 import Heading from '@/components/Typography/Heading'
 import Empty from '@/components/Other/Empty'
 
@@ -37,18 +37,20 @@ function Items({
     isLoading,
     isEmpty,
     emptyMessage = 'Belum ada data.',
+    loadingSkeleton,
 }: {
     className?: string
     children: React.ReactNode
     isLoading?: boolean
     isEmpty?: boolean
     emptyMessage?: string
+    loadingSkeleton: React.ReactNode
 }) {
     return (
         <>
             <div className={`w-full h-full ${className}`}>
                 {isLoading ? (
-                    <GridSkeleton />
+                    loadingSkeleton
                 ) : isEmpty ? (
                     <Empty message={emptyMessage} />
                 ) : (

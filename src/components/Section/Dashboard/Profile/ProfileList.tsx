@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import GridLayout from '@/components/Layout/GridLayout'
 import { BsPlus } from 'react-icons/bs'
 import ProfileCard from '@/components/Card/ProfileCard'
+import ProfilesCardSkeleton from '@/components/Skeleton/ProfilesCardSkeleton'
 
 export default function ProfileList() {
     const [profiles, setProfiles] = useState<Profile[]>([])
@@ -40,6 +41,7 @@ export default function ProfileList() {
                 />
                 <GridLayout.Items
                     isLoading={loading}
+                    loadingSkeleton={<ProfilesCardSkeleton />}
                     className="grid grid-cols-1 lg:grid-cols-2 gap-x-4 gap-y-4 lg:gap-x-6 lg:gap-y-6"
                 >
                     <Link
@@ -58,7 +60,7 @@ export default function ProfileList() {
                                 href={`/dashboard/profiles/${profile.id}`}
                                 key={profile.id}
                                 profile={profile}
-                            /> 
+                            />
                         </>
                     ))}
                 </GridLayout.Items>

@@ -2,7 +2,7 @@
 
 import GridLayout from '@/components/Layout/GridLayout'
 import Dropdown from '@/components/Other/Dropdown'
-import NotFound from '@/components/Other/NotFound'
+import ProjectsCardSkeleton from '@/components/Skeleton/ProjectsCardSkeleton'
 import projectServices from '@/services/projects'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -41,10 +41,13 @@ export default function ProjectList() {
                     desc="Anda dapat melihat, menambahkan, mengubah dan menghapus
                         informasi projek yang akan ditampilkan kepada pengguna."
                 />
-                <GridLayout.Items isLoading={loading}>
+                <GridLayout.Items
+                    isLoading={loading}
+                    loadingSkeleton={<ProjectsCardSkeleton />}
+                >
                     <Link
                         href={`/dashboard/projects/add`}
-                        className="w-full relative aspect-video flex-col flex items-center justify-center hover:bg-stone-100 rounded overflow-hidden transition-all duration-300 bg-white border"
+                        className="w-full relative aspect-video flex-col flex items-center justify-center hover:bg-stone-100 rounded overflow-hidden transition-all duration-300 bg-white border mb-8 lg:mb-4"
                     >
                         <BsPlus className="text-4xl font-medium" />
                         <span className="text-base lg:text-lg font-semibold">

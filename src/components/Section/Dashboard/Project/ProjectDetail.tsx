@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import ProjectDetailSkeleton from '@/components/Skeleton/ProjectDetailSkeleton'
 import Link from 'next/link'
 import ImageDetailModal from '@/components/Modal/ImageDetailModal'
-import NotFound from '@/components/Other/NotFound'
 import projectServices from '@/services/projects'
 
 export default function ProjectDetail({ projectId }: { projectId: string }) {
