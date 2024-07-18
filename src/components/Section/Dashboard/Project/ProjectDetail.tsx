@@ -125,7 +125,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                     <span className="font-semibold text-base">
                         Gambar Lainnya
                     </span>
-                    <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 h-fit">
+                    <div className="w-full columns-1 lg:columns-2 gap-4 lg:gap-6 h-fit">
                         {project?.photos.map((item, index) => (
                             <div
                                 key={index}
@@ -136,7 +136,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                         desc: item.desc,
                                     })
                                 }}
-                                className="w-full relative h-full group cursor-pointer"
+                                className="w-full relative h-fit border group cursor-pointer mb-4 lg:mb-6"
                             >
                                 <Image
                                     src={`/img/projects/${project.id}/${item.photo}`}
@@ -144,7 +144,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                     width={700}
                                     height={900}
                                     layout="responsive"
-                                    className={`h-full group-hover:brightness-75 transition-all`}
+                                    className={`h-fit w-full group-hover:brightness-75 transition-all`}
                                 />
                             </div>
                         ))}

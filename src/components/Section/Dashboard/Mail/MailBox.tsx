@@ -5,18 +5,14 @@ import Table from '@/components/Other/Table'
 import mailServices from '@/services/mails'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import {
-    format,
-    isToday,
-    isThisYear,
-    isSameYear,
-    differenceInHours,
-} from 'date-fns'
+import FormatDate from '@/libs/utils/formatDate'
 
 export default function MailBox() {
     const [mails, setMails] = useState<Mail[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
+
+    const { simpleFormatDate } = FormatDate()
 
     useEffect(() => {
         async function fetchMails() {
@@ -34,21 +30,6 @@ export default function MailBox() {
 
     if (error) {
         return <></>
-    }
-
-    function formatDate(timestamp: { seconds: number; nanoseconds: number }) {
-        const date = new Date(timestamp.seconds * 1000)
-        const now = new Date()
-
-        if (isToday(date)) {
-            return format(date, 'HH:mm')
-        } else if (isThisYear(date) && differenceInHours(now, date) >= 24) {
-            return format(date, 'd MMM')
-        } else if (isSameYear(date, now)) {
-            return format(date, 'd MMM')
-        } else {
-            return format(date, 'dd/MM/yyyy')
-        }
     }
 
     return (
@@ -111,8 +92,8 @@ export default function MailBox() {
                                                     {mail.message}
                                                 </Table.Data>
                                                 <Table.Data className="w-2/12 shrink-0">
-                                                    {formatDate(
-                                                        mail.created_at
+                                                    {simpleFormatDate(
+                                                        mail.created_at.seconds
                                                     )}
                                                 </Table.Data>
                                             </Table.Row>

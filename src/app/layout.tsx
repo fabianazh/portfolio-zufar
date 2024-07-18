@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { urbanist } from './fonts'
+
 export const metadata: Metadata = {
     metadataBase: new URL(`${process.env.NEXT_PUBLIC_BASE_URL}`),
     keywords: [

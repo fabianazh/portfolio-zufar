@@ -4,6 +4,12 @@ import { authOptions } from '@/libs/utils/authOptions'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 
+export function generateMetadata() {
+    return {
+        title: 'Dashboard',
+    }
+}
+
 export default async function DashboardPage() {
     const session = await getServerSession(authOptions)
 

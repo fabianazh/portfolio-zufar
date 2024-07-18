@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Dropdown from '@/components/Other/Dropdown'
 import { RxDotsVertical } from 'react-icons/rx'
-import { FormatDate } from '@/libs/utils/formatDate'
+import FormatDate from '@/libs/utils/formatDate'
 
 export default function ProfileCard({
     href,

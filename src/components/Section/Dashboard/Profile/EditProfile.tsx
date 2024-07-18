@@ -14,7 +14,7 @@ import ActionLayout from '@/components/Layout/ActionLayout'
 import BackButton from '@/components/Button/BackButton'
 import ProfileDetailSkeleton from '@/components/Skeleton/ProfileDetailSkeleton'
 
-export default function ProfileDetail({ profileId }: { profileId: string }) {
+export default function EditProfile({ profileId }: { profileId: string }) {
     const [profile, setProfile] = useState<Profile | null | undefined>(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
@@ -52,34 +52,10 @@ export default function ProfileDetail({ profileId }: { profileId: string }) {
         >
             <ActionLayout.Buttons>
                 <BackButton href={'/dashboard/profiles'} />
-
-                <Dropdown>
-                    <Dropdown.Trigger>
-                        <div className="w-8 h-8 grid place-items-center rounded-full bg-stone-200/50 transition-all duration-300 bg-stone-100 shadow-sm">
-                            <RxDotsVertical />
-                        </div>
-                    </Dropdown.Trigger>
-                    <Dropdown.Items>
-                        {!profile?.isUsed && (
-                            <Dropdown.Item
-                                href={`/dashboard/profiles/${profile?.id}/use`}
-                            >
-                                Gunakan
-                            </Dropdown.Item>
-                        )}
-                        <Dropdown.Item
-                            href={`/dashboard/profiles/${profile?.id}/edit`}
-                        >
-                            Edit
-                        </Dropdown.Item>
-                        <Dropdown.Divider />
-                        <Dropdown.Item as="delete">Hapus</Dropdown.Item>
-                    </Dropdown.Items>
-                </Dropdown>
             </ActionLayout.Buttons>
             <ActionLayout.Header
-                title={`Detail Profil ${profile?.versionName}`}
-                desc="Anda dapat menggunakan, mengubah dan menghapus informasi profil yang akan ditampilkan kepada pengguna."
+                title={`Edit Profil ${profile?.versionName}`}
+                desc="Pastikan informasi profil yang akan ditampilkan kepada pengguna telah sesuai dengan yang diinginkan."
             />
             <ActionLayout.Content>
                 <div className="w-full flex flex-col gap-10 lg:gap-16 min-h-screen">

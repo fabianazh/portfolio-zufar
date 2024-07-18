@@ -5,20 +5,13 @@ import { useEffect, useState } from 'react'
 import ActionLayout from '@/components/Layout/ActionLayout'
 import Dropdown from '@/components/Other/Dropdown'
 import { RxDotsVertical } from 'react-icons/rx'
-import {
-    format,
-    differenceInMinutes,
-    differenceInSeconds,
-    differenceInHours,
-    differenceInDays,
-} from 'date-fns'
-import { id } from 'date-fns/locale'
 import Image from 'next/image'
 import MailDetailSkeleton from '@/components/Skeleton/MailDetailSkeleton'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/context/ToastContext'
 import WarnModal from '@/components/Modal/WarnModal'
 import BackButton from '@/components/Button/BackButton'
+import FormatDate from '@/libs/utils/formatDate'
 
 export default function MailDetail({ mailId }: { mailId: string }) {
     const [mail, setMail] = useState<Mail | null | undefined>(null)
@@ -28,6 +21,7 @@ export default function MailDetail({ mailId }: { mailId: string }) {
 
     const router = useRouter()
     const { showToast } = useToast()
+    const { detailedFormatDate } = FormatDate()
 
     function openModal() {
         setIsModalOpen(true)
@@ -51,41 +45,6 @@ export default function MailDetail({ mailId }: { mailId: string }) {
 
         getMailDetail()
     }, [mailId])
-
-    function formatDate(seconds: number) {
-        const date = new Date(seconds * 1000)
-        const now = new Date()
-        const dayDifference = differenceInDays(now, date)
-        const hourDifference = differenceInHours(now, date)
-        const minuteDifference = differenceInMinutes(now, date)
-        const secondDifference = differenceInSeconds(now, date)
-
-        if (dayDifference < 30) {
-            if (hourDifference < 24) {
-                if (minuteDifference < 60) {
-                    if (secondDifference < 60) {
-                        return `${format(date, 'eee, dd MMM yyyy, HH:mm', {
-                            locale: id,
-                        })} (${secondDifference} detik yang lalu)`
-                    } else {
-                        return `${format(date, 'eee, dd MMM yyyy, HH:mm', {
-                            locale: id,
-                        })} (${minuteDifference} menit yang lalu)`
-                    }
-                } else {
-                    return `${format(date, 'eee, dd MMM yyyy, HH:mm', {
-                        locale: id,
-                    })} (${hourDifference} jam yang lalu)`
-                }
-            } else {
-                return `${format(date, 'eee, dd MMM yyyy, HH:mm', {
-                    locale: id,
-                })} (${dayDifference} hari yang lalu)`
-            }
-        } else {
-            return format(date, 'eee, dd MMM yyyy, HH:mm', { locale: id })
-        }
-    }
 
     async function handleDelete(id: string) {
         try {
@@ -118,9 +77,7 @@ export default function MailDetail({ mailId }: { mailId: string }) {
             </ActionLayout.Buttons>
             <ActionLayout.Header
                 title={`Pesan dari ${mail?.name}`}
-                desc="Pastikan perubahan informasi kontak yang akan
-                            ditampilkan kepada pengguna telah sesuai dengan yang
-                            diinginkan."
+                desc="Anda dapat menandai dan menghapus pesan yang dikirim dari pengguna."
             />
             <ActionLayout.Content className="bg-white rounded-md w-full h-fit shadow-sm px-6 pt-4 pb-8">
                 <div className="w-full flex justify-between h-fit">
@@ -145,7 +102,7 @@ export default function MailDetail({ mailId }: { mailId: string }) {
                     </div>
                     <div className="flex gap-4 items-center">
                         <span className="text-sm font-medium">
-                            {formatDate(mail?.created_at.seconds ?? 0)}
+                            {detailedFormatDate(mail?.created_at.seconds ?? 0)}
                         </span>
                         <Dropdown>
                             <Dropdown.Trigger>

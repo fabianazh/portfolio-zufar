@@ -1,4 +1,4 @@
-import ProfileDetail from '@/components/Section/Dashboard/Profile/ProfileDetail'
+import EditProfile from '@/components/Section/Dashboard/Profile/EditProfile'
 import profileServices from '@/services/profiles'
 
 export async function generateMetadata({
@@ -18,7 +18,7 @@ export async function generateMetadata({
             }
         }
         return {
-            title: `Profil ${data.data.versionName}`,
+            title: `Edit Profil ${data.data.versionName}`,
             description: data.data.desc,
         }
     } catch (error) {
@@ -29,7 +29,7 @@ export async function generateMetadata({
     }
 }
 
-export default function DetailProfilePage({
+export default function EditProfilePage({
     params,
 }: {
     params: {
@@ -38,7 +38,7 @@ export default function DetailProfilePage({
 }) {
     return (
         <>
-            <ProfileDetail profileId={params.profileId} />
+            <EditProfile profileId={params.profileId} />
         </>
     )
 }

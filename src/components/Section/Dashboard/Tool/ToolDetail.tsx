@@ -73,8 +73,7 @@ export default function ToolDetail({ toolId }: { toolId: string }) {
             <ActionLayout.Header
                 title={`Detail Perangkat ${tool?.name}`}
                 desc="Anda dapat merubah dan menghapus informasi perangkat yang akan
-                            ditampilkan kepada pengguna telah sesuai dengan yang
-                            diinginkan."
+                            ditampilkan kepada pengguna."
             />
             <ActionLayout.Content>
                 <form className="w-full lg:w-6/12 h-fit flex flex-col gap-6">
