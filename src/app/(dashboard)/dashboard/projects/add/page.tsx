@@ -1,3 +1,5 @@
+import CreateProject from '@/components/Section/Dashboard/Project/CreateProject'
+
 export function generateMetadata() {
     return {
         title: 'Tambah Projek',
@@ -7,7 +9,7 @@ export function generateMetadata() {
 export default function CreateProjectPage() {
     return (
         <>
-            <section></section>
+            <CreateProject />
         </>
     )
 }

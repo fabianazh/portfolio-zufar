@@ -4,7 +4,7 @@ export const mailSchema = z.object({
     name: z
         .string()
         .min(4, 'Nama minmal harus berisi 4 karakter.')
-        .max(48, 'Nama maksimal berisi 48 karakter.'),
+        .max(64, 'Nama maksimal berisi 64 karakter.'),
     email: z.string().email().nonempty('Email tampilan harus diisi.'),
     message: z
         .string()
@@ -24,6 +24,13 @@ export const toolSchema = z.object({
         .nonempty('Link tampilan harus diisi.'),
 })
 
+export const projectSchema = z.object({
+    name: z
+        .string()
+        .min(4, 'Nama projek minmal harus berisi 10 karakter.')
+        .max(90, 'Nama projek maksimal berisi 90 karakter.'),
+})
+
 export const loginSchema = z.object({
     email: z.string().email(),
     password: z.string().min(8),
@@ -40,18 +47,6 @@ export const contactSchema = z.object({
         .string()
         .min(4, 'Link minimal harus 4 karakter.')
         .nonempty('Link harus diisi.'),
-})
-
-export const photoSchema = z.object({
-    path: z
-        .string()
-        .min(4, 'Nama tampilan minimal harus 4 karakter.')
-        .max(28, 'Nama tampilan maksimal berisi 28 karakter.')
-        .nonempty('Nama tampilan harus diisi.'),
-    alt: z
-        .string()
-        .min(4, 'Alt minimal harus 4 karakter.')
-        .nonempty('Alt harus diisi.'),
 })
 
 export type User = z.infer<typeof loginSchema>

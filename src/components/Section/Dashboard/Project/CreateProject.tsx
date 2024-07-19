@@ -1,9 +1,9 @@
 'use client'
 
-import toolServices from '@/services/tools'
+import projectServices from '@/services/projects'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { toolSchema } from '@/zodSchema/route'
+import { projectSchema } from '@/zodSchema/route'
 import ActionLayout from '@/components/Layout/ActionLayout'
 import TextInput from '@/components/Form/TextInput'
 import PrimaryButton from '@/components/Button/PrimaryButton'
@@ -13,9 +13,9 @@ import { useRouter } from 'next/navigation'
 import { useToast } from '@/context/ToastContext'
 import BackButton from '@/components/Button/BackButton'
 
-type FormData = z.infer<typeof toolSchema>
+type FormData = z.infer<typeof projectSchema>
 
-export default function CreateTool() {
+export default function CreateProject() {
     const router = useRouter()
     const { showToast } = useToast()
     const {
@@ -24,15 +24,15 @@ export default function CreateTool() {
         reset,
         formState: { errors, isSubmitting, isDirty, isValid },
     } = useForm<FormData>({
-        resolver: zodResolver(toolSchema),
+        resolver: zodResolver(projectSchema),
     })
 
     async function onSubmit(data: FormData) {
         try {
-            const response = await toolServices.createTool(data)
+            const response = await projectServices.createProject(data)
             if (response.data.status === true) {
                 showToast(response.data.message, { type: 'success' })
-                router.push('/dashboard/tools')
+                router.push('/dashboard/projects')
             } else {
                 showToast(response.data.message, { type: 'error' })
             }
@@ -42,13 +42,13 @@ export default function CreateTool() {
     }
 
     return (
-        <ActionLayout returnLink="/dashboard/tools">
+        <ActionLayout returnLink="/dashboard/projects">
             <ActionLayout.Buttons>
-                <BackButton href={'/dashboard/tools'} />
+                <BackButton href={'/dashboard/projects'} />
             </ActionLayout.Buttons>
             <ActionLayout.Header
-                title={`Tambah Perangkat`}
-                desc="Pastikan informasi perangkat yang akan
+                title={`Tambah Projek`}
+                desc="Pastikan informasi projek yang akan
                             ditampilkan kepada pengguna telah sesuai dengan yang
                             diinginkan."
             />
@@ -59,11 +59,11 @@ export default function CreateTool() {
                 >
                     <TextInput
                         {...register('name')}
-                        label="Nama"
+                        label="Nama Projek"
                         id="name"
                         type="text"
                         name="name"
-                        placeholder="Masukan nama perangkat"
+                        placeholder="Masukan nama projek"
                         required
                         inputClassName="bg-stone-200/50"
                         error={errors?.name?.message}
@@ -74,7 +74,7 @@ export default function CreateTool() {
                         id="link"
                         type="text"
                         name="link"
-                        placeholder="Masukan link perangkat"
+                        placeholder="Masukan link kontak"
                         required
                         inputClassName="bg-stone-200/50"
                         error={errors?.link?.message}

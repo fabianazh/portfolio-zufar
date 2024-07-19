@@ -6,6 +6,7 @@ import ProjectDetailSkeleton from '@/components/Skeleton/ProjectDetailSkeleton'
 import Link from 'next/link'
 import ImageDetailModal from '@/components/Modal/ImageDetailModal'
 import projectServices from '@/services/projects'
+import { IoArrowBack } from 'react-icons/io5'
 
 export default function ProjectDetail({ projectId }: { projectId: string }) {
     const [project, setProject] = useState<Project | null | undefined>(null)
@@ -49,6 +50,13 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
     return (
         <>
             <section className="w-full flex flex-col gap-8">
+                <Link
+                    href={'/dashboard/projects'}
+                    className="flex w-fit h-fit gap-2 items-center text-lg"
+                >
+                    <IoArrowBack></IoArrowBack>
+                    <span className="font-medium">Kembali</span>
+                </Link>
                 {/* Thumbnail  */}
                 <div className="w-full h-fit flex flex-col gap-2.5">
                     <div className="w-full flex h-fit overflow-hidden scale-100 mb-2">

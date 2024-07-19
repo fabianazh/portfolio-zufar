@@ -9,7 +9,7 @@ import AppIcon from '@/components/Icon/AppIcon'
 import Navbar from '@/components/Partials/Navbar'
 import Footer from '@/components/Partials/Footer'
 
-export const Header = () => {
+export default function Header() {
     const [isNavOpen, setIsNavOpen] = useState<boolean>(false)
 
     const pathname = usePathname()

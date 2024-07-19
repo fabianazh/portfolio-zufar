@@ -1,7 +1,5 @@
 import ProjectDetail from '@/components/Section/Landing/ProjectDetail'
 import projectServices from '@/services/projects'
-import Link from 'next/link'
-import { IoArrowBack } from 'react-icons/io5'
 
 export async function generateMetadata({
     params,
@@ -44,15 +42,6 @@ export default function DetailProjectPage({
 }) {
     return (
         <>
-            <section className="w-full h-fit mb-6 flex items-start">
-                <Link
-                    href={'/projects'}
-                    className="flex w-fit h-fit gap-2 items-center text-lg"
-                >
-                    <IoArrowBack></IoArrowBack>
-                    <span className="font-medium">Kembali</span>
-                </Link>
-            </section>
             <ProjectDetail projectId={params.projectId} />
         </>
     )

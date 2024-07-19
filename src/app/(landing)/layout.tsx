@@ -1,7 +1,7 @@
 'use client'
 
 import Sidebar from '@/components/Partials/Landing/Sidebar'
-import { Header } from '@/components/Partials/Landing/Header'
+import Header from '@/components/Partials/Landing/Header'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastProvider } from '@/context/ToastContext'
