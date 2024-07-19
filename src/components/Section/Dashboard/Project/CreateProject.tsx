@@ -30,6 +30,7 @@ export default function CreateProject() {
     async function onSubmit(data: FormData) {
         try {
             const response = await projectServices.createProject(data)
+            console.log(response.data)
             if (response.data.status === true) {
                 showToast(response.data.message, { type: 'success' })
                 router.push('/dashboard/projects')
@@ -67,17 +68,6 @@ export default function CreateProject() {
                         required
                         inputClassName="bg-stone-200/50"
                         error={errors?.name?.message}
-                    />
-                    <TextInput
-                        {...register('link')}
-                        label="Link"
-                        id="link"
-                        type="text"
-                        name="link"
-                        placeholder="Masukan link kontak"
-                        required
-                        inputClassName="bg-stone-200/50"
-                        error={errors?.link?.message}
                     />
                     <div className="w-full lg:w-8/12 grid grid-cols-2 gap-6">
                         <PrimaryButton

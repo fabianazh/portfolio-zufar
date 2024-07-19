@@ -1,4 +1,4 @@
-import EditProfile from '@/components/Section/Dashboard/Profile/EditProfile'
+// import EditProfile from '@/components/Section/Dashboard/Profile/EditProfile'
 import profileServices from '@/services/profiles'
 
 export async function generateMetadata({
@@ -36,9 +36,5 @@ export default function EditProfilePage({
         profileId: string
     }
 }) {
-    return (
-        <>
-            <EditProfile profileId={params.profileId} />
-        </>
-    )
+    return <></>
 }
