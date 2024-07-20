@@ -15,6 +15,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
     try {
         const data = await req.json()
+        const token = req.headers.authhorization?.split(' ')[1] ?? ''
         await addData(
             'tools',
             data.data,
@@ -22,7 +23,7 @@ export async function POST(req: NextRequest) {
         )
 
         return NextResponse.json({
-            status: true,
+            status: false,
             statusCode: 200,
             message: 'Perangkat berhasil dibuat!',
         })

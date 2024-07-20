@@ -7,6 +7,7 @@ import Link from 'next/link'
 import ImageDetailModal from '@/components/Modal/ImageDetailModal'
 import projectServices from '@/services/projects'
 import { IoArrowBack } from 'react-icons/io5'
+import LinkText from '@/components/Typography/LinkText'
 
 export default function ProjectDetail({ projectId }: { projectId: string }) {
     const [project, setProject] = useState<Project | null | undefined>(null)
@@ -101,14 +102,14 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             <span className="text-sm font-medium">Tools</span>
                             <div>
                                 {project?.tools.map((tool, index) => (
-                                    <Link
+                                    <LinkText
                                         href={tool.url}
                                         className="text-base font-bold"
                                         key={tool.name}
                                     >
                                         {tool.name}
                                         {index + 1 == lastIndex ? '.' : ', '}
-                                    </Link>
+                                    </LinkText>
                                 ))}
                             </div>
                         </div>
