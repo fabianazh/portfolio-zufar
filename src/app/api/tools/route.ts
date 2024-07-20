@@ -1,6 +1,7 @@
 import { getData, addData } from '@/libs/firebase/service'
 import { NextRequest, NextResponse } from 'next/server'
 import slugify from 'slugify'
+import jwt from 'jsonwebtoken'
 
 export async function GET(req: NextRequest) {
     const tools = await getData<Tool>('tools')
@@ -13,9 +14,24 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+    const data = await req.json()
+    const token = req.headers.get('Authorization')?.split(' ')[1] ?? ''
+
     try {
-        const data = await req.json()
-        const token = req.headers.authhorization?.split(' ')[1] ?? ''
+        const decoded = await new Promise((resolve, reject) => {
+            jwt.verify(
+                token,
+                process.env.NEXTAUTH_SECRET as string,
+                (err, decoded) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve(decoded)
+                    }
+                }
+            )
+        })
+
         await addData(
             'tools',
             data.data,
@@ -23,7 +39,7 @@ export async function POST(req: NextRequest) {
         )
 
         return NextResponse.json({
-            status: false,
+            status: true,
             statusCode: 200,
             message: 'Perangkat berhasil dibuat!',
         })
