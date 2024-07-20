@@ -19,13 +19,17 @@ export async function POST(req: NextRequest) {
 
     try {
         const decoded = await new Promise((resolve, reject) => {
-            jwt.verify(token, process.env.NEXTAUTH_SECRET, (err, decoded) => {
-                if (err) {
-                    reject(err)
-                } else {
-                    resolve(decoded)
+            jwt.verify(
+                token,
+                process.env.NEXTAUTH_SECRET as string,
+                (err, decoded) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve(decoded)
+                    }
                 }
-            })
+            )
         })
 
         await addData(
