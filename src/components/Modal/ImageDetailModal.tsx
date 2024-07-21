@@ -4,16 +4,14 @@ import { BiX } from 'react-icons/bi'
 
 export default function ImageDetailModal({
     isOpen,
-    open,
     close,
     photo,
-    desc,
+    alt,
 }: {
     isOpen: boolean
-    open: () => void
     close: () => void
     photo: string
-    desc: string
+    alt: string
 }) {
     return (
         <>
@@ -34,18 +32,18 @@ export default function ImageDetailModal({
                                 : 'scale-50 opacity-0'
                         }`}
                     >
-                        <BiX className="text-4xl lg:text-5xl text-white transition-all duration-300 hover:text-stone-50"></BiX>
+                        <BiX className="text-4xl lg:text-5xl text-white transition-all duration-300 hover:text-stone-50" />
                     </div>
                     {/* End Close Button */}
-                    <div className="flex min-h-full items-center justify-center p-2 lg:p-4">
+                    <div className="flex min-h-full items-center justify-center">
                         <DialogPanel
                             transition
-                            className="w-fit h-full max-w-4xlx relative bg-white/90 p-2 lg:p-4 pb-3 duration-300 ease-out data-[closed]:opacity-0"
+                            className="w-fit h-full max-w-4xlx relative duration-300 ease-out data-[closed]:opacity-0"
                         >
                             <div className="w-fit max-w-5xl h-fit flex flex-col gap-3">
                                 <Image
                                     src={photo}
-                                    alt={desc}
+                                    alt={alt}
                                     width={900}
                                     height={800}
                                     layout="responsive"
@@ -53,11 +51,6 @@ export default function ImageDetailModal({
                                     draggable={false}
                                     className={`w-auto h-full shrink-0 shadow-md`}
                                 />
-                                <div className="flex relative w-full h-fit justify-center">
-                                    <span className="text-base font-semibold text-black">
-                                        {desc}
-                                    </span>
-                                </div>
                             </div>
                         </DialogPanel>
                     </div>

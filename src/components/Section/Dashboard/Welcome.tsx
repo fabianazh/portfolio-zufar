@@ -1,7 +1,18 @@
-import { getSession } from 'next-auth/react'
+'use client'
 
-export default async function Welcome() {
-    const session = await getSession()
+import { getSession } from 'next-auth/react'
+import { useEffect, useState } from 'react'
+
+export default function Welcome() {
+    const [session, setSession] = useState(null)
+
+    useEffect(() => {
+        const fetchSession = async () => {
+            const sessionData = await getSession()
+            setSession(sessionData)
+        }
+        fetchSession()
+    }, [])
 
     return (
         <>

@@ -3,17 +3,18 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import ProjectDetailSkeleton from '@/components/Skeleton/ProjectDetailSkeleton'
-import Link from 'next/link'
 import ImageDetailModal from '@/components/Modal/ImageDetailModal'
+import ActionLayout from '@/components/Layout/ActionLayout'
 import projectServices from '@/services/projects'
-import { IoArrowBack } from 'react-icons/io5'
+import LinkText from '@/components/Typography/LinkText'
+import BackButton from '@/components/Button/BackButton'
 
 export default function ProjectDetail({ projectId }: { projectId: string }) {
     const [project, setProject] = useState<Project | null | undefined>(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-    const [modalData, setModalData] = useState({ photo: '', desc: '' })
+    const [modalData, setModalData] = useState({ photo: '', alt: '' })
 
     useEffect(() => {
         async function fetchProject() {
@@ -28,10 +29,6 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
         }
         fetchProject()
     }, [projectId])
-
-    if (loading) {
-        return <ProjectDetailSkeleton />
-    }
 
     if (error) {
         return <></>
@@ -49,23 +46,25 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
 
     return (
         <>
-            <section className="w-full flex flex-col gap-8">
-                <Link
-                    href={'/dashboard/projects'}
-                    className="flex w-fit h-fit gap-2 items-center text-lg"
-                >
-                    <IoArrowBack></IoArrowBack>
-                    <span className="font-medium">Kembali</span>
-                </Link>
-                {/* Thumbnail  */}
-                <div className="w-full h-fit flex flex-col gap-2.5">
-                    <div className="w-full flex h-fit overflow-hidden scale-100 mb-2">
+            <ActionLayout
+                returnLink={'/dashboard/projects'}
+                isLoading={loading}
+                loadingSkeleton={<ProjectDetailSkeleton />}
+                isEmpty={!project}
+                emptyMessage="Projek tidak ditemukan."
+            >
+                <ActionLayout.Buttons>
+                    <BackButton href={'/dashboard/projects'} />
+                </ActionLayout.Buttons>
+                <ActionLayout.Content className="w-full h-fit flex flex-col gap-2.5">
+                    {/* Thumbnail  */}
+                    <div className="w-full flex h-fit overflow-hidden scale-100">
                         <Image
                             onClick={() => {
                                 openModal()
                                 setModalData({
                                     photo: `${project?.id}/${project?.thumbnail.photo}`,
-                                    desc: `${project?.name}`,
+                                    alt: project.id ?? '',
                                 })
                             }}
                             src={`/img/projects/${project?.id}/${project?.thumbnail.photo}`}
@@ -78,6 +77,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             className={`w-full h-auto cursor-pointer`}
                         />
                     </div>
+                    {/* End Thumbnail  */}
                     <div className="w-full h-fit flex flex-col lg:flex-row justify-between gap-2 lg:gap-4 mb-2 lg:mb-0">
                         <div className="w-full lg:w-4/12 flex flex-col">
                             <span className="text-sm font-medium">
@@ -101,14 +101,14 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             <span className="text-sm font-medium">Tools</span>
                             <div>
                                 {project?.tools.map((tool, index) => (
-                                    <Link
+                                    <LinkText
                                         href={tool.url}
                                         className="text-base font-bold"
                                         key={tool.name}
                                     >
                                         {tool.name}
                                         {index + 1 == lastIndex ? '.' : ', '}
-                                    </Link>
+                                    </LinkText>
                                 ))}
                             </div>
                         </div>
@@ -116,7 +116,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                         <div className="w-full lg:w-fit flex flex-col">
                             <span className="text-sm font-medium">Tahun</span>
                             <span className="text-base font-bold">
-                                {project?.month} {project?.year}
+                                {project?.date}
                             </span>
                         </div>
                     </div>
@@ -125,51 +125,47 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                         <span className="font-medium">{project?.desc}</span>
                     </div>
                     {/* End Description */}
-                </div>
-                {/* End Thumbnail  */}
-
-                {/* Images */}
-                <div className="w-full h-auto flex flex-col gap-2">
-                    <span className="font-semibold text-base">
-                        Gambar Lainnya
-                    </span>
-                    <div className="w-full columns-1 lg:columns-2 gap-4 lg:gap-6 h-fit">
-                        {project?.photos.map((item, index) => (
-                            <div
-                                key={index}
-                                onClick={() => {
-                                    openModal()
-                                    setModalData({
-                                        photo: `${project?.id}/${item.photo}`,
-                                        desc: item.desc,
-                                    })
-                                }}
-                                className="w-full relative h-fit border group cursor-pointer mb-4 lg:mb-6"
-                            >
-                                <Image
-                                    src={`/img/projects/${project.id}/${item.photo}`}
-                                    alt={`${item.desc}`}
-                                    width={700}
-                                    height={900}
-                                    layout="responsive"
-                                    className={`h-fit w-full group-hover:brightness-75 transition-all`}
-                                />
-                            </div>
-                        ))}
+                    {/* Images */}
+                    <div className="w-full h-auto flex flex-col gap-3">
+                        <span className="font-semibold text-base">
+                            Gambar Lainnya
+                        </span>
+                        <div className="w-full columns-1 lg:columns-2 gap-4 lg:gap-6 h-fit">
+                            {project?.photos.map((item, index) => (
+                                <div
+                                    key={index}
+                                    onClick={() => {
+                                        openModal()
+                                        setModalData({
+                                            photo: `${project?.id}/${item.photo}`,
+                                            alt: project.id ?? '',
+                                        })
+                                    }}
+                                    className="w-full relative h-full group cursor-pointer mb-4 lg:mb-6"
+                                >
+                                    <Image
+                                        src={`/img/projects/${project?.id}/${item.photo}`}
+                                        alt={`${item.photo}`}
+                                        width={700}
+                                        height={900}
+                                        layout="responsive"
+                                        className={`h-full group-hover:brightness-75 transition-all`}
+                                    />
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
-                {/* End Images */}
-
-                {/* Modal */}
-                <ImageDetailModal
-                    isOpen={isModalOpen}
-                    open={openModal}
-                    close={closeModal}
-                    photo={`/img/projects/${modalData.photo}`}
-                    desc={modalData.desc}
-                />
-                {/* End Modal */}
-            </section>
+                    {/* End Images */}
+                </ActionLayout.Content>
+            </ActionLayout>
+            {/* Modal */}
+            <ImageDetailModal
+                isOpen={isModalOpen}
+                close={closeModal}
+                photo={`/img/projects/${modalData.photo}`}
+                alt={modalData.alt}
+            />
+            {/* End Modal */}
         </>
     )
 }

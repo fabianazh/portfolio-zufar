@@ -1,14 +1,12 @@
 'use client'
 
 import GridLayout from '@/components/Layout/GridLayout'
-import Dropdown from '@/components/Other/Dropdown'
 import ProjectsCardSkeleton from '@/components/Skeleton/ProjectsCardSkeleton'
 import projectServices from '@/services/projects'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { BsPlus } from 'react-icons/bs'
-import { RxDotsVertical } from 'react-icons/rx'
+import ProjectCard from '@/components/Card/ProjectCard'
 
 export default function ProjectList() {
     const [projects, setProjects] = useState<Project[]>([])
@@ -55,55 +53,14 @@ export default function ProjectList() {
                         </span>
                     </Link>
 
-                    {projects.map((project) => {
-                        return (
-                            <div
-                                key={project.id}
-                                className="w-full relative h-fit flex-col flex gap-3 pb-8 mb-8 lg:mb-4"
-                            >
-                                <Link
-                                    href={`/dashboard/projects/${project.id}`}
-                                    className="w-full flex h-fit overflow-hidden group"
-                                >
-                                    <Image
-                                        src={`/img/projects/${project.id}/${project.thumbnail.photo}`}
-                                        alt={`Projek ${project.name}`}
-                                        width={300}
-                                        height={400}
-                                        layout="responsive"
-                                        draggable={false}
-                                        className={`w-full h-full group-hover:brightness-80 transition-all`}
-                                    />
-                                </Link>
-                                <div className="flex w-full text-sm gap-2 text-black font-semibold absolute bottom-0 left-0 jusifty-between items-center">
-                                    <div className="truncate w-11/12">
-                                        {project.name}
-                                    </div>
-                                    <Dropdown>
-                                        <Dropdown.Trigger>
-                                            <RxDotsVertical />
-                                        </Dropdown.Trigger>
-                                        <Dropdown.Items>
-                                            <Dropdown.Item
-                                                href={`/dashboard/projects/${project.id}`}
-                                            >
-                                                Detail
-                                            </Dropdown.Item>
-                                            <Dropdown.Item
-                                                href={`/dashboard/projects/${project.id}/edit`}
-                                            >
-                                                Edit
-                                            </Dropdown.Item>
-                                            <Dropdown.Divider />
-                                            <Dropdown.Item as="delete">
-                                                Hapus
-                                            </Dropdown.Item>
-                                        </Dropdown.Items>
-                                    </Dropdown>
-                                </div>
-                            </div>
-                        )
-                    })}
+                    {projects.map((project) => (
+                        <ProjectCard
+                            href={`/dashboard/projects/${project.id}`}
+                            project={project}
+                            key={project.id}
+                            withDropdown
+                        />
+                    ))}
                 </GridLayout.Items>
             </GridLayout>
         </>

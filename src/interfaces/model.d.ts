@@ -10,10 +10,7 @@ interface Mail {
     name: string
     email: string
     message: string
-    created_at: {
-        seconds: number
-        nanoseconds: number
-    }
+    created_at: Date
     isUnread: boolean
 }
 
@@ -68,8 +65,7 @@ interface Project {
         photo: string
         desc: string
     }
-    month: string
-    year: string
+    date: string
     name: string
     desc: string
     category: string
@@ -81,7 +77,8 @@ interface Project {
         photo: string
         desc: string
     }[]
-    created_at: string
+    created_at: Date
+    updated_at: Date
     isHighlighted: boolean
 }
 
