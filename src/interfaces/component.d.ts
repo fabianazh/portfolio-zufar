@@ -20,3 +20,13 @@ export interface SelectProps extends InputProps {
 export interface ReactSelectProps extends SelectProps {
     isMulti: boolean
 }
+
+export interface FileInputProps extends InputProps {
+    accept?: string
+    multiple?: boolean
+}
+
+export interface DateInputProps extends InputProps {
+    min?: string
+    max?: string
+}

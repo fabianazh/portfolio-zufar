@@ -7,6 +7,8 @@ import { projectSchema } from '@/zodSchema/route'
 import ActionLayout from '@/components/Layout/ActionLayout'
 import TextInput from '@/components/Form/TextInput'
 import SelectInput from '@/components/Form/SelectInput'
+import FileInput from '@/components/Form/FileInput'
+import DateInput from '@/components/Form/DateInput'
 import PrimaryButton from '@/components/Button/PrimaryButton'
 import Loaders from '@/components/Other/Loader'
 import * as z from 'zod'
@@ -92,6 +94,13 @@ export default function CreateProject() {
                     onSubmit={handleSubmit(onSubmit)}
                     encType="multipart/form-data"
                 >
+                    <FileInput
+                        onChange={handleFileChange}
+                        label="Thumbnail"
+                        id="thumbnail"
+                        accept=".jpg,.png"
+                        error={errors?.thumbnail?.message}
+                    />
                     <TextInput
                         {...register('name')}
                         label="Nama Projek"
@@ -101,6 +110,15 @@ export default function CreateProject() {
                         required
                         error={errors?.name?.message}
                     />
+                    <TextInput
+                        {...register('desc')}
+                        label="Deskripsi"
+                        id="desc"
+                        type="text"
+                        placeholder="Masukan nama projek"
+                        required
+                        error={errors?.desc?.message}
+                    />
                     <SelectInput
                         {...register('category')}
                         label="Kategori"
@@ -109,17 +127,20 @@ export default function CreateProject() {
                         error={errors?.category?.message}
                         options={categoryOptions}
                     />
-                    {/* <input
-                        type="file"
-                        multiple
-                        onChange={handleFileChange}
-                        className="bg-stone-200/50"
+                    <DateInput
+                        label="Tanggal Pengerjaan"
+                        id="date"
+                        min="2021-01-01"
+                        error={errors.date?.message}
                     />
-                    {errors.photos && (
-                        <span className="text-red-600">
-                            {errors.photos.message}
-                        </span>
-                    )} */}
+                    <FileInput
+                        onChange={handleFileChange}
+                        label="Gambar Lain"
+                        id="photos"
+                        accept=".jpg,.png"
+                        multiple
+                        error={errors?.photos?.message}
+                    />
                     <div className="w-full lg:w-8/12 grid grid-cols-2 gap-6">
                         <PrimaryButton
                             type="reset"
