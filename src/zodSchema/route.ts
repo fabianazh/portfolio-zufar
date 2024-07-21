@@ -25,10 +25,38 @@ export const toolSchema = z.object({
 })
 
 export const projectSchema = z.object({
+    id: z.string(),
+    thumbnail: z.object({
+        photo: z.string().nonempty('Foto thumbnail harus diisi.'),
+        desc: z.string().nonempty('Deskripsi thumbnail harus diisi.'),
+    }),
+    date: z.string().nonempty('Tanggal harus diisi.'),
     name: z
         .string()
-        .min(4, 'Nama projek minmal harus berisi 10 karakter.')
-        .max(90, 'Nama projek maksimal berisi 90 karakter.'),
+        .min(4, 'Nama projek minimal harus berisi 4 karakter.')
+        .max(90, 'Nama projek maksimal berisi 90 karakter.')
+        .nonempty('Nama projek harus diisi.'),
+    desc: z.string().nonempty('Deskripsi projek harus diisi.'),
+    category: z.string().nonempty('Kategori harus diisi.'),
+    tools: z
+        .array(
+            z.object({
+                name: z.string().nonempty('Nama perangkat harus diisi.'),
+                url: z
+                    .string()
+                    .url('URL perangkat tidak valid')
+                    .nonempty('URL perangkat harus diisi.'),
+            })
+        )
+        .nonempty('Perangkat harus diisi.'),
+    photos: z
+        .array(
+            z.object({
+                photo: z.string(),
+                desc: z.string().optional(),
+            })
+        )
+        .optional(),
 })
 
 export const loginSchema = z.object({

@@ -5,13 +5,13 @@ import {
     doc,
     getDoc,
     getDocs,
-    getFirestore,
     query,
     setDoc,
     updateDoc,
     where,
 } from 'firebase/firestore'
-import { firestore } from './init'
+import { firestore, storage } from './init'
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 
 export async function getData<T>(collectionName: string): Promise<T[]> {
     const snapshot = await getDocs(collection(firestore, collectionName))
@@ -106,5 +106,36 @@ export async function signInWithGoogle(data: any, callback: Function) {
         callback(user[0])
     } else {
         return null
+    }
+}
+
+export async function uploadFile(folderName: string, file: any) {
+    console.log(file)
+    if (file) {
+        if (file < 10248576) {
+            const storageRef = ref(storage, `/img/${folderName}/${file.name}`)
+            // const uploadTask = uploadBytesResumable(storageRef, file)
+            // uploadTask.on(
+            //     'state_changed',
+            //     (snapshot) => {
+            //         const progress =
+            //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            //     },
+            //     (error) => {
+            //         console.log(error)
+            //     },
+            //     () => {
+            //         getDownloadURL(uploadTask.snapshot.ref).then(
+            //             (downloadURL) => {
+            //                 console.log(downloadURL)
+            //             }
+            //         )
+            //     }
+            // )
+        } else {
+            return false
+        }
+    } else {
+        return false
     }
 }

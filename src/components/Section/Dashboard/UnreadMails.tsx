@@ -5,21 +5,17 @@ import Table from '@/components/Other/Table'
 import mailServices from '@/services/mails'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import {
-    format,
-    isToday,
-    isThisYear,
-    isSameYear,
-    differenceInHours,
-} from 'date-fns'
 import TableSkeleton from '@/components/Skeleton/TableSkeleton'
 import Empty from '@/components/Other/Empty'
 import PrimaryButton from '@/components/Button/PrimaryButton'
+import formatDate from '@/libs/utils/formatDate'
 
 export default function UnreadMails() {
     const [mails, setMails] = useState<Mail[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
+
+    const { simpleFormatDate } = formatDate()
 
     useEffect(() => {
         async function fetchMails() {
@@ -37,21 +33,6 @@ export default function UnreadMails() {
 
     if (error) {
         return <NotFound message="Semua pesan telah dibaca." />
-    }
-
-    function formatDate(timestamp: { seconds: number; nanoseconds: number }) {
-        const date = new Date(timestamp.seconds * 1000)
-        const now = new Date()
-
-        if (isToday(date)) {
-            return format(date, 'HH:mm')
-        } else if (isThisYear(date) && differenceInHours(now, date) >= 24) {
-            return format(date, 'd MMM')
-        } else if (isSameYear(date, now)) {
-            return format(date, 'd MMM')
-        } else {
-            return format(date, 'dd/MM/yyyy')
-        }
     }
 
     const unreadMails = mails
@@ -105,7 +86,7 @@ export default function UnreadMails() {
                         </Table.Head>
                         <Table.Body className="gap-0 pt-0">
                             <>
-                                {unreadMails.map((mail, index) => {
+                                {mails.map((mail, index) => {
                                     return (
                                         <Link
                                             key={index}
@@ -131,8 +112,8 @@ export default function UnreadMails() {
                                                     {mail.message}
                                                 </Table.Data>
                                                 <Table.Data className="w-2/12 shrink-0">
-                                                    {formatDate(
-                                                        mail.created_at
+                                                    {simpleFormatDate(
+                                                        mail.created_at.seconds
                                                     )}
                                                 </Table.Data>
                                             </Table.Row>

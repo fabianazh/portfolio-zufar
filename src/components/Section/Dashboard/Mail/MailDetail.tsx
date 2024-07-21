@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation'
 import { useToast } from '@/context/ToastContext'
 import WarnModal from '@/components/Modal/WarnModal'
 import BackButton from '@/components/Button/BackButton'
-import FormatDate from '@/libs/utils/formatDate'
+import formatDate from '@/libs/utils/formatDate'
 
 export default function MailDetail({ mailId }: { mailId: string }) {
     const [mail, setMail] = useState<Mail | null | undefined>(null)
@@ -21,7 +21,7 @@ export default function MailDetail({ mailId }: { mailId: string }) {
 
     const router = useRouter()
     const { showToast } = useToast()
-    const { detailedFormatDate } = FormatDate()
+    const { detailedFormatDate } = formatDate()
 
     function openModal() {
         setIsModalOpen(true)

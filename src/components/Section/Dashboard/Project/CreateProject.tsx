@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { projectSchema } from '@/zodSchema/route'
 import ActionLayout from '@/components/Layout/ActionLayout'
 import TextInput from '@/components/Form/TextInput'
+import SelectInput from '@/components/Form/SelectInput'
 import PrimaryButton from '@/components/Button/PrimaryButton'
 import Loaders from '@/components/Other/Loader'
 import * as z from 'zod'
@@ -22,24 +23,56 @@ export default function CreateProject() {
         handleSubmit,
         register,
         reset,
+        setValue,
         formState: { errors, isSubmitting, isDirty, isValid },
     } = useForm<FormData>({
         resolver: zodResolver(projectSchema),
     })
 
-    async function onSubmit(data: FormData) {
-        try {
-            const response = await projectServices.createProject(data)
-            console.log(response.data)
-            if (response.data.status === true) {
-                showToast(response.data.message, { type: 'success' })
-                router.push('/dashboard/projects')
-            } else {
-                showToast(response.data.message, { type: 'error' })
-            }
-        } catch (error) {
-            showToast('Error', { type: 'error' })
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const files = Array.from(e.target.files)
+            const photosWithDesc = files.map((file) => ({
+                photo: URL.createObjectURL(file),
+                desc: 'Default description',
+            }))
+            setValue('photos', photosWithDesc)
         }
+    }
+
+    const categoryOptions = [
+        {
+            value: 'Desain Arsitektur',
+            label: 'Desain Arsitektur',
+        },
+        {
+            value: 'Desain Interior',
+            label: 'Desain Interior',
+        },
+        {
+            value: 'Struktur Bangunan',
+            label: 'Struktur Bangunan',
+        },
+        {
+            value: 'Instalasi Listrik & Air',
+            label: 'Instalasi Listrik & Air',
+        },
+    ]
+
+    async function onSubmit(data: FormData) {
+        console.log(data)
+        // try {
+        //     const response = await projectServices.createProject(data)
+        //     console.log(response.data)
+        //     if (response.data.status === true) {
+        //         showToast(response.data.message, { type: 'success' })
+        //         router.push('/dashboard/projects')
+        //     } else {
+        //         showToast(response.data.message, { type: 'error' })
+        //     }
+        // } catch (error) {
+        //     showToast('Error', { type: 'error' })
+        // }
     }
 
     return (
@@ -57,18 +90,36 @@ export default function CreateProject() {
                 <form
                     className="w-full lg:w-6/12 h-fit flex flex-col gap-6"
                     onSubmit={handleSubmit(onSubmit)}
+                    encType="multipart/form-data"
                 >
                     <TextInput
                         {...register('name')}
                         label="Nama Projek"
                         id="name"
                         type="text"
-                        name="name"
                         placeholder="Masukan nama projek"
                         required
-                        inputClassName="bg-stone-200/50"
                         error={errors?.name?.message}
                     />
+                    <SelectInput
+                        {...register('category')}
+                        label="Kategori"
+                        id="category"
+                        defaultValue="Pilih Kategori"
+                        error={errors?.category?.message}
+                        options={categoryOptions}
+                    />
+                    {/* <input
+                        type="file"
+                        multiple
+                        onChange={handleFileChange}
+                        className="bg-stone-200/50"
+                    />
+                    {errors.photos && (
+                        <span className="text-red-600">
+                            {errors.photos.message}
+                        </span>
+                    )} */}
                     <div className="w-full lg:w-8/12 grid grid-cols-2 gap-6">
                         <PrimaryButton
                             type="reset"

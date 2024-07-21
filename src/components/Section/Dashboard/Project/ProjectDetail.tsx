@@ -64,7 +64,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                 openModal()
                                 setModalData({
                                     photo: `${project?.id}/${project?.thumbnail.photo}`,
-                                    alt: project.id ?? '',
+                                    alt: project?.id ?? '',
                                 })
                             }}
                             src={`/img/projects/${project?.id}/${project?.thumbnail.photo}`}

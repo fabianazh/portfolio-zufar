@@ -9,7 +9,7 @@ import {
 } from 'date-fns'
 import { id } from 'date-fns/locale'
 
-export default function FormatDate() {
+export default function formatDate() {
     return {
         detailedFormatDate: (seconds: number) => {
             const date = new Date(seconds * 1000)

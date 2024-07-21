@@ -90,9 +90,7 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
                         label="Nama"
                         id="name"
                         type="text"
-                        name="name"
                         required
-                        inputClassName="bg-stone-200/50"
                         defaultValue={contact?.name}
                         error={errors?.name?.message}
                         disabled
@@ -102,10 +100,8 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
                         label="Nama Tampilan"
                         id="displayName"
                         type="text"
-                        name="displayName"
                         placeholder="Masukan Nama Tampilan"
                         required
-                        inputClassName="bg-stone-200/50"
                         defaultValue={contact?.displayName}
                         error={errors?.displayName?.message}
                     />

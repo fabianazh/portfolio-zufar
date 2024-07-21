@@ -1,10 +1,11 @@
 'use client'
 
+import { Session } from 'next-auth'
 import { getSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 
 export default function Welcome() {
-    const [session, setSession] = useState(null)
+    const [session, setSession] = useState<Session | null>(null)
 
     useEffect(() => {
         const fetchSession = async () => {

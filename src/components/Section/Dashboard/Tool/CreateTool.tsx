@@ -62,10 +62,8 @@ export default function CreateTool() {
                         label="Nama"
                         id="name"
                         type="text"
-                        name="name"
                         placeholder="Masukan nama perangkat"
                         required
-                        inputClassName="bg-stone-200/50"
                         error={errors?.name?.message}
                     />
                     <TextInput
@@ -73,10 +71,8 @@ export default function CreateTool() {
                         label="Link"
                         id="link"
                         type="text"
-                        name="link"
                         placeholder="Masukan link perangkat"
                         required
-                        inputClassName="bg-stone-200/50"
                         error={errors?.link?.message}
                     />
                     <div className="w-full lg:w-8/12 grid grid-cols-2 gap-6">

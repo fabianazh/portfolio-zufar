@@ -5,14 +5,14 @@ import Table from '@/components/Other/Table'
 import mailServices from '@/services/mails'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import FormatDate from '@/libs/utils/formatDate'
+import formatDate from '@/libs/utils/formatDate'
 
 export default function MailBox() {
     const [mails, setMails] = useState<Mail[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 
-    const { simpleFormatDate } = FormatDate()
+    const { simpleFormatDate } = formatDate()
 
     useEffect(() => {
         async function fetchMails() {

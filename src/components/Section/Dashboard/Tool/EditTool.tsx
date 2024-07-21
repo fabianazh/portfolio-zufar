@@ -90,10 +90,8 @@ export default function EditTool({ toolId }: { toolId: string }) {
                         label="Nama"
                         id="name"
                         type="text"
-                        name="name"
                         required
                         placeholder="Masukan nama perangkat"
-                        inputClassName="bg-stone-200/50"
                         defaultValue={tool?.name}
                         error={errors?.name?.message}
                     />
@@ -102,10 +100,8 @@ export default function EditTool({ toolId }: { toolId: string }) {
                         label="Link"
                         id="link"
                         type="text"
-                        name="link"
                         placeholder="Masukan link perangkat"
                         required
-                        inputClassName="bg-stone-200/50"
                         defaultValue={tool?.link}
                         error={errors?.link?.message}
                     />
