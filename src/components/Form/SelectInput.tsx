@@ -10,12 +10,12 @@ const SelectInput = forwardRef<HTMLSelectElement, SelectProps>(
             error,
             label,
             defaultValue,
-            options,
             className,
             labelClassName,
             desc,
             descClassName,
             inputClassName,
+            children,
             ...rest
         },
         ref
@@ -26,7 +26,7 @@ const SelectInput = forwardRef<HTMLSelectElement, SelectProps>(
             >
                 <label
                     htmlFor={id}
-                    className={`inline-block w-fit text-sm lg:text-base text-gray-700 font-medium px-1 ${labelClassName}`}
+                    className={`inline-block w-fit text-sm text-gray-700 font-medium px-1 ${labelClassName}`}
                 >
                     {label}
                 </label>
@@ -42,12 +42,7 @@ const SelectInput = forwardRef<HTMLSelectElement, SelectProps>(
                     className={`peer h-fit w-full px-4 py-2.5 rounded text-sm focus:border-gray-400 focus:outline-none border text-gray-900 bg-white disabled:bg-stone-100/80 read-only:cursor-auto ${inputClassName}`}
                     {...(rest as React.SelectHTMLAttributes<HTMLSelectElement>)}
                 >
-                    <option value="">{defaultValue}</option>
-                    {options.map((item, index) => (
-                        <option value={item.value} key={index}>
-                            {item.label}
-                        </option>
-                    ))}
+                    {children}
                 </select>
                 {error && <span className="text-red-600 text-sm">{error}</span>}
             </fieldset>

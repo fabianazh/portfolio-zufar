@@ -11,10 +11,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export interface SelectProps extends InputProps {
-    options: {
-        value: string
-        label: string
-    }[]
+    children: React.ReactNode
 }
 
 export interface ReactSelectProps extends SelectProps {

@@ -23,7 +23,7 @@ const TextInput = forwardRef<HTMLInputElement, InputProps>(function TextInput(
         >
             <label
                 htmlFor={id}
-                className={`inline-block w-fit text-sm lg:text-base text-gray-700 font-medium px-1 ${labelClassName}`}
+                className={`inline-block w-fit text-sm text-gray-700 font-medium px-1 ${labelClassName}`}
             >
                 {label}
             </label>
