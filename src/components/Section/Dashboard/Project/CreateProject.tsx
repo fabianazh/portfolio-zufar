@@ -1,14 +1,16 @@
 'use client'
 
 import projectServices from '@/services/projects'
+import toolServices from '@/services/tools'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { projectSchema } from '@/zodSchema/route'
 import ActionLayout from '@/components/Layout/ActionLayout'
 import TextInput from '@/components/Form/TextInput'
+import TextareaInput from '@/components/Form/TextareaInput'
 import SelectInput from '@/components/Form/SelectInput'
+import CheckboxInput from '@/components/Form/CheckboxInput'
 import FileInput from '@/components/Form/FileInput'
-import DateInput from '@/components/Form/DateInput'
 import PrimaryButton from '@/components/Button/PrimaryButton'
 import Loaders from '@/components/Other/Loader'
 import * as z from 'zod'
@@ -17,41 +19,64 @@ import { useToast } from '@/context/ToastContext'
 import BackButton from '@/components/Button/BackButton'
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { categoryOptions, monthOptions, yearOptions } from '@/constant/options'
 
 type FormData = z.infer<typeof projectSchema>
 
 export default function CreateProject() {
+    const [tools, setTools] = useState<Tool[]>([])
+    const [loading, setLoading] = useState<boolean>(true)
+    const [error, setError] = useState<boolean>(false)
+
     const router = useRouter()
     const { showToast } = useToast()
-    const [previewImages, setPreviewImages] = useState<
-        Record<string, string[]>
-    >({})
+    const [previewImages, setPreviewImages] = useState<{
+        thumbnail: string
+        photos: string[]
+    }>({ thumbnail: '', photos: [] })
+    const [files, setFiles] = useState<{
+        thumbnail: File | null
+        photos: File[]
+    }>({ thumbnail: null, photos: [] })
 
     const {
         handleSubmit,
         register,
         reset,
         setValue,
-        watch,
-        formState: { errors, isSubmitting, isDirty, isValid },
+        formState: { errors, isSubmitting },
     } = useForm<FormData>({
         resolver: zodResolver(projectSchema),
     })
 
-    const handleFileChange = (
-        e: React.ChangeEvent<HTMLInputElement>,
-        fieldName: 'thumbnail' | 'photos'
-    ) => {
-        if (e.target.files) {
-            const files = Array.from(e.target.files)
-            const photosWithDesc = files.map((file) => ({
-                photo: URL.createObjectURL(file),
-                desc: file.name,
+    const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            const file = e.target.files[0]
+            const photo = URL.createObjectURL(file)
+            setValue('thumbnail', file)
+            setFiles((prev) => ({
+                ...prev,
+                thumbnail: file,
             }))
-            setValue(fieldName, photosWithDesc)
             setPreviewImages((prev) => ({
                 ...prev,
-                [fieldName]: photosWithDesc.map((photo) => photo.photo),
+                thumbnail: photo,
+            }))
+        }
+    }
+
+    const handlePhotosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const files = Array.from(e.target.files)
+            const photos = files.map((file) => URL.createObjectURL(file))
+            setValue('photos', files)
+            setFiles((prev) => ({
+                ...prev,
+                photos: files,
+            }))
+            setPreviewImages((prev) => ({
+                ...prev,
+                photos: photos,
             }))
         }
     }
@@ -61,77 +86,64 @@ export default function CreateProject() {
         index: number
     ) => {
         setPreviewImages((prev) => {
-            const updatedField = prev[fieldName].filter((_, i) => i !== index)
-            if (updatedField.length === 0) {
-                setValue(fieldName, [])
-            }
-            return {
-                ...prev,
-                [fieldName]: updatedField,
+            if (fieldName === 'thumbnail') {
+                setValue(fieldName, null as any)
+                setFiles((prev) => ({
+                    ...prev,
+                    thumbnail: null,
+                }))
+                return { ...prev, thumbnail: '' }
+            } else {
+                const updatedPhotos = prev.photos.filter((_, i) => i !== index)
+                const updatedFiles = files.photos.filter((_, i) => i !== index)
+                setValue(fieldName, updatedFiles)
+                setFiles((prev) => ({
+                    ...prev,
+                    photos: updatedFiles,
+                }))
+                return { ...prev, photos: updatedPhotos }
             }
         })
     }
 
     const resetForm = () => {
         reset()
-        setPreviewImages({})
+        setPreviewImages({ thumbnail: '', photos: [] })
+        setFiles({ thumbnail: null, photos: [] })
     }
 
-    const categoryOptions = [
-        { value: 'Desain Arsitektur', label: 'Desain Arsitektur' },
-        { value: 'Desain Interior', label: 'Desain Interior' },
-        { value: 'Struktur Bangunan', label: 'Struktur Bangunan' },
-        { value: 'Instalasi Listrik & Air', label: 'Instalasi Listrik & Air' },
-    ]
+    async function fetchTools() {
+        try {
+            const { data } = await toolServices.getAllTools()
+            setTools(data.data)
+        } catch (error) {
+            setError(true)
+        } finally {
+            setLoading(false)
+        }
+    }
 
-    const monthOptions = [
-        { value: 'Jan', label: 'Januari' },
-        { value: 'Feb', label: 'Februari' },
-        { value: 'Mar', label: 'Maret' },
-        { value: 'Apr', label: 'April' },
-        { value: 'May', label: 'Mei' },
-        { value: 'Jun', label: 'Juni' },
-        { value: 'Jul', label: 'Juli' },
-        { value: 'Aug', label: 'Agustus' },
-        { value: 'Sep', label: 'September' },
-        { value: 'Oct', label: 'Oktober' },
-        { value: 'Nov', label: 'November' },
-        { value: 'Dec', label: 'Desember' },
-    ]
-
-    const currentYear = new Date().getFullYear()
-    const yearOptions = Array.from({ length: currentYear - 2020 }, (_, i) => ({
-        value: `${2021 + i}`,
-        label: `${2021 + i}`,
-    }))
-
-    // useEffect(() => {
-    //     const subscription = watch((value, { name }) => {
-    //         if (name === 'month' || name === 'year') {
-    //             if (value.month && value.year) {
-    //                 const date = new Date(`${value.month} 1, ${value.year}`)
-    //                 setValue('date', date.toISOString().split('T')[0])
-    //             }
-    //         }
-    //     })
-    //     return () => subscription.unsubscribe()
-    // }, [watch, setValue])
+    useEffect(() => {
+        fetchTools()
+    }, [])
 
     async function onSubmit(data: FormData) {
         console.log(data)
         // try {
-        //     const response = await projectServices.createProject(data)
-        //     console.log(response.data)
+        //     const response = await projectServices.createProject(data);
+        //     console.log(response.data);
         //     if (response.data.status === true) {
-        //         showToast(response.data.message, { type: 'success' })
-        //         router.push('/dashboard/projects')
+        //         showToast(response.data.message, { type: 'success' });
+        //         router.push('/dashboard/projects');
         //     } else {
-        //         showToast(response.data.message, { type: 'error' })
+        //         showToast(response.data.message, { type: 'error' });
         //     }
         // } catch (error) {
-        //     showToast('Error', { type: 'error' })
+        //     showToast('Error', { type: 'error' });
         // }
     }
+
+    console.log(errors)
 
     return (
         <ActionLayout returnLink="/dashboard/projects">
@@ -151,14 +163,11 @@ export default function CreateProject() {
                     <div className="h-fit flex flex-col gap-1.5">
                         <FileInput
                             {...register('thumbnail')}
-                            onChange={(e) => handleFileChange(e, 'thumbnail')}
+                            onChange={handleThumbnailChange}
                             label="Thumbnail"
                             className="lg:w-6/12"
                             inputClassName={`${
-                                previewImages.thumbnail &&
-                                previewImages.thumbnail.length !== 0
-                                    ? 'sr-only'
-                                    : ''
+                                previewImages.thumbnail ? 'sr-only' : ''
                             }`}
                             id="thumbnail"
                             accept=".jpg,.png"
@@ -166,29 +175,22 @@ export default function CreateProject() {
                         />
                         {previewImages.thumbnail && (
                             <div className="w-6/12 relative">
-                                {previewImages.thumbnail.map((src, index) => (
-                                    <div key={index} className="relative">
-                                        <Image
-                                            src={src}
-                                            alt="Thumbnail preview"
-                                            width={300}
-                                            height={200}
-                                            className="w-full h-fit object-cover border"
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={() =>
-                                                handleImageRemove(
-                                                    'thumbnail',
-                                                    index
-                                                )
-                                            }
-                                            className="absolute h-7 w-7 text-sm aspect-square top-2 right-2 bg-stone-200 opacity-90 text-black rounded-full font-semibold"
-                                        >
-                                            &#10005;
-                                        </button>
-                                    </div>
-                                ))}
+                                <Image
+                                    src={previewImages.thumbnail}
+                                    alt="Thumbnail preview"
+                                    width={300}
+                                    height={200}
+                                    className="w-full h-fit object-cover border"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        handleImageRemove('thumbnail', 0)
+                                    }
+                                    className="absolute h-7 w-7 text-sm aspect-square top-2 right-2 bg-stone-200 opacity-90 text-black rounded-full font-semibold"
+                                >
+                                    &#10005;
+                                </button>
                             </div>
                         )}
                     </div>
@@ -202,7 +204,7 @@ export default function CreateProject() {
                         required
                         error={errors?.name?.message}
                     />
-                    <TextInput
+                    <TextareaInput
                         {...register('desc')}
                         label="Deskripsi"
                         id="desc"
@@ -210,6 +212,7 @@ export default function CreateProject() {
                         type="text"
                         placeholder="Masukan deskripsi projek"
                         required
+                        rows={4}
                         error={errors?.desc?.message}
                     />
                     <SelectInput
@@ -226,72 +229,64 @@ export default function CreateProject() {
                             </option>
                         ))}
                     </SelectInput>
-                    <SelectInput
-                        {...register('tools')}
+                    <CheckboxInput
                         label="Perangkat"
-                        id="tools"
-                        className="lg:w-6/12"
+                        options={tools.map((tool) => ({
+                            value: tool,
+                            label: tool.name,
+                        }))}
+                        register={register('tools')}
                         error={errors?.tools?.message}
-                    >
-                        <option value="">Pilih perangkat</option>
-                        {categoryOptions.map((item, index) => (
-                            <option value={item.value} key={index}>
-                                {item.label}
-                            </option>
-                        ))}
-                    </SelectInput>
-                    <div className="w-6/12 flex flex-col gap-1.5">
-                        <div className="w-full grid grid-cols-2 gap-6">
-                            <SelectInput
-                                // {...register('month')}
-                                label="Bulan"
-                                id="month"
-                                error={``}
-                                // error={errors?.date?.message}
-                            >
-                                <option value="">Pilih bulan pengerjaan</option>
-                                {monthOptions.map((item, index) => (
-                                    <option value={item.value} key={index}>
-                                        {item.label}
-                                    </option>
-                                ))}
-                            </SelectInput>
-                            <SelectInput
-                                // {...register('year')}
-                                label="Tahun"
-                                id="year"
-                                error={``}
-                                // error={errors?.date?.message}
-                            >
-                                <option value="">Pilih tahun pengerjaan</option>
-                                {yearOptions.map((item, index) => (
-                                    <option value={item.value} key={index}>
-                                        {item.label}
-                                    </option>
-                                ))}
-                            </SelectInput>
-                        </div>
+                    />
+                    <div className="w-full lg:w-6/12 flex flex-row gap-4">
+                        <SelectInput
+                            {...register('month')}
+                            label="Bulan"
+                            id="month"
+                            error={errors?.month?.message}
+                            className="w-full"
+                        >
+                            <option value="">Pilih bulan</option>
+                            {monthOptions.map((item, index) => (
+                                <option value={item.value} key={index}>
+                                    {item.label}
+                                </option>
+                            ))}
+                        </SelectInput>
+                        <SelectInput
+                            {...register('year')}
+                            label="Tahun"
+                            id="year"
+                            error={errors?.year?.message}
+                            className="w-full"
+                        >
+                            <option value="">Pilih tahun</option>
+                            {yearOptions.map((item, index) => (
+                                <option value={item.value} key={index}>
+                                    {item.label}
+                                </option>
+                            ))}
+                        </SelectInput>
                     </div>
-                    <input type="hidden" {...register('date')} />
                     <div className="h-fit flex flex-col gap-1.5">
                         <FileInput
                             {...register('photos')}
-                            onChange={(e) => handleFileChange(e, 'photos')}
-                            label="Gambar Lain"
+                            onChange={handlePhotosChange}
+                            label="Foto Projek"
                             className="lg:w-6/12"
-                            id="photos"
-                            accept=".jpg,.png"
-                            multiple
-                            error={errors?.photos?.message}
                             inputClassName={`${
                                 previewImages.photos &&
                                 previewImages.photos.length !== 0
                                     ? 'sr-only'
                                     : ''
                             }`}
+                            id="photos"
+                            accept=".jpg,.png"
+                            multiple
+                            error={errors?.photos?.message}
                         />
                         {previewImages.photos && (
-                            <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="w-full grid grid-cols-2 lg:grid-cols-3 gap-6">
                                 {previewImages.photos.map((src, index) => (
                                     <div key={index} className="relative">
                                         <Image

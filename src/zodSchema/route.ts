@@ -23,40 +23,22 @@ export const toolSchema = z.object({
         .url('Link tidak valid.')
         .nonempty('Link tampilan harus diisi.'),
 })
-
 export const projectSchema = z.object({
-    id: z.string(),
-    thumbnail: z.object({
-        photo: z.string().nonempty('Foto thumbnail harus diisi.'),
-        desc: z.string().nonempty('Deskripsi thumbnail harus diisi.'),
-    }),
-    date: z.string().nonempty('Tanggal harus diisi.'),
-    name: z
-        .string()
-        .min(4, 'Nama projek minimal harus berisi 4 karakter.')
-        .max(90, 'Nama projek maksimal berisi 90 karakter.')
-        .nonempty('Nama projek harus diisi.'),
-    desc: z.string().nonempty('Deskripsi projek harus diisi.'),
-    category: z.string().nonempty('Kategori harus diisi.'),
+    name: z.string().nonempty('Nama projek diperlukan'),
+    desc: z.string().nonempty('Deskripsi projek diperlukan'),
+    category: z.string().nonempty('Kategori projek diperlukan'),
     tools: z
         .array(
             z.object({
-                name: z.string().nonempty('Nama perangkat harus diisi.'),
-                url: z
-                    .string()
-                    .url('URL perangkat tidak valid')
-                    .nonempty('URL perangkat harus diisi.'),
+                id: z.number(),
+                name: z.string(),
             })
         )
-        .nonempty('Perangkat harus diisi.'),
-    photos: z
-        .array(
-            z.object({
-                photo: z.string(),
-                desc: z.string().optional(),
-            })
-        )
-        .optional(),
+        .min(1, 'Minimal satu alat harus dipilih'),
+    thumbnail: z.instanceof(File),
+    photos: z.array(z.instanceof(File)).optional(),
+    month: z.string().nonempty('Bulan diperlukan'),
+    year: z.string().nonempty('Tahun diperlukan'),
 })
 
 export const loginSchema = z.object({

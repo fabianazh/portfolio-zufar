@@ -27,3 +27,20 @@ export interface DateInputProps extends InputProps {
     min?: string
     max?: string
 }
+
+export interface CheckboxInputProps extends InputProps {
+    options: { value: any; label: string }[]
+    register: any
+}
+
+export interface TextareaInputProps
+    extends InputHTMLAttributes<HTMLTextAreaElement> {
+    className?: string
+    labelClassName?: string
+    descClassName?: string
+    inputClassName?: string
+    label: string
+    desc?: string
+    error?: string
+    rows?: number
+}
