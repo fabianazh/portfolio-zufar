@@ -29,8 +29,7 @@ export interface DateInputProps extends InputProps {
 }
 
 export interface CheckboxInputProps extends InputProps {
-    options: { value: any; label: string }[]
-    register: any
+    children: React.ReactNode
 }
 
 export interface TextareaInputProps

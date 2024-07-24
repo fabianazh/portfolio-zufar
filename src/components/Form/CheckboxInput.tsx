@@ -14,31 +14,28 @@ const CheckboxInput = forwardRef<HTMLTextAreaElement, CheckboxInputProps>(
             label,
             desc,
             error,
-            options,
-            register,
+            children,
             ...rest
         },
         ref
     ) {
         return (
-            <div className="flex flex-col gap-1.5">
-                <label className="font-medium">{label}</label>
-                <div className="flex flex-wrap gap-4">
-                    {options.map((option, index) => (
-                        <label key={index} className="flex items-center gap-2">
-                            <input
-                                type="checkbox"
-                                value={option.value.id}
-                                {...register}
-                                className="form-checkbox"
-                                {...rest}
-                            />
-                            {option.label}
-                        </label>
-                    ))}
-                </div>
-                {error && <p className="text-red-500 text-sm">{error}</p>}
-            </div>
+            <fieldset
+                className={`relative h-fit flex flex-col gap-1.5 ${className}`}
+            >
+                <label
+                    className={`inline-block w-fit text-sm text-gray-700 font-medium px-1 ${labelClassName}`}
+                >
+                    {label}
+                </label>
+                {desc && (
+                    <div className={`w-full h-fit text-xs ${descClassName}`}>
+                        {desc}
+                    </div>
+                )}
+                <div className="flex flex-wrap gap-4">{children}</div>
+                {error && <span className="text-red-600 text-sm">{error}</span>}
+            </fieldset>
         )
     }
 )

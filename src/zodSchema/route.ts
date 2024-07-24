@@ -30,13 +30,24 @@ export const projectSchema = z.object({
     tools: z
         .array(
             z.object({
-                id: z.number(),
+                id: z.string(),
                 name: z.string(),
+                link: z.string(),
             })
         )
         .min(1, 'Minimal satu alat harus dipilih'),
-    thumbnail: z.instanceof(File),
-    photos: z.array(z.instanceof(File)).optional(),
+    thumbnail: z
+        .instanceof(FileList)
+        .refine(
+            (files) => files.length === 1,
+            'Thumbnail is required and should be one file'
+        ),
+    photos: z
+        .instanceof(FileList)
+        .refine(
+            (files) => files.length > 0,
+            'Photos are required and should be multiple files'
+        ),
     month: z.string().nonempty('Bulan diperlukan'),
     year: z.string().nonempty('Tahun diperlukan'),
 })

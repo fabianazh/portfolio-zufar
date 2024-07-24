@@ -2,6 +2,7 @@ import { getData, addData } from '@/libs/firebase/service'
 import { NextRequest, NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
 import slugify from 'slugify'
+import { serverTimestamp } from 'firebase/firestore'
 
 export async function GET(req: NextRequest) {
     const projects = await getData<Project>('projects')
@@ -16,6 +17,21 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
     const data = await req.json()
     const token = req.headers.get('Authorization')?.split(' ')[1] ?? ''
+
+    const projectId = slugify(data.data.name, { lower: true })
+
+    const newData = {
+        projectId,
+        name: data.data.name,
+        thumbnail: data.data.thumbnail,
+        photos: data.data.photos,
+        desc: data.data.desc,
+        category: data.data.category,
+        tools: data.data.tools,
+        date: `${data.data.month} ${data.data.year}`,
+        created_at: serverTimestamp(),
+        updated_at: serverTimestamp(),
+    }
 
     try {
         const decoded = await new Promise((resolve, reject) => {
@@ -32,16 +48,14 @@ export async function POST(req: NextRequest) {
             )
         })
 
-        await addData(
-            'projects',
-            data.data,
-            slugify(data.data.name, { lower: true })
-        )
+        // await addData('projects', data.data, projectId)
 
         return NextResponse.json({
             status: true,
             statusCode: 200,
             message: 'Projek berhasil dibuat!',
+            data,
+            newData,
         })
     } catch (error) {
         return NextResponse.json({

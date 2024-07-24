@@ -2,7 +2,7 @@
 
 import projectServices from '@/services/projects'
 import toolServices from '@/services/tools'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { projectSchema } from '@/zodSchema/route'
 import ActionLayout from '@/components/Layout/ActionLayout'
@@ -18,7 +18,6 @@ import { useRouter } from 'next/navigation'
 import { useToast } from '@/context/ToastContext'
 import BackButton from '@/components/Button/BackButton'
 import { useState, useEffect } from 'react'
-import Image from 'next/image'
 import { categoryOptions, monthOptions, yearOptions } from '@/constant/options'
 
 type FormData = z.infer<typeof projectSchema>
@@ -30,86 +29,19 @@ export default function CreateProject() {
 
     const router = useRouter()
     const { showToast } = useToast()
-    const [previewImages, setPreviewImages] = useState<{
-        thumbnail: string
-        photos: string[]
-    }>({ thumbnail: '', photos: [] })
-    const [files, setFiles] = useState<{
-        thumbnail: File | null
-        photos: File[]
-    }>({ thumbnail: null, photos: [] })
 
     const {
         handleSubmit,
+        control,
         register,
         reset,
-        setValue,
         formState: { errors, isSubmitting },
     } = useForm<FormData>({
         resolver: zodResolver(projectSchema),
     })
 
-    const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files.length > 0) {
-            const file = e.target.files[0]
-            const photo = URL.createObjectURL(file)
-            setValue('thumbnail', file)
-            setFiles((prev) => ({
-                ...prev,
-                thumbnail: file,
-            }))
-            setPreviewImages((prev) => ({
-                ...prev,
-                thumbnail: photo,
-            }))
-        }
-    }
-
-    const handlePhotosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            const files = Array.from(e.target.files)
-            const photos = files.map((file) => URL.createObjectURL(file))
-            setValue('photos', files)
-            setFiles((prev) => ({
-                ...prev,
-                photos: files,
-            }))
-            setPreviewImages((prev) => ({
-                ...prev,
-                photos: photos,
-            }))
-        }
-    }
-
-    const handleImageRemove = (
-        fieldName: 'thumbnail' | 'photos',
-        index: number
-    ) => {
-        setPreviewImages((prev) => {
-            if (fieldName === 'thumbnail') {
-                setValue(fieldName, null as any)
-                setFiles((prev) => ({
-                    ...prev,
-                    thumbnail: null,
-                }))
-                return { ...prev, thumbnail: '' }
-            } else {
-                const updatedPhotos = prev.photos.filter((_, i) => i !== index)
-                const updatedFiles = files.photos.filter((_, i) => i !== index)
-                setValue(fieldName, updatedFiles)
-                setFiles((prev) => ({
-                    ...prev,
-                    photos: updatedFiles,
-                }))
-                return { ...prev, photos: updatedPhotos }
-            }
-        })
-    }
-
     const resetForm = () => {
         reset()
-        setPreviewImages({ thumbnail: '', photos: [] })
-        setFiles({ thumbnail: null, photos: [] })
     }
 
     async function fetchTools() {
@@ -128,22 +60,26 @@ export default function CreateProject() {
     }, [])
 
     async function onSubmit(data: FormData) {
-        console.log(data)
-        // try {
-        //     const response = await projectServices.createProject(data);
-        //     console.log(response.data);
-        //     if (response.data.status === true) {
-        //         showToast(response.data.message, { type: 'success' });
-        //         router.push('/dashboard/projects');
-        //     } else {
-        //         showToast(response.data.message, { type: 'error' });
-        //     }
-        // } catch (error) {
-        //     showToast('Error', { type: 'error' });
-        // }
+        // const formData = new FormData()
+        // formData.append('thumbnail', data.thumbnail[0])
+        // Array.from(data.photos).forEach((file) => {
+        //     formData.append('photos', file as File)
+        // })
+        // console.log(formData)
+        try {
+            const response = await projectServices.createProject(data)
+            console.log(response.data)
+            if (response.data.status === true) {
+                showToast(response.data.message, { type: 'success' })
+                // router.push('/dashboard/projects')
+                console.log(response.data)
+            } else {
+                showToast(response.data.message, { type: 'error' })
+            }
+        } catch (error) {
+            showToast('Error', { type: 'error' })
+        }
     }
-
-    console.log(errors)
 
     return (
         <ActionLayout returnLink="/dashboard/projects">
@@ -160,40 +96,15 @@ export default function CreateProject() {
                     onSubmit={handleSubmit(onSubmit)}
                     encType="multipart/form-data"
                 >
-                    <div className="h-fit flex flex-col gap-1.5">
-                        <FileInput
-                            {...register('thumbnail')}
-                            onChange={handleThumbnailChange}
-                            label="Thumbnail"
-                            className="lg:w-6/12"
-                            inputClassName={`${
-                                previewImages.thumbnail ? 'sr-only' : ''
-                            }`}
-                            id="thumbnail"
-                            accept=".jpg,.png"
-                            error={errors?.thumbnail?.message}
-                        />
-                        {previewImages.thumbnail && (
-                            <div className="w-6/12 relative">
-                                <Image
-                                    src={previewImages.thumbnail}
-                                    alt="Thumbnail preview"
-                                    width={300}
-                                    height={200}
-                                    className="w-full h-fit object-cover border"
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        handleImageRemove('thumbnail', 0)
-                                    }
-                                    className="absolute h-7 w-7 text-sm aspect-square top-2 right-2 bg-stone-200 opacity-90 text-black rounded-full font-semibold"
-                                >
-                                    &#10005;
-                                </button>
-                            </div>
-                        )}
-                    </div>
+                    <FileInput
+                        {...register('thumbnail')}
+                        label="Thumbnail"
+                        id="thumbnail"
+                        accept=".jpg,.png"
+                        className="w-full"
+                        inputClassName="w-full lg:w-6/12"
+                        error={errors?.thumbnail?.message}
+                    />
                     <TextInput
                         {...register('name')}
                         label="Nama Projek"
@@ -231,13 +142,45 @@ export default function CreateProject() {
                     </SelectInput>
                     <CheckboxInput
                         label="Perangkat"
-                        options={tools.map((tool) => ({
-                            value: tool,
-                            label: tool.name,
-                        }))}
-                        register={register('tools')}
                         error={errors?.tools?.message}
-                    />
+                    >
+                        {tools.map((tool, index) => (
+                            <label
+                                key={index}
+                                className="flex items-center gap-2 text-sm"
+                            >
+                                <Controller
+                                    name="tools"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <input
+                                            type="checkbox"
+                                            className="form-checkbox"
+                                            value={tool.id}
+                                            checked={field.value?.some(
+                                                (t: Tool) => t.id === tool.id
+                                            )}
+                                            onChange={(e) => {
+                                                const newTools = e.target
+                                                    .checked
+                                                    ? [
+                                                          ...(field.value ||
+                                                              []),
+                                                          tool,
+                                                      ]
+                                                    : field.value.filter(
+                                                          (t: Tool) =>
+                                                              t.id !== tool.id
+                                                      )
+                                                field.onChange(newTools)
+                                            }}
+                                        />
+                                    )}
+                                />
+                                {tool.name}
+                            </label>
+                        ))}
+                    </CheckboxInput>
                     <div className="w-full lg:w-6/12 flex flex-row gap-4">
                         <SelectInput
                             {...register('month')}
@@ -268,51 +211,16 @@ export default function CreateProject() {
                             ))}
                         </SelectInput>
                     </div>
-                    <div className="h-fit flex flex-col gap-1.5">
-                        <FileInput
-                            {...register('photos')}
-                            onChange={handlePhotosChange}
-                            label="Foto Projek"
-                            className="lg:w-6/12"
-                            inputClassName={`${
-                                previewImages.photos &&
-                                previewImages.photos.length !== 0
-                                    ? 'sr-only'
-                                    : ''
-                            }`}
-                            id="photos"
-                            accept=".jpg,.png"
-                            multiple
-                            error={errors?.photos?.message}
-                        />
-                        {previewImages.photos && (
-                            <div className="w-full grid grid-cols-2 lg:grid-cols-3 gap-6">
-                                {previewImages.photos.map((src, index) => (
-                                    <div key={index} className="relative">
-                                        <Image
-                                            src={src}
-                                            alt="Photos preview"
-                                            width={300}
-                                            height={200}
-                                            className="w-full h-fit object-cover border"
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={() =>
-                                                handleImageRemove(
-                                                    'photos',
-                                                    index
-                                                )
-                                            }
-                                            className="absolute h-7 w-7 text-sm aspect-square top-2 right-2 bg-stone-200 opacity-90 text-black rounded-full font-semibold"
-                                        >
-                                            &#10005;
-                                        </button>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
+                    <FileInput
+                        {...register('photos')}
+                        label="Gambar projek"
+                        id="photos"
+                        multiple
+                        accept=".jpg,.png"
+                        className="w-full"
+                        inputClassName="w-full lg:w-6/12"
+                        error={errors?.photos?.message}
+                    />
                     <div className="w-full lg:w-6/12 grid grid-cols-2 gap-6">
                         <PrimaryButton
                             type="button"
