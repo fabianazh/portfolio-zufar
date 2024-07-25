@@ -17,7 +17,7 @@ import * as z from 'zod'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/context/ToastContext'
 import BackButton from '@/components/Button/BackButton'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { categoryOptions, monthOptions, yearOptions } from '@/constant/options'
 
 type FormData = z.infer<typeof projectSchema>
@@ -40,8 +40,13 @@ export default function CreateProject() {
         resolver: zodResolver(projectSchema),
     })
 
+    const thumbnailRef = useRef<HTMLInputElement>(null)
+    const photosRef = useRef<HTMLInputElement>(null)
+
     const resetForm = () => {
         reset()
+        thumbnailRef.current?.reset()
+        photosRef.current?.reset()
     }
 
     async function fetchTools() {
@@ -60,18 +65,11 @@ export default function CreateProject() {
     }, [])
 
     async function onSubmit(data: FormData) {
-        // const formData = new FormData()
-        // formData.append('thumbnail', data.thumbnail[0])
-        // Array.from(data.photos).forEach((file) => {
-        //     formData.append('photos', file as File)
-        // })
-        // console.log(formData)
         try {
             const response = await projectServices.createProject(data)
             console.log(response.data)
             if (response.data.status === true) {
                 showToast(response.data.message, { type: 'success' })
-                // router.push('/dashboard/projects')
                 console.log(response.data)
             } else {
                 showToast(response.data.message, { type: 'error' })
@@ -104,6 +102,7 @@ export default function CreateProject() {
                         className="w-full"
                         inputClassName="w-full lg:w-6/12"
                         error={errors?.thumbnail?.message}
+                        ref={thumbnailRef}
                     />
                     <TextInput
                         {...register('name')}
@@ -220,6 +219,7 @@ export default function CreateProject() {
                         className="w-full"
                         inputClassName="w-full lg:w-6/12"
                         error={errors?.photos?.message}
+                        ref={photosRef}
                     />
                     <div className="w-full lg:w-6/12 grid grid-cols-2 gap-6">
                         <PrimaryButton
