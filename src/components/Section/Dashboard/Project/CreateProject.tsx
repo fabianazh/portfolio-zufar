@@ -19,17 +19,11 @@ import { useToast } from '@/context/ToastContext'
 import BackButton from '@/components/Button/BackButton'
 import { useState, useEffect, useRef } from 'react'
 import { categoryOptions, monthOptions, yearOptions } from '@/constant/options'
+import { uploadFile } from '@/libs/firebase/service'
 
 type FormData = z.infer<typeof projectSchema>
 
 export default function CreateProject() {
-    const [tools, setTools] = useState<Tool[]>([])
-    const [loading, setLoading] = useState<boolean>(true)
-    const [error, setError] = useState<boolean>(false)
-
-    const router = useRouter()
-    const { showToast } = useToast()
-
     const {
         handleSubmit,
         control,
@@ -39,14 +33,18 @@ export default function CreateProject() {
     } = useForm<FormData>({
         resolver: zodResolver(projectSchema),
     })
+    const [tools, setTools] = useState<Tool[]>([])
+    const [loading, setLoading] = useState<boolean>(true)
+    const [error, setError] = useState<boolean>(false)
+
+    const router = useRouter()
+    const { showToast } = useToast()
 
     const thumbnailRef = useRef<HTMLInputElement>(null)
     const photosRef = useRef<HTMLInputElement>(null)
 
     const resetForm = () => {
         reset()
-        thumbnailRef.current?.reset()
-        photosRef.current?.reset()
     }
 
     async function fetchTools() {
@@ -67,10 +65,58 @@ export default function CreateProject() {
     async function onSubmit(data: FormData) {
         try {
             const response = await projectServices.createProject(data)
-            console.log(response.data)
+
             if (response.data.status === true) {
-                showToast(response.data.message, { type: 'success' })
-                console.log(response.data)
+                const projectId = response.data.projectId
+
+                const thumbnailFiles = thumbnailRef.current?.files ?? []
+                let thumbnailUrl: string | null = null
+
+                if (thumbnailFiles.length > 0) {
+                    const thumbnailFile = thumbnailFiles[0]
+                    thumbnailUrl = await uploadFile(
+                        'projects',
+                        projectId,
+                        thumbnailFile
+                    )
+                }
+
+                const photosFiles = photosRef.current?.files ?? []
+                const photoUploadPromises = Array.from(photosFiles).map(
+                    (file) => {
+                        uploadFile('projects', projectId, file)
+                    }
+                )
+                const photoUrls = await Promise.all(photoUploadPromises)
+
+                const updateData: any = {}
+                if (thumbnailUrl) {
+                    updateData.thumbnail = thumbnailUrl
+                }
+                if (photoUrls.length > 0) {
+                    updateData.photos = photoUrls
+                }
+
+                if (Object.keys(updateData).length > 0) {
+                    try {
+                        const responseUpdate =
+                            await projectServices.updateProject(
+                                projectId,
+                                updateData
+                            )
+
+                        if (responseUpdate.data.status === true) {
+                            showToast(response.data.message, {
+                                type: 'success',
+                            })
+                            router.push('/dashboard/projects')
+                        } else {
+                            showToast(response.data.message, { type: 'error' })
+                        }
+                    } catch (error) {
+                        showToast('Error', { type: 'error' })
+                    }
+                }
             } else {
                 showToast(response.data.message, { type: 'error' })
             }
@@ -96,13 +142,13 @@ export default function CreateProject() {
                 >
                     <FileInput
                         {...register('thumbnail')}
+                        ref={thumbnailRef}
                         label="Thumbnail"
                         id="thumbnail"
                         accept=".jpg,.png"
                         className="w-full"
                         inputClassName="w-full lg:w-6/12"
-                        error={errors?.thumbnail?.message}
-                        ref={thumbnailRef}
+                        error={errors?.thumbnail?.message as string}
                     />
                     <TextInput
                         {...register('name')}
@@ -212,14 +258,14 @@ export default function CreateProject() {
                     </div>
                     <FileInput
                         {...register('photos')}
+                        ref={photosRef}
                         label="Gambar projek"
                         id="photos"
                         multiple
                         accept=".jpg,.png"
                         className="w-full"
                         inputClassName="w-full lg:w-6/12"
-                        error={errors?.photos?.message}
-                        ref={photosRef}
+                        error={errors?.photos?.message as string}
                     />
                     <div className="w-full lg:w-6/12 grid grid-cols-2 gap-6">
                         <PrimaryButton

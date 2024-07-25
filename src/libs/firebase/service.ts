@@ -109,33 +109,36 @@ export async function signInWithGoogle(data: any, callback: Function) {
     }
 }
 
-export async function uploadFile(folderName: string, file: any) {
-    console.log(file)
-    if (file) {
-        if (file < 10248576) {
-            const storageRef = ref(storage, `/img/${folderName}/${file.name}`)
-            // const uploadTask = uploadBytesResumable(storageRef, file)
-            // uploadTask.on(
-            //     'state_changed',
-            //     (snapshot) => {
-            //         const progress =
-            //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            //     },
-            //     (error) => {
-            //         console.log(error)
-            //     },
-            //     () => {
-            //         getDownloadURL(uploadTask.snapshot.ref).then(
-            //             (downloadURL) => {
-            //                 console.log(downloadURL)
-            //             }
-            //         )
-            //     }
-            // )
+export async function uploadFile(folderName: string, id: string, file: File): Promise<string | null> {
+    return new Promise((resolve, reject) => {
+        if (file && file.size < 10248576) {
+            const storageRef = ref(storage, `/img/${folderName}/${id}/${file.name}`);
+            const uploadTask = uploadBytesResumable(storageRef, file);
+
+            uploadTask.on(
+                'state_changed',
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log(`Upload is ${progress}% done`);
+                },
+                (error) => {
+                    console.error('Upload error:', error);
+                    reject(error);
+                },
+                async () => {
+                    try {
+                        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                        console.log('File available at', downloadURL);
+                        resolve(downloadURL);
+                    } catch (error) {
+                        console.error('Error getting download URL:', error);
+                        reject(error);
+                    }
+                }
+            );
         } else {
-            return false
+            resolve(null);  // Resolves with null if file is invalid or too large
         }
-    } else {
-        return false
-    }
+    });
 }
+

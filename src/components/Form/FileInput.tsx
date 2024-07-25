@@ -1,6 +1,6 @@
 'use client'
 
-import { forwardRef, useImperativeHandle, useState } from 'react'
+import { forwardRef, useState } from 'react'
 import { FileInputProps } from '@/interfaces/component'
 import Image from 'next/image'
 
@@ -24,14 +24,10 @@ const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
     ) {
         const [preview, setPreview] = useState<string[]>([])
 
-        useImperativeHandle(ref, () => ({
-            reset: () => {
-                setPreview([])
-            },
-        }))
-
         const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            e.preventDefault()
             const files = e.target.files
+
             if (files) {
                 const filePreviews = Array.from(files).map((file) => {
                     return URL.createObjectURL(file)
@@ -65,7 +61,7 @@ const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
                         className={`${
                             multiple
                                 ? 'w-full grid gap-6 grid-cols-2 lg:grid-cols-3'
-                                : 'w-full lg:w-8/12'
+                                : 'w-full lg:w-6/12'
                         }`}
                     >
                         {preview.map((src, index) => (

@@ -27,14 +27,13 @@ export async function PUT(
         return NextResponse.json({
             status: true,
             statusCode: 200,
-            message: 'Perangkat berhasil dihapus!',
-            data: data,
+            message: 'Perangkat berhasil diperbarui!',
         })
     } catch (error) {
         return NextResponse.json({
             status: false,
             statusCode: 500,
-            message: 'Perangkat gagal dihapus!',
+            message: 'Perangkat gagal diperbarui!',
         })
     }
 }

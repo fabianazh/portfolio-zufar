@@ -21,10 +21,8 @@ export async function POST(req: NextRequest) {
     const projectId = slugify(data.data.name, { lower: true })
 
     const newData = {
-        projectId,
+        id: projectId,
         name: data.data.name,
-        thumbnail: data.data.thumbnail,
-        photos: data.data.photos,
         desc: data.data.desc,
         category: data.data.category,
         tools: data.data.tools,
@@ -48,14 +46,13 @@ export async function POST(req: NextRequest) {
             )
         })
 
-        // await addData('projects', data.data, projectId)
+        await addData('projects', newData, projectId)
 
         return NextResponse.json({
             status: true,
             statusCode: 200,
             message: 'Projek berhasil dibuat!',
-            data,
-            newData,
+            projectId,
         })
     } catch (error) {
         return NextResponse.json({

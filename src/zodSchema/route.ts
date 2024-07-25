@@ -1,4 +1,5 @@
 import z from 'zod'
+import { zfd } from 'zod-form-data'
 
 export const mailSchema = z.object({
     name: z
@@ -23,10 +24,11 @@ export const toolSchema = z.object({
         .url('Link tidak valid.')
         .nonempty('Link tampilan harus diisi.'),
 })
+
 export const projectSchema = z.object({
-    name: z.string().nonempty('Nama projek diperlukan'),
-    desc: z.string().nonempty('Deskripsi projek diperlukan'),
-    category: z.string().nonempty('Kategori projek diperlukan'),
+    name: z.string().nonempty('Nama projek harus diisi'),
+    desc: z.string().nonempty('Deskripsi projek harus diisi'),
+    category: z.string().nonempty('Kategori projek harus diisi'),
     tools: z
         .array(
             z.object({
@@ -36,20 +38,18 @@ export const projectSchema = z.object({
             })
         )
         .min(1, 'Minimal satu alat harus dipilih'),
-    thumbnail: z
-        .instanceof(FileList)
-        .refine(
-            (files) => files.length === 1,
-            'Thumbnail is required and should be one file'
-        ),
-    photos: z
-        .instanceof(FileList)
-        .refine(
-            (files) => files.length > 0,
-            'Photos are required and should be multiple files'
-        ),
-    month: z.string().nonempty('Bulan diperlukan'),
-    year: z.string().nonempty('Tahun diperlukan'),
+    thumbnail: z.any(),
+    // .length(1, { message: 'Thumbnail harus berisi 1 file.' })
+    // .refine((files) => files[0]?.size < 5000000, {
+    //     message: "Thumbnail file can't be bigger than 5MB.",
+    // })
+    photos: z.any(),
+    // .min(1, 'Gambar harus diisi dengan lebih dari satu file.')
+    // .refine((files) => files.every((file) => file.size < 5000000), {
+    //     message: "Each photo file can't be bigger than 5MB.",
+    // })
+    month: z.string().nonempty('Bulan harus diisi'),
+    year: z.string().nonempty('Tahun harus diisi'),
 })
 
 export const loginSchema = z.object({
