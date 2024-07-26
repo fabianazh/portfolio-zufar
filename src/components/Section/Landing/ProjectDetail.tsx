@@ -144,7 +144,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                     className="w-full relative h-full group cursor-pointer mb-4 lg:mb-6"
                                 >
                                     <Image
-                                        src={photo}
+                                        src={photo ?? ''}
                                         alt={`${photo}`}
                                         width={700}
                                         height={900}
@@ -162,7 +162,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
             <ImageDetailModal
                 isOpen={isModalOpen}
                 close={closeModal}
-                photo={modalData?.photo}
+                photo={modalData?.photo ?? ''}
                 alt={modalData.alt}
             />
             {/* End Modal */}
