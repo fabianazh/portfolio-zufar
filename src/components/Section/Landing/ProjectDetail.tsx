@@ -102,7 +102,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             <div>
                                 {project?.tools.map((tool, index) => (
                                     <LinkText
-                                        href={tool.url}
+                                        href={tool.link}
                                         className="text-base font-bold"
                                         key={tool.name}
                                     >
