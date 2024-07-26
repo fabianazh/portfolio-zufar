@@ -69,10 +69,7 @@ interface Project {
     name: string
     desc: string
     category: string
-    tools: {
-        name: string
-        url: string
-    }[]
+    tools: Tool[]
     photos: string[]
     created_at: {
         seconds: number
