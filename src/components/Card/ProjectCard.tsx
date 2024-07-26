@@ -26,7 +26,7 @@ export default function ProjectCard({
                     className="w-full flex h-fit overflow-hidden group"
                 >
                     <Image
-                        src={`/img/projects/${project.id}/${project.thumbnail}`}
+                        src={project.thumbnail}
                         alt={`Projek ${project.name}`}
                         width={300}
                         height={400}
