@@ -75,7 +75,7 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
                 <BackButton href={'/dashboard/contacts'} />
             </ActionLayout.Buttons>
             <ActionLayout.Header
-                title={`Edit Info ${contact?.name}`}
+                title={`Edit Info ${contact?.type}`}
                 desc="Pastikan perubahan informasi kontak yang akan
                             ditampilkan kepada pengguna telah sesuai dengan yang
                             diinginkan."
@@ -86,13 +86,13 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
                     onSubmit={handleSubmit(onSubmit)}
                 >
                     <TextInput
-                        {...register('name')}
-                        label="Nama"
-                        id="name"
+                        {...register('type')}
+                        label="Jenis Kontak"
+                        id="type"
                         type="text"
                         required
-                        defaultValue={contact?.name}
-                        error={errors?.name?.message}
+                        defaultValue={contact?.type}
+                        error={errors?.type?.message}
                         disabled
                     />
                     <TextInput

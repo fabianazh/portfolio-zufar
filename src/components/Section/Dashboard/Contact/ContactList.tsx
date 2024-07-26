@@ -51,7 +51,7 @@ export default function ContactList() {
                                     #
                                 </Table.Header>
                                 <Table.Header className="w-2/12">
-                                    Nama
+                                    Jenis Kontak
                                 </Table.Header>
                                 <Table.Header className="w-3/12">
                                     Nama Tampilan
@@ -73,7 +73,7 @@ export default function ContactList() {
                                                 {index + 1}
                                             </Table.Data>
                                             <Table.Data className="w-2/12">
-                                                {contact.name}
+                                                {contact.type}
                                             </Table.Data>
                                             <Table.Data className="w-3/12">
                                                 {contact.displayName}

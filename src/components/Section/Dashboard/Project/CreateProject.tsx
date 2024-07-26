@@ -81,37 +81,40 @@ export default function CreateProject() {
                     )
                 }
 
-                const photosFiles = photosRef.current?.files ?? []
-                const photoUploadPromises = Array.from(photosFiles).map(
-                    (file) => {
-                        uploadFile('projects', projectId, file)
+                const photosFiles = photosRef.current?.files ?? [];
+                const photoUploadPromises = Array.from(photosFiles).map(async (file) => {
+                    if (file) {
+                        return await uploadFile('projects', projectId, file);
                     }
-                )
-                const photoUrls = await Promise.all(photoUploadPromises)
-
-                const updateData: any = {}
+                    return null;
+                });
+                const photoUrls = await Promise.all(photoUploadPromises);
+    
+                const updateData: any = {};
                 if (thumbnailUrl) {
-                    updateData.thumbnail = thumbnailUrl
+                    updateData.thumbnail = thumbnailUrl;
                 }
-                if (photoUrls.length > 0) {
-                    updateData.photos = photoUrls
+                if (photoUrls.filter(url => url !== null).length > 0) {
+                    updateData.photos = photoUrls.filter(url => url !== null);
                 }
 
                 if (Object.keys(updateData).length > 0) {
                     try {
-                        const responseUpdate =
-                            await projectServices.updateProject(
-                                projectId,
-                                updateData
-                            )
+                        const updateImage = await projectServices.updateProject(
+                            projectId,
+                            updateData
+                        )
+ 
 
-                        if (responseUpdate.data.status === true) {
-                            showToast(response.data.message, {
+                        if (updateImage.data.status === true) {
+                            showToast('Projek berhasil dibuat!', {
                                 type: 'success',
                             })
                             router.push('/dashboard/projects')
                         } else {
-                            showToast(response.data.message, { type: 'error' })
+                            showToast('Projek gagal dibuat!', {
+                                type: 'error',
+                            })
                         }
                     } catch (error) {
                         showToast('Error', { type: 'error' })

@@ -19,11 +19,11 @@ export async function GET(
 
 export async function PUT(
     req: NextRequest,
-    { params }: { params: { toolId: string } }
+    { params }: { params: { projectId: string } }
 ) {
     const data = await req.json()
     const token = req.headers.get('Authorization')?.split(' ')[1] ?? ''
-    const projectId = params.toolId
+    const projectId = params.projectId
 
     try {
         const decoded = await new Promise((resolve, reject) => {
@@ -49,14 +49,13 @@ export async function PUT(
             status: true,
             statusCode: 200,
             message: 'Projek berhasil diperbarui!',
-            projectId,
         })
     } catch (error) {
         return NextResponse.json({
             status: false,
             statusCode: 500,
             message: 'Projek gagal diperbarui!',
-            error: error,
+            error,
         })
     }
 }

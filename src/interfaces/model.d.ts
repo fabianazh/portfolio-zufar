@@ -1,6 +1,6 @@
 interface Contact {
     id: string
-    name: string
+    type: string
     displayName: string
     link: string
 }
@@ -64,10 +64,7 @@ interface Profile {
 
 interface Project {
     id: string
-    thumbnail: {
-        photo: string
-        desc: string
-    }
+    thumbnail: string
     date: string
     name: string
     desc: string
@@ -76,10 +73,7 @@ interface Project {
         name: string
         url: string
     }[]
-    photos: {
-        photo: string
-        desc: string
-    }[]
+    photos: string[]
     created_at: {
         seconds: number
         nanoseconds: number

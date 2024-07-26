@@ -63,11 +63,11 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             onClick={() => {
                                 openModal()
                                 setModalData({
-                                    photo: `${project?.id}/${project?.thumbnail.photo}`,
+                                    photo: `${project?.id}/${project?.thumbnail}`,
                                     alt: project?.id ?? '',
                                 })
                             }}
-                            src={`/img/projects/${project?.id}/${project?.thumbnail.photo}`}
+                            src={`/img/projects/${project?.id}/${project?.thumbnail}`}
                             alt={`Projek ${project?.name}`}
                             width={900}
                             height={700}
@@ -131,21 +131,21 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             Gambar Lainnya
                         </span>
                         <div className="w-full columns-1 lg:columns-2 gap-4 lg:gap-6 h-fit">
-                            {project?.photos.map((item, index) => (
+                            {project?.photos.map((photo, index) => (
                                 <div
                                     key={index}
                                     onClick={() => {
                                         openModal()
                                         setModalData({
-                                            photo: `${project?.id}/${item.photo}`,
+                                            photo: `${project?.id}/${photo}`,
                                             alt: project.id ?? '',
                                         })
                                     }}
                                     className="w-full relative h-full group cursor-pointer mb-4 lg:mb-6"
                                 >
                                     <Image
-                                        src={`/img/projects/${project?.id}/${item.photo}`}
-                                        alt={`${item.photo}`}
+                                        src={`/img/projects/${project?.id}/${photo}`}
+                                        alt={`${photo}`}
                                         width={700}
                                         height={900}
                                         layout="responsive"

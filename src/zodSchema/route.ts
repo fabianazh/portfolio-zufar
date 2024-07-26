@@ -1,5 +1,4 @@
 import z from 'zod'
-import { zfd } from 'zod-form-data'
 
 export const mailSchema = z.object({
     name: z
@@ -58,7 +57,7 @@ export const loginSchema = z.object({
 })
 
 export const contactSchema = z.object({
-    name: z.string().readonly(),
+    type: z.string().readonly(),
     displayName: z
         .string()
         .min(4, 'Nama tampilan minimal harus 4 karakter.')
