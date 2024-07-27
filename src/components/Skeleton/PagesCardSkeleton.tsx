@@ -1,20 +1,20 @@
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
-export default function ProfilesCardSkeleton() {
+export default function PagesCardSkeleton() {
     return (
         <>
-            {Array.from({ length: 6 }, (_, index) => (
+            {Array.from({ length: 3 }, (_, index) => (
                 <div
                     key={index}
-                    className="w-full h-48 flex gap-6 z-0 p-4 border rounded overflow-hidden bg-white"
+                    className="w-full h-36 flex gap-6 z-0 p-4 border rounded overflow-hidden bg-white"
                 >
-                    <div className="w-fit flex h-full aspect-square my-auto overflow-hidden rounded group">
+                    {/* <div className="w-fit flex h-full aspect-square my-auto overflow-hidden rounded group">
                         <Skeleton
                             containerClassName="w-fit h-full"
                             className={`aspect-square h-full`}
                         />
-                    </div>
+                    </div> */}
                     <div className="w-6/12 flex flex-col h-full justify-between">
                         <Skeleton
                             height={'1.5rem'}

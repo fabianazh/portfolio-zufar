@@ -1,10 +1,10 @@
 'use client'
 
-import { forwardRef, useState } from 'react'
-import { FileInputProps } from '@/interfaces/component'
+import { forwardRef, useState, useImperativeHandle, Ref } from 'react'
+import { FileInputProps, FileInputHandle } from '@/interfaces/component'
 import Image from 'next/image'
 
-const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
+const FileInput = forwardRef<FileInputHandle, FileInputProps>(
     function FileInput(
         {
             className,
@@ -40,6 +40,22 @@ const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
         const handleRemovePreview = (index: number) => {
             setPreview((prev) => prev.filter((_, i) => i !== index))
         }
+
+        useImperativeHandle(
+            ref,
+            () => ({
+                resetPreview() {
+                    setPreview([])
+                },
+                getFiles() {
+                    return (
+                        (ref as React.RefObject<HTMLInputElement>).current
+                            ?.files ?? null
+                    )
+                },
+            }),
+            []
+        )
 
         return (
             <fieldset
@@ -139,7 +155,7 @@ const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
                     </>
                 )}
                 <input
-                    ref={ref}
+                    ref={ref as Ref<HTMLInputElement>}
                     id={id}
                     name={id}
                     type="file"

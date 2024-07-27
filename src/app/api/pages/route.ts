@@ -2,12 +2,12 @@ import { getData } from '@/libs/firebase/service'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest) {
-    const profiles = await getData<Profile>('profiles')
+    const pages = await getData<any>('pages')
     return NextResponse.json({
         status: true,
         statusCode: 200,
         message: 'success',
-        data: profiles,
+        data: pages,
     })
 }
 

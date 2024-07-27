@@ -5,7 +5,7 @@ import LinkText from '@/components/Typography/LinkText'
 import Record from '@/components/Typography/Record'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import profileServices from '@/services/profiles'
+import pageServices from '@/services/pages'
 import Dropdown from '@/components/Other/Dropdown'
 import { RxDotsVertical } from 'react-icons/rx'
 import { useRouter } from 'next/navigation'
@@ -14,7 +14,7 @@ import ActionLayout from '@/components/Layout/ActionLayout'
 import BackButton from '@/components/Button/BackButton'
 import ProfileDetailSkeleton from '@/components/Skeleton/ProfileDetailSkeleton'
 
-export default function ProfileDetail({ profileId }: { profileId: string }) {
+export default function ProfileDetail() {
     const [profile, setProfile] = useState<Profile | null | undefined>(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
@@ -25,7 +25,7 @@ export default function ProfileDetail({ profileId }: { profileId: string }) {
     useEffect(() => {
         async function getProfileDetail() {
             try {
-                const { data } = await profileServices.getProfileById(profileId)
+                const { data } = await pageServices.getPageById('about')
                 setProfile(data.data)
             } catch (error) {
                 console.error(error)
@@ -35,7 +35,7 @@ export default function ProfileDetail({ profileId }: { profileId: string }) {
         }
 
         getProfileDetail()
-    }, [profileId])
+    }, [])
 
     if (error) {
         return <></>
@@ -45,13 +45,13 @@ export default function ProfileDetail({ profileId }: { profileId: string }) {
         <ActionLayout
             isLoading={loading}
             className="w-full flex flex-col gap-6"
-            returnLink="/dashboard/profiles"
+            returnLink="/dashboard/pages"
             isEmpty={!profile}
             emptyMessage="Tidak dapat menemukan data profil."
             loadingSkeleton={<ProfileDetailSkeleton />}
         >
             <ActionLayout.Buttons>
-                <BackButton href={'/dashboard/profiles'} />
+                <BackButton href={'/dashboard/pages'} />
 
                 <Dropdown>
                     <Dropdown.Trigger>
@@ -62,13 +62,13 @@ export default function ProfileDetail({ profileId }: { profileId: string }) {
                     <Dropdown.Items>
                         {!profile?.isUsed && (
                             <Dropdown.Item
-                                href={`/dashboard/profiles/${profile?.id}/use`}
+                                href={`/dashboard/pages/${profile?.id}/use`}
                             >
                                 Gunakan
                             </Dropdown.Item>
                         )}
                         <Dropdown.Item
-                            href={`/dashboard/profiles/${profile?.id}/edit`}
+                            href={`/dashboard/pages/${profile?.id}/edit`}
                         >
                             Edit
                         </Dropdown.Item>
@@ -78,16 +78,16 @@ export default function ProfileDetail({ profileId }: { profileId: string }) {
                 </Dropdown>
             </ActionLayout.Buttons>
             <ActionLayout.Header
-                title={`Detail Profil ${profile?.versionName}`}
-                desc="Anda dapat menggunakan, mengubah dan menghapus informasi profil yang akan ditampilkan kepada pengguna."
+                title={`Detail Halaman Profil`}
+                desc="Anda dapat mengubah profil yang akan ditampilkan kepada pengguna."
             />
             <ActionLayout.Content>
                 <div className="w-full flex flex-col gap-10 lg:gap-16 min-h-screen">
                     <div className="w-full h-auto flex flex-col lg:flex-row gap-10">
                         <div className="w-full lg:w-3/12 shrink-0">
                             <Image
-                                src={`/img/z/${profile?.photo.path}`}
-                                alt={profile?.photo.alt ?? ''}
+                                src={`${profile?.photo}`}
+                                alt={'Zufar Syabana'}
                                 width={200}
                                 height={200}
                                 className="w-full h-fit"
@@ -203,11 +203,7 @@ export default function ProfileDetail({ profileId }: { profileId: string }) {
                                             </Record.Title>
                                             {item.desc.length < 2 ? (
                                                 <Record.Description>
-                                                    Melakukan pengukuran dan
-                                                    observasi lingkungan sekitar
-                                                    untuk mendukung visualisasi
-                                                    dan detail model 3D yang
-                                                    akurat.
+                                                   {item.desc}
                                                 </Record.Description>
                                             ) : (
                                                 <>

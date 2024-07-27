@@ -8,6 +8,8 @@ import ActionLayout from '@/components/Layout/ActionLayout'
 import projectServices from '@/services/projects'
 import LinkText from '@/components/Typography/LinkText'
 import BackButton from '@/components/Button/BackButton'
+import Dropdown from '@/components/Other/Dropdown'
+import { RxDotsVertical } from 'react-icons/rx'
 
 export default function ProjectDetail({ projectId }: { projectId: string }) {
     const [project, setProject] = useState<Project | null | undefined>(null)
@@ -55,6 +57,27 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
             >
                 <ActionLayout.Buttons>
                     <BackButton href={'/dashboard/projects'} />
+                    <Dropdown>
+                        <Dropdown.Trigger>
+                            <div className="w-8 h-8 grid place-items-center rounded-full bg-stone-200/50 transition-all duration-300 bg-stone-100 shadow-sm">
+                                <RxDotsVertical />
+                            </div>
+                        </Dropdown.Trigger>
+                        <Dropdown.Items>
+                            <Dropdown.Item
+                                href={`/dashboard/projects/${project?.id}`}
+                            >
+                                Detail
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                                href={`/dashboard/projects/${project?.id}/edit`}
+                            >
+                                Edit
+                            </Dropdown.Item>
+                            <Dropdown.Divider />
+                            <Dropdown.Item as="delete">Hapus</Dropdown.Item>
+                        </Dropdown.Items>
+                    </Dropdown>
                 </ActionLayout.Buttons>
                 <ActionLayout.Content className="w-full h-fit flex flex-col gap-2.5">
                     {/* Thumbnail  */}

@@ -13,11 +13,11 @@ export default function TotalData() {
     useEffect(() => {
         async function getAllCounts() {
             try {
-                const profileCount = await getCollectionCount('profiles')
+                const pageCount = await getCollectionCount('pages')
                 const toolCount = await getCollectionCount('tools')
                 const projectCount = await getCollectionCount('projects')
                 const mailsCount = await getCollectionCount('mails')
-                setCounts({ projectCount, profileCount, toolCount, mailsCount })
+                setCounts({ projectCount, pageCount, toolCount, mailsCount })
             } catch (error) {
                 setError(true)
             } finally {
@@ -39,9 +39,9 @@ export default function TotalData() {
                     ) : (
                         <section className="grid w-full h-auto grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-8 lg:mb-6">
                             <TotalDataCard
-                                href={`/dashboard/profiles`}
-                                title="Total Profil"
-                                totalData={counts.profileCount}
+                                href={`/dashboard/pages`}
+                                title="Total Halaman"
+                                totalData={counts.pageCount + 1}
                             />
                             <TotalDataCard
                                 href={`/dashboard/tools`}

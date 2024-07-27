@@ -24,7 +24,12 @@ import { FileInputHandle } from '@/interfaces/component'
 
 type FormData = z.infer<typeof projectSchema>
 
-export default function CreateProject() {
+export default function EditProject({ projectId }: { projectId: string }) {
+    const [project, setProject] = useState<Project | null | undefined>(null)
+    const [tools, setTools] = useState<Tool[]>([])
+    const [loading, setLoading] = useState<boolean>(true)
+    const [error, setError] = useState<boolean>(false)
+
     const {
         handleSubmit,
         control,
@@ -33,10 +38,17 @@ export default function CreateProject() {
         formState: { errors, isSubmitting },
     } = useForm<FormData>({
         resolver: zodResolver(projectSchema),
+        // defaultValues: {
+        //     thumbnail: project?.thumbnail,
+        //     name: project?.name,
+        //     desc: project?.desc,
+        //     category: project?.category,
+        //     month: project?.date.split(' ')[0],
+        //     year: project?.date.split(' ')[1],
+        //     tools: project?.tools,
+        //     photos: project?.photos,
+        // },
     })
-    const [tools, setTools] = useState<Tool[]>([])
-    const [loading, setLoading] = useState<boolean>(true)
-    const [error, setError] = useState<boolean>(false)
 
     const router = useRouter()
     const { showToast } = useToast()
@@ -50,10 +62,14 @@ export default function CreateProject() {
         photosRef.current?.resetPreview()
     }
 
-    async function fetchTools() {
+    async function fetchData() {
         try {
-            const { data } = await toolServices.getAllTools()
-            setTools(data.data)
+            const toolsResponse = await toolServices.getAllTools()
+            const projectResponse = await projectServices.getProjectById(
+                projectId
+            )
+            setProject(projectResponse.data.data)
+            setTools(toolsResponse.data.data)
         } catch (error) {
             setError(true)
         } finally {
@@ -62,7 +78,7 @@ export default function CreateProject() {
     }
 
     useEffect(() => {
-        fetchTools()
+        fetchData()
     }, [])
 
     async function onSubmit(data: FormData) {
@@ -148,13 +164,18 @@ export default function CreateProject() {
     }
 
     return (
-        <ActionLayout returnLink="/dashboard/projects">
+        <ActionLayout
+            returnLink="/dashboard/projects"
+            isLoading={loading}
+            isEmpty={!project}
+            emptyMessage="Projek tidak ditemukan."
+        >
             <ActionLayout.Buttons>
                 <BackButton href={'/dashboard/projects'} />
             </ActionLayout.Buttons>
             <ActionLayout.Header
-                title={`Tambah Projek`}
-                desc="Pastikan informasi projek yang akan ditampilkan kepada pengguna telah sesuai dengan yang diinginkan."
+                title={`Edit Projek ${project?.name}`}
+                desc="Pastikan perubahan informasi projek yang akan ditampilkan kepada pengguna telah sesuai dengan yang diinginkan."
             />
             <ActionLayout.Content>
                 <form
@@ -181,17 +202,18 @@ export default function CreateProject() {
                         placeholder="Masukan nama projek"
                         required
                         error={errors?.name?.message}
+                        defaultValue={project?.name}
                     />
                     <TextareaInput
                         {...register('desc')}
                         label="Deskripsi"
                         id="desc"
                         className="lg:w-6/12"
-                        type="text"
                         placeholder="Masukan deskripsi projek"
                         required
                         rows={4}
                         error={errors?.desc?.message}
+                        defaultValue={project?.desc}
                     />
                     <SelectInput
                         {...register('category')}
@@ -200,10 +222,13 @@ export default function CreateProject() {
                         className="lg:w-6/12"
                         error={errors?.category?.message}
                     >
-                        <option value="">Pilih kategori</option>
-                        {categoryOptions.map((item, index) => (
-                            <option value={item.value} key={index}>
-                                {item.label}
+                        {categoryOptions.map((category, index) => (
+                            <option
+                                value={category.value}
+                                key={index}
+                                selected={category.value === project?.category}
+                            >
+                                {category.label}
                             </option>
                         ))}
                     </SelectInput>
@@ -256,10 +281,16 @@ export default function CreateProject() {
                             error={errors?.month?.message}
                             className="w-full"
                         >
-                            <option value="">Pilih bulan</option>
-                            {monthOptions.map((item, index) => (
-                                <option value={item.value} key={index}>
-                                    {item.label}
+                            {monthOptions.map((month, index) => (
+                                <option
+                                    value={month.value}
+                                    key={index}
+                                    selected={
+                                        month.value ===
+                                        project?.date.split(' ')[0]
+                                    }
+                                >
+                                    {month.label}
                                 </option>
                             ))}
                         </SelectInput>
@@ -270,10 +301,16 @@ export default function CreateProject() {
                             error={errors?.year?.message}
                             className="w-full"
                         >
-                            <option value="">Pilih tahun</option>
-                            {yearOptions.map((item, index) => (
-                                <option value={item.value} key={index}>
-                                    {item.label}
+                            {yearOptions.map((year, index) => (
+                                <option
+                                    value={year.value}
+                                    key={index}
+                                    selected={
+                                        year.value ===
+                                        project?.date.split(' ')[1]
+                                    }
+                                >
+                                    {year.label}
                                 </option>
                             ))}
                         </SelectInput>

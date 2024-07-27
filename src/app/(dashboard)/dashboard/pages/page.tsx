@@ -1,15 +1,15 @@
-import ProfileList from '@/components/Section/Dashboard/Profile/ProfileList'
+import PageList from '@/components/Section/Dashboard/Page/PageList'
 
 export function generateMetadata() {
     return {
-        title: 'List Profil',
+        title: 'List Halaman',
     }
 }
 
 export default function CreateProjectPage() {
     return (
         <>
-            <ProfileList />
+            <PageList />
         </>
     )
 }

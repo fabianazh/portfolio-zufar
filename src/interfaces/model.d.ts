@@ -62,6 +62,16 @@ interface Profile {
     // [key: string]: any
 }
 
+interface Page {
+    id: string
+    name: string
+    updated_at: {
+        seconds: number
+        nanoseconds: number
+    }
+    [key: string]: any
+}
+
 interface Project {
     id: string
     thumbnail: string
