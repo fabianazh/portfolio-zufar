@@ -11,7 +11,7 @@ export default function FormSkeleton() {
                     <Skeleton height={'1.2rem'} containerClassName="w-5/12" />
                 </div>
             </div>
-            <div className="w-full h-fit grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="w-full h-fit grid grid-cols-1 gap-6">
                 {Array.from({ length: 4 }, (_, index) => (
                     <div key={index} className="w-full flex flex-col gap-1.5">
                         <Skeleton height={'1.3rem'} containerClassName="w-32" />

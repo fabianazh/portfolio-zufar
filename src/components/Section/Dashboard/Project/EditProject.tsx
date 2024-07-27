@@ -20,46 +20,97 @@ import BackButton from '@/components/Button/BackButton'
 import { useState, useEffect, useRef } from 'react'
 import { categoryOptions, monthOptions, yearOptions } from '@/constant/options'
 import { uploadFile } from '@/libs/firebase/service'
-import { FileInputHandle } from '@/interfaces/component'
 
 type FormData = z.infer<typeof projectSchema>
 
 export default function EditProject({ projectId }: { projectId: string }) {
-    const [project, setProject] = useState<Project | null | undefined>(null)
-    const [tools, setTools] = useState<Tool[]>([])
-    const [loading, setLoading] = useState<boolean>(true)
-    const [error, setError] = useState<boolean>(false)
-
     const {
         handleSubmit,
         control,
         register,
+        setValue,
+        getValues,
         reset,
         formState: { errors, isSubmitting },
     } = useForm<FormData>({
         resolver: zodResolver(projectSchema),
-        // defaultValues: {
-        //     thumbnail: project?.thumbnail,
-        //     name: project?.name,
-        //     desc: project?.desc,
-        //     category: project?.category,
-        //     month: project?.date.split(' ')[0],
-        //     year: project?.date.split(' ')[1],
-        //     tools: project?.tools,
-        //     photos: project?.photos,
-        // },
     })
+
+    const [project, setProject] = useState<Project | null | undefined>(null)
+    const [tools, setTools] = useState<Tool[]>([])
+    const [loading, setLoading] = useState<boolean>(true)
+    const [error, setError] = useState<boolean>(false)
+    const [thumbnailPreview, setThumbnailPreview] = useState<string[]>([])
+    const [photosPreview, setPhotosPreview] = useState<string[]>([])
 
     const router = useRouter()
     const { showToast } = useToast()
 
-    const thumbnailRef = useRef<FileInputHandle>(null)
-    const photosRef = useRef<FileInputHandle>(null)
+    const thumbnailRef = useRef<HTMLInputElement>(null)
+    const photosRef = useRef<HTMLInputElement>(null)
+
+    const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault()
+        const files = e.target.files
+
+        if (files) {
+            const fileThumbnailPreviews = Array.from(files).map((file) =>
+                URL.createObjectURL(file)
+            )
+            setThumbnailPreview(fileThumbnailPreviews)
+
+            setValue('thumbnail', files)
+        }
+    }
+
+    const handleRemoveThumbnailPreview = (index: number) => {
+        setThumbnailPreview((prev) => {
+            const updatedPreviews = prev.filter((_, i) => i !== index)
+            const updatedFiles = getValues('thumbnail') as FileList
+
+            const newFileList = Array.from(updatedFiles).filter(
+                (_, i) => i !== index
+            )
+            setValue('thumbnail', newFileList)
+
+            return updatedPreviews
+        })
+    }
+
+    const handlePhotosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault()
+        const files = e.target.files
+
+        if (files) {
+            const filePhotosPreviews = Array.from(files).map((file) =>
+                URL.createObjectURL(file)
+            )
+            setPhotosPreview(filePhotosPreviews)
+
+            setValue('photos', files)
+        }
+    }
+    const handleRemovePhotosPreview = (index: number) => {
+        setPhotosPreview((prev) => {
+            const updatedPhotos = prev.filter((_, i) => i !== index)
+            const currentFiles = getValues('photos') as FileList
+            const updatedFiles = Array.from(currentFiles).filter(
+                (_, i) => i !== index
+            )
+
+            const newFileList = new DataTransfer()
+            updatedFiles.forEach((file) => newFileList.items.add(file))
+
+            setValue('photos', newFileList.files)
+
+            return updatedPhotos
+        })
+    }
 
     function resetForm() {
         reset()
-        thumbnailRef.current?.resetPreview()
-        photosRef.current?.resetPreview()
+        setThumbnailPreview([])
+        setPhotosPreview([])
     }
 
     async function fetchData() {
@@ -70,6 +121,8 @@ export default function EditProject({ projectId }: { projectId: string }) {
             )
             setProject(projectResponse.data.data)
             setTools(toolsResponse.data.data)
+            setThumbnailPreview([projectResponse.data.data?.thumbnail])
+            setPhotosPreview(projectResponse.data.data?.photos)
         } catch (error) {
             setError(true)
         } finally {
@@ -90,7 +143,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
 
                 const uploadPromises: Promise<string | null>[] = []
 
-                const thumbnailFiles = thumbnailRef.current?.getFiles() ?? []
+                const thumbnailFiles = thumbnailRef.current?.files ?? []
                 if (thumbnailFiles.length > 0) {
                     const thumbnailFile = thumbnailFiles[0]
                     uploadPromises.push(
@@ -98,7 +151,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                     )
                 }
 
-                const photosFiles = photosRef.current?.getFiles()
+                const photosFiles = photosRef.current?.files
                 const filesArray = photosFiles ? Array.from(photosFiles) : []
 
                 for (const file of filesArray) {
@@ -192,6 +245,9 @@ export default function EditProject({ projectId }: { projectId: string }) {
                         className="w-full"
                         inputClassName="w-full lg:w-6/12"
                         error={errors?.thumbnail?.message as string}
+                        handleFileChange={handleThumbnailChange}
+                        handleRemovePreview={handleRemoveThumbnailPreview}
+                        preview={thumbnailPreview}
                     />
                     <TextInput
                         {...register('name')}
@@ -244,35 +300,45 @@ export default function EditProject({ projectId }: { projectId: string }) {
                                 <Controller
                                     name="tools"
                                     control={control}
-                                    render={({ field }) => (
-                                        <input
-                                            type="checkbox"
-                                            className="form-checkbox"
-                                            value={tool.id}
-                                            checked={field.value?.some(
+                                    render={({ field }) => {
+                                        const isChecked =
+                                            field.value?.some(
                                                 (t: Tool) => t.id === tool.id
-                                            )}
-                                            onChange={(e) => {
-                                                const newTools = e.target
-                                                    .checked
-                                                    ? [
-                                                          ...(field.value ||
-                                                              []),
-                                                          tool,
-                                                      ]
-                                                    : field.value.filter(
-                                                          (t: Tool) =>
-                                                              t.id !== tool.id
-                                                      )
-                                                field.onChange(newTools)
-                                            }}
-                                        />
-                                    )}
+                                            ) ||
+                                            project?.tools?.some(
+                                                (item) => item.id === tool.id
+                                            )
+
+                                        return (
+                                            <input
+                                                type="checkbox"
+                                                className="form-checkbox"
+                                                value={tool.id}
+                                                checked={isChecked}
+                                                onChange={(e) => {
+                                                    const newTools = e.target
+                                                        .checked
+                                                        ? [
+                                                              ...(field.value ||
+                                                                  []),
+                                                              tool,
+                                                          ]
+                                                        : field.value?.filter(
+                                                              (t: Tool) =>
+                                                                  t.id !==
+                                                                  tool.id
+                                                          ) || []
+                                                    field.onChange(newTools)
+                                                }}
+                                            />
+                                        )
+                                    }}
                                 />
                                 {tool.name}
                             </label>
                         ))}
                     </CheckboxInput>
+
                     <div className="w-full lg:w-6/12 flex flex-row gap-4">
                         <SelectInput
                             {...register('month')}
@@ -325,6 +391,9 @@ export default function EditProject({ projectId }: { projectId: string }) {
                         className="w-full"
                         inputClassName="w-full lg:w-6/12"
                         error={errors?.photos?.message as string}
+                        handleFileChange={handlePhotosChange}
+                        handleRemovePreview={handleRemovePhotosPreview}
+                        preview={photosPreview}
                     />
                     <div className="w-full lg:w-6/12 grid grid-cols-2 gap-6">
                         <PrimaryButton

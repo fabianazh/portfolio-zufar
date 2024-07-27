@@ -1,10 +1,10 @@
 'use client'
 
-import { forwardRef, useState, useImperativeHandle, Ref } from 'react'
-import { FileInputProps, FileInputHandle } from '@/interfaces/component'
+import { forwardRef, useState } from 'react'
+import { FileInputProps } from '@/interfaces/component'
 import Image from 'next/image'
 
-const FileInput = forwardRef<FileInputHandle, FileInputProps>(
+const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
     function FileInput(
         {
             className,
@@ -18,45 +18,13 @@ const FileInput = forwardRef<FileInputHandle, FileInputProps>(
             accept,
             multiple,
             onChange,
+            preview,
+            handleFileChange,
+            handleRemovePreview,
             ...rest
         },
         ref
     ) {
-        const [preview, setPreview] = useState<string[]>([])
-
-        const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-            e.preventDefault()
-            const files = e.target.files
-
-            if (files) {
-                const filePreviews = Array.from(files).map((file) => {
-                    return URL.createObjectURL(file)
-                })
-                setPreview(filePreviews)
-            }
-            if (onChange) onChange(e)
-        }
-
-        const handleRemovePreview = (index: number) => {
-            setPreview((prev) => prev.filter((_, i) => i !== index))
-        }
-
-        useImperativeHandle(
-            ref,
-            () => ({
-                resetPreview() {
-                    setPreview([])
-                },
-                getFiles() {
-                    return (
-                        (ref as React.RefObject<HTMLInputElement>).current
-                            ?.files ?? null
-                    )
-                },
-            }),
-            []
-        )
-
         return (
             <fieldset
                 className={`w-full relative h-fit flex flex-col gap-1.5 ${className}`}
@@ -89,13 +57,17 @@ const FileInput = forwardRef<FileInputHandle, FileInputProps>(
                                     height={200}
                                     className="w-full h-fit object-cover border"
                                 />
-                                <button
-                                    type="button"
-                                    onClick={() => handleRemovePreview(index)}
-                                    className="absolute h-5 lg:h-7 w-5 lg:w-7 text-xs lg:text-sm aspect-square top-2 right-2 bg-stone-200 opacity-90 text-black rounded-full font-semibold"
-                                >
-                                    &#10005;
-                                </button>
+                                {handleRemovePreview && (
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            handleRemovePreview(index)
+                                        }
+                                        className="absolute h-5 lg:h-7 w-5 lg:w-7 text-xs lg:text-sm aspect-square top-2 right-2 bg-stone-200 opacity-90 text-black rounded-full font-semibold"
+                                    >
+                                        &#10005;
+                                    </button>
+                                )}
                             </div>
                         ))}
                     </div>
@@ -155,7 +127,7 @@ const FileInput = forwardRef<FileInputHandle, FileInputProps>(
                     </>
                 )}
                 <input
-                    ref={ref as Ref<HTMLInputElement>}
+                    ref={ref}
                     id={id}
                     name={id}
                     type="file"

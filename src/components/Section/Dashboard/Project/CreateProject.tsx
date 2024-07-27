@@ -20,7 +20,6 @@ import BackButton from '@/components/Button/BackButton'
 import { useState, useEffect, useRef } from 'react'
 import { categoryOptions, monthOptions, yearOptions } from '@/constant/options'
 import { uploadFile } from '@/libs/firebase/service'
-import { FileInputHandle } from '@/interfaces/component'
 
 type FormData = z.infer<typeof projectSchema>
 
@@ -29,25 +28,89 @@ export default function CreateProject() {
         handleSubmit,
         control,
         register,
+        setValue,
+        getValues,
         reset,
         formState: { errors, isSubmitting },
     } = useForm<FormData>({
         resolver: zodResolver(projectSchema),
     })
+
     const [tools, setTools] = useState<Tool[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<boolean>(false)
+    const [thumbnailPreview, setThumbnailPreview] = useState<string[]>([])
+    const [photosPreview, setPhotosPreview] = useState<string[]>([])
 
     const router = useRouter()
     const { showToast } = useToast()
 
-    const thumbnailRef = useRef<FileInputHandle>(null)
-    const photosRef = useRef<FileInputHandle>(null)
+    const thumbnailRef = useRef<HTMLInputElement>(null)
+    const photosRef = useRef<HTMLInputElement>(null)
+
+    const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault()
+        const files = e.target.files
+
+        if (files) {
+            const fileThumbnailPreviews = Array.from(files).map((file) =>
+                URL.createObjectURL(file)
+            )
+            setThumbnailPreview(fileThumbnailPreviews)
+
+            setValue('thumbnail', files)
+        }
+    }
+
+    const handleRemoveThumbnailPreview = (index: number) => {
+        setThumbnailPreview((prev) => {
+            const updatedPreviews = prev.filter((_, i) => i !== index)
+            const updatedFiles = getValues('thumbnail') as FileList
+
+            const newFileList = Array.from(updatedFiles).filter(
+                (_, i) => i !== index
+            )
+            setValue('thumbnail', newFileList)
+
+            return updatedPreviews
+        })
+    }
+
+    const handlePhotosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault()
+        const files = e.target.files
+
+        if (files) {
+            const filePhotosPreviews = Array.from(files).map((file) =>
+                URL.createObjectURL(file)
+            )
+            setPhotosPreview(filePhotosPreviews)
+
+            setValue('photos', files)
+        }
+    }
+
+    const handleRemovePhotosPreview = (index: number) => {
+        setPhotosPreview((prev) => {
+            const updatedPhotos = prev.filter((_, i) => i !== index)
+            const currentFiles = getValues('photos') as FileList
+            const updatedFiles = Array.from(currentFiles).filter(
+                (_, i) => i !== index
+            )
+
+            const newFileList = new DataTransfer()
+            updatedFiles.forEach((file) => newFileList.items.add(file))
+
+            setValue('photos', newFileList.files)
+
+            return updatedPhotos
+        })
+    }
 
     function resetForm() {
         reset()
-        thumbnailRef.current?.resetPreview()
-        photosRef.current?.resetPreview()
+        setThumbnailPreview([])
+        setPhotosPreview([])
     }
 
     async function fetchTools() {
@@ -72,50 +135,35 @@ export default function CreateProject() {
             if (response.data.status === true) {
                 const projectId = response.data.projectId
 
-                const uploadPromises: Promise<string | null>[] = []
+                const thumbnailFiles = thumbnailRef.current?.files ?? []
+                let thumbnailUrl: string | null = null
 
-                const thumbnailFiles = thumbnailRef.current?.getFiles() ?? []
                 if (thumbnailFiles.length > 0) {
                     const thumbnailFile = thumbnailFiles[0]
-                    uploadPromises.push(
-                        uploadFile('projects', projectId, thumbnailFile)
+                    thumbnailUrl = await uploadFile(
+                        'projects',
+                        projectId,
+                        thumbnailFile
                     )
                 }
 
-                const photosFiles = photosRef.current?.getFiles()
-                const filesArray = photosFiles ? Array.from(photosFiles) : []
-
-                for (const file of filesArray) {
-                    if (file) {
-                        uploadPromises.push(
-                            uploadFile('projects', projectId, file)
-                        )
+                const photosFiles = photosRef.current?.files ?? []
+                const photoUploadPromises = Array.from(photosFiles).map(
+                    async (file) => {
+                        if (file) {
+                            return await uploadFile('projects', projectId, file)
+                        }
+                        return null
                     }
-                }
-
-                const uploadResults = await Promise.allSettled(uploadPromises)
-
-                const thumbnailUrl =
-                    uploadResults[0].status === 'fulfilled'
-                        ? uploadResults[0].value
-                        : null
-                const results = await Promise.allSettled(uploadPromises)
-
-                const photoUrls = results
-                    .filter(
-                        (
-                            result
-                        ): result is PromiseFulfilledResult<string | null> =>
-                            result.status === 'fulfilled'
-                    )
-                    .map((result) => result.value)
+                )
+                const photoUrls = await Promise.all(photoUploadPromises)
 
                 const updateData: any = {}
                 if (thumbnailUrl) {
                     updateData.thumbnail = thumbnailUrl
                 }
-                if (photoUrls.length > 0) {
-                    updateData.photos = photoUrls
+                if (photoUrls.filter((url) => url !== null).length > 0) {
+                    updateData.photos = photoUrls.filter((url) => url !== null)
                 }
 
                 if (Object.keys(updateData).length > 0) {
@@ -131,20 +179,24 @@ export default function CreateProject() {
                             })
                             router.push('/dashboard/projects')
                         } else {
-                            showToast('Projek gagal dibuat!', { type: 'error' })
+                            showToast('Projek gagal dibuat!', {
+                                type: 'error',
+                            })
                         }
                     } catch (error) {
-                        showToast('Error saat pembuatan projek', {
-                            type: 'error',
-                        })
+                        showToast('Error', { type: 'error' })
                     }
                 }
             } else {
                 showToast(response.data.message, { type: 'error' })
             }
         } catch (error) {
-            showToast('Error saat pembuatan projek', { type: 'error' })
+            showToast('Error', { type: 'error' })
         }
+    }
+
+    if (error) {
+        return <></>
     }
 
     return (
@@ -171,6 +223,9 @@ export default function CreateProject() {
                         className="w-full"
                         inputClassName="w-full lg:w-6/12"
                         error={errors?.thumbnail?.message as string}
+                        handleFileChange={handleThumbnailChange}
+                        handleRemovePreview={handleRemoveThumbnailPreview}
+                        preview={thumbnailPreview}
                     />
                     <TextInput
                         {...register('name')}
@@ -288,6 +343,9 @@ export default function CreateProject() {
                         className="w-full"
                         inputClassName="w-full lg:w-6/12"
                         error={errors?.photos?.message as string}
+                        handleFileChange={handlePhotosChange}
+                        handleRemovePreview={handleRemovePhotosPreview}
+                        preview={photosPreview}
                     />
                     <div className="w-full lg:w-6/12 grid grid-cols-2 gap-6">
                         <PrimaryButton

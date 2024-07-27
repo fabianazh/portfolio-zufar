@@ -18,14 +18,12 @@ export interface ReactSelectProps extends SelectProps {
     isMulti: boolean
 }
 
-export interface FileInputHandle {
-    resetPreview: () => void
-    getFiles: () => FileList | null
-}
-
 export interface FileInputProps extends InputProps {
     accept?: string
     multiple?: boolean
+    handleFileChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+    handleRemovePreview?: (index: number) => void
+    preview: string[]
 }
 
 export interface DateInputProps extends InputProps {
