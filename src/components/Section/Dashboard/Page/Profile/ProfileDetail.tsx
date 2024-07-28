@@ -13,6 +13,9 @@ import { useToast } from '@/context/ToastContext'
 import ActionLayout from '@/components/Layout/ActionLayout'
 import BackButton from '@/components/Button/BackButton'
 import ProfileDetailSkeleton from '@/components/Skeleton/ProfileDetailSkeleton'
+import TextInput from '@/components/Form/TextInput'
+import FileInput from '@/components/Form/FileInput'
+import TextareaInput from '@/components/Form/TextareaInput'
 
 export default function ProfileDetail() {
     const [profile, setProfile] = useState<Profile | null | undefined>(null)
@@ -60,13 +63,6 @@ export default function ProfileDetail() {
                         </div>
                     </Dropdown.Trigger>
                     <Dropdown.Items>
-                        {!profile?.isUsed && (
-                            <Dropdown.Item
-                                href={`/dashboard/pages/${profile?.id}/use`}
-                            >
-                                Gunakan
-                            </Dropdown.Item>
-                        )}
                         <Dropdown.Item
                             href={`/dashboard/pages/${profile?.id}/edit`}
                         >
@@ -79,7 +75,7 @@ export default function ProfileDetail() {
             </ActionLayout.Buttons>
             <ActionLayout.Header
                 title={`Detail Halaman Profil`}
-                desc="Anda dapat mengubah profil yang akan ditampilkan kepada pengguna."
+                desc="Anda dapat mengubah informasi halaman profil yang akan ditampilkan kepada pengguna."
             />
             <ActionLayout.Content>
                 <div className="w-full flex flex-col gap-10 lg:gap-16 min-h-screen">
@@ -203,7 +199,7 @@ export default function ProfileDetail() {
                                             </Record.Title>
                                             {item.desc.length < 2 ? (
                                                 <Record.Description>
-                                                   {item.desc}
+                                                    {item.desc}
                                                 </Record.Description>
                                             ) : (
                                                 <>

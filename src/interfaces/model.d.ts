@@ -23,6 +23,29 @@ interface Tool {
     link: string
 }
 
+interface Page {
+    id: string
+    name: string
+    updated_at: {
+        seconds: number
+        nanoseconds: number
+    }
+    [key: string]: any
+}
+
+interface Home {
+    id: string
+    primaryPhoto: string
+    secondaryPhoto: string
+    heading: string
+    subHeading: string
+    desc: string
+    updated_at: {
+        seconds: number
+        nanoseconds: number
+    }
+}
+
 interface Profile {
     id: string
     versionName: string
@@ -60,16 +83,6 @@ interface Profile {
         yearEnd: string
     }[]
     // [key: string]: any
-}
-
-interface Page {
-    id: string
-    name: string
-    updated_at: {
-        seconds: number
-        nanoseconds: number
-    }
-    [key: string]: any
 }
 
 interface Project {

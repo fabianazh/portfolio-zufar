@@ -63,11 +63,11 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             onClick={() => {
                                 openModal()
                                 setModalData({
-                                    photo: project?.thumbnail ?? '',
-                                    alt: project?.id ?? '',
+                                    photo: `${project?.thumbnail}`,
+                                    alt: `${project?.id}`,
                                 })
                             }}
-                            src={project?.thumbnail ?? ''}
+                            src={`${project?.thumbnail}`}
                             alt={`Projek ${project?.name}`}
                             width={900}
                             height={700}
@@ -137,14 +137,14 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                     onClick={() => {
                                         openModal()
                                         setModalData({
-                                            photo: photo,
-                                            alt: project.id ?? '',
+                                            photo: `${photo}`,
+                                            alt: `${project.id}`,
                                         })
                                     }}
                                     className="w-full relative h-full group cursor-pointer mb-4 lg:mb-6"
                                 >
                                     <Image
-                                        src={photo ?? ''}
+                                        src={`${photo}`}
                                         alt={`${photo}`}
                                         width={700}
                                         height={900}
@@ -162,7 +162,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
             <ImageDetailModal
                 isOpen={isModalOpen}
                 close={closeModal}
-                photo={modalData?.photo ?? ''}
+                photo={`${modalData.photo}`}
                 alt={modalData.alt}
             />
             {/* End Modal */}

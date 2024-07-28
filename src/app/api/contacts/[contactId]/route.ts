@@ -1,12 +1,13 @@
 import { getDataById, updateData } from '@/libs/firebase/service'
 import { NextRequest, NextResponse } from 'next/server'
+import jwt from 'jsonwebtoken'
 
 export async function GET(
     req: NextRequest,
     { params }: { params: { contactId: string } }
 ) {
-    const id = params.contactId
-    const contacts = await getDataById<Contact>('contacts', id)
+    const contactId = params.contactId
+    const contacts = await getDataById<Contact>('contacts', contactId)
     return NextResponse.json({
         status: true,
         statusCode: 200,
@@ -19,10 +20,26 @@ export async function PUT(
     req: NextRequest,
     { params }: { params: { contactId: string } }
 ) {
-    const id = params.contactId
+    const data = await req.json()
+    const contactId = params.contactId
+    const token = req.headers.get('Authorization')?.split(' ')[1] ?? ''
+
     try {
-        const data = await req.json()
-        await updateData('contacts', id, data.data)
+        const decoded = await new Promise((resolve, reject) => {
+            jwt.verify(
+                token,
+                process.env.NEXTAUTH_SECRET as string,
+                (err, decoded) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve(decoded)
+                    }
+                }
+            )
+        })
+
+        await updateData('contacts', contactId, data.data)
 
         return NextResponse.json({
             status: true,

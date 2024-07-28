@@ -48,7 +48,7 @@ export default function CreateProject() {
     const thumbnailRef = useRef<HTMLInputElement>(null)
     const photosRef = useRef<HTMLInputElement>(null)
 
-    const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    function handleThumbnailChange(e: React.ChangeEvent<HTMLInputElement>) {
         e.preventDefault()
         const files = e.target.files
 
@@ -62,7 +62,7 @@ export default function CreateProject() {
         }
     }
 
-    const handleRemoveThumbnailPreview = (index: number) => {
+    function handleRemoveThumbnailPreview(index: number) {
         setThumbnailPreview((prev) => {
             const updatedPreviews = prev.filter((_, i) => i !== index)
             const updatedFiles = getValues('thumbnail') as FileList
@@ -76,7 +76,7 @@ export default function CreateProject() {
         })
     }
 
-    const handlePhotosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    function handlePhotosChange(e: React.ChangeEvent<HTMLInputElement>) {
         e.preventDefault()
         const files = e.target.files
 
@@ -90,7 +90,7 @@ export default function CreateProject() {
         }
     }
 
-    const handleRemovePhotosPreview = (index: number) => {
+    function handleRemovePhotosPreview(index: number) {
         setPhotosPreview((prev) => {
             const updatedPhotos = prev.filter((_, i) => i !== index)
             const currentFiles = getValues('photos') as FileList
@@ -135,35 +135,50 @@ export default function CreateProject() {
             if (response.data.status === true) {
                 const projectId = response.data.projectId
 
-                const thumbnailFiles = thumbnailRef.current?.files ?? []
-                let thumbnailUrl: string | null = null
+                const uploadPromises: Promise<string | null>[] = []
 
+                const thumbnailFiles = thumbnailRef.current?.files ?? []
                 if (thumbnailFiles.length > 0) {
                     const thumbnailFile = thumbnailFiles[0]
-                    thumbnailUrl = await uploadFile(
-                        'projects',
-                        projectId,
-                        thumbnailFile
+                    uploadPromises.push(
+                        uploadFile('projects', projectId, thumbnailFile)
                     )
                 }
 
-                const photosFiles = photosRef.current?.files ?? []
-                const photoUploadPromises = Array.from(photosFiles).map(
-                    async (file) => {
-                        if (file) {
-                            return await uploadFile('projects', projectId, file)
-                        }
-                        return null
+                const photosFiles = photosRef.current?.files
+                const filesArray = photosFiles ? Array.from(photosFiles) : []
+
+                for (const file of filesArray) {
+                    if (file) {
+                        uploadPromises.push(
+                            uploadFile('projects', projectId, file)
+                        )
                     }
-                )
-                const photoUrls = await Promise.all(photoUploadPromises)
+                }
+
+                const uploadResults = await Promise.allSettled(uploadPromises)
+
+                const thumbnailUrl =
+                    uploadResults[0].status === 'fulfilled'
+                        ? uploadResults[0].value
+                        : null
+                const results = await Promise.allSettled(uploadPromises)
+
+                const photoUrls = results
+                    .filter(
+                        (
+                            result
+                        ): result is PromiseFulfilledResult<string | null> =>
+                            result.status === 'fulfilled'
+                    )
+                    .map((result) => result.value)
 
                 const updateData: any = {}
                 if (thumbnailUrl) {
                     updateData.thumbnail = thumbnailUrl
                 }
-                if (photoUrls.filter((url) => url !== null).length > 0) {
-                    updateData.photos = photoUrls.filter((url) => url !== null)
+                if (photoUrls.length > 0) {
+                    updateData.photos = photoUrls
                 }
 
                 if (Object.keys(updateData).length > 0) {
@@ -179,19 +194,19 @@ export default function CreateProject() {
                             })
                             router.push('/dashboard/projects')
                         } else {
-                            showToast('Projek gagal dibuat!', {
-                                type: 'error',
-                            })
+                            showToast('Projek gagal dibuat!', { type: 'error' })
                         }
                     } catch (error) {
-                        showToast('Error', { type: 'error' })
+                        showToast('Error saat pembuatan projek', {
+                            type: 'error',
+                        })
                     }
                 }
             } else {
                 showToast(response.data.message, { type: 'error' })
             }
         } catch (error) {
-            showToast('Error', { type: 'error' })
+            showToast('Error saat pembuatan projek', { type: 'error' })
         }
     }
 

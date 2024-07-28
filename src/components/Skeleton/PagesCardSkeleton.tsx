@@ -15,16 +15,21 @@ export default function PagesCardSkeleton() {
                             className={`aspect-square h-full`}
                         />
                     </div> */}
-                    <div className="w-6/12 flex flex-col h-full justify-between">
+                    <div className="w-full flex flex-col h-full justify-between">
                         <Skeleton
                             height={'1.5rem'}
-                            containerClassName="w-full"
+                            containerClassName="w-11/12"
                         />
-                        <Skeleton
-                            height={'1rem'}
-                            count={4}
-                            containerClassName="w-full"
-                        />
+                        <div className="w-full flex flex-col">
+                            <Skeleton
+                                height={'1rem'}
+                                containerClassName="w-full"
+                            />
+                            <Skeleton
+                                height={'1rem'}
+                                containerClassName="w-9/12"
+                            />
+                        </div>
                     </div>
                 </div>
             ))}

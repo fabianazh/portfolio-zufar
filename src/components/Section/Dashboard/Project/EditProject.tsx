@@ -49,7 +49,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
     const thumbnailRef = useRef<HTMLInputElement>(null)
     const photosRef = useRef<HTMLInputElement>(null)
 
-    const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    function handleThumbnailChange(e: React.ChangeEvent<HTMLInputElement>) {
         e.preventDefault()
         const files = e.target.files
 
@@ -63,7 +63,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
         }
     }
 
-    const handleRemoveThumbnailPreview = (index: number) => {
+    function handleRemoveThumbnailPreview(index: number) {
         setThumbnailPreview((prev) => {
             const updatedPreviews = prev.filter((_, i) => i !== index)
             const updatedFiles = getValues('thumbnail') as FileList
@@ -77,7 +77,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
         })
     }
 
-    const handlePhotosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    function handlePhotosChange(e: React.ChangeEvent<HTMLInputElement>) {
         e.preventDefault()
         const files = e.target.files
 
@@ -90,7 +90,8 @@ export default function EditProject({ projectId }: { projectId: string }) {
             setValue('photos', files)
         }
     }
-    const handleRemovePhotosPreview = (index: number) => {
+
+    function handleRemovePhotosPreview(index: number) {
         setPhotosPreview((prev) => {
             const updatedPhotos = prev.filter((_, i) => i !== index)
             const currentFiles = getValues('photos') as FileList
@@ -109,8 +110,10 @@ export default function EditProject({ projectId }: { projectId: string }) {
 
     function resetForm() {
         reset()
-        setThumbnailPreview([])
-        setPhotosPreview([])
+        setThumbnailPreview(
+            Array.isArray(project?.thumbnail) ? project.thumbnail : []
+        )
+        setPhotosPreview(project?.photos ?? [])
     }
 
     async function fetchData() {
@@ -316,18 +319,21 @@ export default function EditProject({ projectId }: { projectId: string }) {
                                                 value={tool.id}
                                                 checked={isChecked}
                                                 onChange={(e) => {
-                                                    const newTools = e.target
-                                                        .checked
+                                                    const currentTools =
+                                                        field.value || []
+                                                    const isChecked =
+                                                        e.target.checked
+
+                                                    const newTools = isChecked
                                                         ? [
-                                                              ...(field.value ||
-                                                                  []),
+                                                              ...currentTools,
                                                               tool,
                                                           ]
-                                                        : field.value?.filter(
+                                                        : currentTools.filter(
                                                               (t: Tool) =>
                                                                   t.id !==
                                                                   tool.id
-                                                          ) || []
+                                                          )
                                                     field.onChange(newTools)
                                                 }}
                                             />

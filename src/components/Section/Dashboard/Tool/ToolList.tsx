@@ -100,7 +100,7 @@ export default function ToolList() {
                                 <Table.Header className="w-3/12">
                                     Nama Perangkat
                                 </Table.Header>
-                                <Table.Header className="w-6/12">
+                                <Table.Header className="w-5/12">
                                     Link
                                 </Table.Header>
                                 <Table.Header className="w-1/12 text-center">
@@ -116,10 +116,10 @@ export default function ToolList() {
                                             <Table.Data className="w-1/12 text-center">
                                                 {index + 1}
                                             </Table.Data>
-                                            <Table.Data className="w-3/12">
+                                            <Table.Data className="w-3/12 truncate">
                                                 {tool.name}
                                             </Table.Data>
-                                            <Table.Data className="w-6/12">
+                                            <Table.Data className="w-5/12 truncate">
                                                 {tool.link}
                                             </Table.Data>
                                             <Table.Data className="w-1/12 grid place-items-center">

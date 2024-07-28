@@ -1,6 +1,5 @@
 'use client'
 
-import NotFound from '@/components/Other/NotFound'
 import Table from '@/components/Other/Table'
 import mailServices from '@/services/mails'
 import Link from 'next/link'
@@ -32,7 +31,7 @@ export default function UnreadMails() {
     }, [])
 
     if (error) {
-        return <NotFound message="Semua pesan telah dibaca." />
+        return <></>
     }
 
     const unreadMails = mails
