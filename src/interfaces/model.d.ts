@@ -87,7 +87,7 @@ interface Profile {
 
 interface Project {
     id: string
-    thumbnail: string
+    thumbnail: string[]
     date: string
     name: string
     desc: string

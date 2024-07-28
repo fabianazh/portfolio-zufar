@@ -2,7 +2,6 @@
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import ProjectDetailSkeleton from '@/components/Skeleton/ProjectDetailSkeleton'
 import ImageDetailModal from '@/components/Modal/ImageDetailModal'
 import ActionLayout from '@/components/Layout/ActionLayout'
 import projectServices from '@/services/projects'
@@ -101,11 +100,11 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                     onClick={() => {
                                         openModal()
                                         setModalData({
-                                            photo: `${project?.thumbnail}`,
+                                            photo: `${project?.thumbnail[0]}`,
                                             alt: `${project?.id}`,
                                         })
                                     }}
-                                    src={`${project?.thumbnail}`}
+                                    src={`${project?.thumbnail[0]}`}
                                     alt={`Projek ${project?.name}`}
                                     width={900}
                                     height={700}
@@ -207,14 +206,16 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                         <>
                             <FileInput
                                 label="Thumbnail"
+                                readOnly
                                 id="thumbnail"
                                 accept=".jpg,.png"
                                 className="w-full"
                                 inputClassName="w-full lg:w-6/12"
-                                preview={[project?.thumbnail ?? '']}
+                                preview={project?.thumbnail ?? []}
                             />
                             <TextInput
                                 label="Nama Projek"
+                                readOnly
                                 id="name"
                                 className="lg:w-6/12"
                                 type="text"
@@ -222,6 +223,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             />
                             <TextareaInput
                                 label="Deskripsi"
+                                readOnly
                                 id="desc"
                                 className="lg:w-6/12"
                                 rows={4}
@@ -229,6 +231,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             />
                             <TextInput
                                 label="Kategori Projek"
+                                readOnly
                                 id="category"
                                 className="lg:w-6/12"
                                 type="text"
@@ -237,21 +240,24 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             <div className="w-full lg:w-6/12 flex flex-row gap-4">
                                 <TextInput
                                     label="Bulan"
+                                    readOnly
                                     id="name"
                                     className="lg:w-6/12"
                                     type="text"
-                                    value={project?.desc.split(' ')[0]}
+                                    value={project?.date.split(' ')[0]}
                                 />
                                 <TextInput
                                     label="Tahun"
+                                    readOnly
                                     id="name"
                                     className="lg:w-6/12"
                                     type="text"
-                                    value={project?.desc.split(' ')[1]}
+                                    value={project?.date.split(' ')[1]}
                                 />
                             </div>
                             <FileInput
-                                label="Gambar projek"
+                                label="Gambar Projek"
+                                readOnly
                                 id="photos"
                                 multiple
                                 accept=".jpg,.png"

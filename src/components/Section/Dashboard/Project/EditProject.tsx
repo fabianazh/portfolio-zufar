@@ -110,9 +110,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
 
     function resetForm() {
         reset()
-        setThumbnailPreview(
-            Array.isArray(project?.thumbnail) ? project.thumbnail : []
-        )
+        setThumbnailPreview(project?.thumbnail ?? [])
         setPhotosPreview(project?.photos ?? [])
     }
 
@@ -124,7 +122,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
             )
             setProject(projectResponse.data.data)
             setTools(toolsResponse.data.data)
-            setThumbnailPreview([projectResponse.data.data?.thumbnail])
+            setThumbnailPreview(projectResponse.data.data?.thumbnail)
             setPhotosPreview(projectResponse.data.data?.photos)
         } catch (error) {
             setError(true)
@@ -148,43 +146,47 @@ export default function EditProject({ projectId }: { projectId: string }) {
 
                 const thumbnailFiles = thumbnailRef.current?.files ?? []
                 if (thumbnailFiles.length > 0) {
-                    const thumbnailFile = thumbnailFiles[0]
-                    uploadPromises.push(
-                        uploadFile('projects', projectId, thumbnailFile)
-                    )
-                }
-
-                const photosFiles = photosRef.current?.files
-                const filesArray = photosFiles ? Array.from(photosFiles) : []
-
-                for (const file of filesArray) {
-                    if (file) {
+                    Array.from(thumbnailFiles).forEach((file) => {
                         uploadPromises.push(
                             uploadFile('projects', projectId, file)
                         )
-                    }
+                    })
+                }
+
+                const photosFiles = photosRef.current?.files ?? []
+                if (photosFiles.length > 0) {
+                    Array.from(photosFiles).forEach((file) => {
+                        uploadPromises.push(
+                            uploadFile('projects', projectId, file)
+                        )
+                    })
                 }
 
                 const uploadResults = await Promise.allSettled(uploadPromises)
 
-                const thumbnailUrl =
-                    uploadResults[0].status === 'fulfilled'
-                        ? uploadResults[0].value
-                        : null
-                const results = await Promise.allSettled(uploadPromises)
-
-                const photoUrls = results
+                const thumbnailUrls = uploadResults
+                    .slice(0, thumbnailFiles.length)
                     .filter(
                         (
                             result
                         ): result is PromiseFulfilledResult<string | null> =>
                             result.status === 'fulfilled'
                     )
-                    .map((result) => result.value)
+                    .map((result) => result.value) as string[]
+
+                const photoUrls = uploadResults
+                    .slice(thumbnailFiles.length)
+                    .filter(
+                        (
+                            result
+                        ): result is PromiseFulfilledResult<string | null> =>
+                            result.status === 'fulfilled'
+                    )
+                    .map((result) => result.value) as string[]
 
                 const updateData: any = {}
-                if (thumbnailUrl) {
-                    updateData.thumbnail = thumbnailUrl
+                if (thumbnailUrls.length > 0) {
+                    updateData.thumbnail = thumbnailUrls
                 }
                 if (photoUrls.length > 0) {
                     updateData.photos = photoUrls

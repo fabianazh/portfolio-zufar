@@ -63,11 +63,11 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             onClick={() => {
                                 openModal()
                                 setModalData({
-                                    photo: `${project?.thumbnail}`,
+                                    photo: `${project?.thumbnail[0]}`,
                                     alt: `${project?.id}`,
                                 })
                             }}
-                            src={`${project?.thumbnail}`}
+                            src={`${project?.thumbnail[0]}`}
                             alt={`Projek ${project?.name}`}
                             width={900}
                             height={700}

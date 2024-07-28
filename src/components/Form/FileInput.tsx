@@ -62,10 +62,13 @@ const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
                                 multiple
                                     ? 'w-full grid gap-6 grid-cols-2 lg:grid-cols-3'
                                     : 'w-full lg:w-6/12'
-                            } ${inputClassName}`}
+                            }`}
                         >
                             {preview.map((src, index) => (
-                                <div key={index} className={`relative ${previewClassName}`}>
+                                <div
+                                    key={index}
+                                    className={`relative ${previewClassName}`}
+                                >
                                     <Image
                                         src={src}
                                         alt="Photos preview"

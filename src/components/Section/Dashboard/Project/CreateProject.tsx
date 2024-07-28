@@ -93,14 +93,21 @@ export default function CreateProject() {
     function handleRemovePhotosPreview(index: number) {
         setPhotosPreview((prev) => {
             const updatedPhotos = prev.filter((_, i) => i !== index)
-            const currentFiles = getValues('photos') as FileList
-            const updatedFiles = Array.from(currentFiles).filter(
-                (_, i) => i !== index
-            )
+
+            const photosInput = photosRef.current
+            if (!photosInput) return updatedPhotos
+
+            const currentFiles = photosInput.files
+            if (!currentFiles) return updatedPhotos
 
             const newFileList = new DataTransfer()
-            updatedFiles.forEach((file) => newFileList.items.add(file))
+            Array.from(currentFiles).forEach((file, i) => {
+                if (i !== index) {
+                    newFileList.items.add(file)
+                }
+            })
 
+            photosInput.files = newFileList.files
             setValue('photos', newFileList.files)
 
             return updatedPhotos
@@ -139,43 +146,47 @@ export default function CreateProject() {
 
                 const thumbnailFiles = thumbnailRef.current?.files ?? []
                 if (thumbnailFiles.length > 0) {
-                    const thumbnailFile = thumbnailFiles[0]
-                    uploadPromises.push(
-                        uploadFile('projects', projectId, thumbnailFile)
-                    )
-                }
-
-                const photosFiles = photosRef.current?.files
-                const filesArray = photosFiles ? Array.from(photosFiles) : []
-
-                for (const file of filesArray) {
-                    if (file) {
+                    Array.from(thumbnailFiles).forEach((file) => {
                         uploadPromises.push(
                             uploadFile('projects', projectId, file)
                         )
-                    }
+                    })
+                }
+
+                const photosFiles = photosRef.current?.files ?? []
+                if (photosFiles.length > 0) {
+                    Array.from(photosFiles).forEach((file) => {
+                        uploadPromises.push(
+                            uploadFile('projects', projectId, file)
+                        )
+                    })
                 }
 
                 const uploadResults = await Promise.allSettled(uploadPromises)
 
-                const thumbnailUrl =
-                    uploadResults[0].status === 'fulfilled'
-                        ? uploadResults[0].value
-                        : null
-                const results = await Promise.allSettled(uploadPromises)
-
-                const photoUrls = results
+                const thumbnailUrls = uploadResults
+                    .slice(0, thumbnailFiles.length)
                     .filter(
                         (
                             result
                         ): result is PromiseFulfilledResult<string | null> =>
                             result.status === 'fulfilled'
                     )
-                    .map((result) => result.value)
+                    .map((result) => result.value) as string[]
+
+                const photoUrls = uploadResults
+                    .slice(thumbnailFiles.length)
+                    .filter(
+                        (
+                            result
+                        ): result is PromiseFulfilledResult<string | null> =>
+                            result.status === 'fulfilled'
+                    )
+                    .map((result) => result.value) as string[]
 
                 const updateData: any = {}
-                if (thumbnailUrl) {
-                    updateData.thumbnail = thumbnailUrl
+                if (thumbnailUrls.length > 0) {
+                    updateData.thumbnail = thumbnailUrls
                 }
                 if (photoUrls.length > 0) {
                     updateData.photos = photoUrls
@@ -215,7 +226,7 @@ export default function CreateProject() {
     }
 
     return (
-        <ActionLayout returnLink="/dashboard/projects">
+        <ActionLayout returnLink="/dashboard/projects" isLoading={loading}>
             <ActionLayout.Buttons>
                 <BackButton href={'/dashboard/projects'} />
             </ActionLayout.Buttons>
@@ -351,11 +362,11 @@ export default function CreateProject() {
                     <FileInput
                         {...register('photos')}
                         ref={photosRef}
-                        label="Gambar projek"
+                        label="Gambar Projek"
                         id="photos"
                         multiple
                         accept=".jpg,.png"
-                        className="w-full"
+                        className="w-full lg:w-full"
                         inputClassName="w-full lg:w-6/12"
                         error={errors?.photos?.message as string}
                         handleFileChange={handlePhotosChange}
