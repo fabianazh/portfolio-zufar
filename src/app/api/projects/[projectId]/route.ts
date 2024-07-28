@@ -1,4 +1,9 @@
-import { getDataById, updateData, deleteData } from '@/libs/firebase/service'
+import {
+    getDataById,
+    updateData,
+    deleteData,
+    deleteFile,
+} from '@/libs/firebase/service'
 import { NextRequest, NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
 import { serverTimestamp } from 'firebase/firestore'
@@ -7,13 +12,13 @@ export async function GET(
     req: NextRequest,
     { params }: { params: { projectId: string } }
 ) {
-    const id = params.projectId
-    const projects = await getDataById<Project>('projects', id)
+    const { projectId } = params
+    const project = await getDataById<Project>('projects', projectId)
     return NextResponse.json({
         status: true,
         statusCode: 200,
         message: 'success',
-        data: projects,
+        data: project,
     })
 }
 
@@ -64,7 +69,7 @@ export async function DELETE(
     req: NextRequest,
     { params }: { params: { projectId: string } }
 ) {
-    const id = params.projectId
+    const { projectId } = params
     const token = req.headers.get('Authorization')?.split(' ')[1] ?? ''
 
     try {
@@ -82,7 +87,21 @@ export async function DELETE(
             )
         })
 
-        await deleteData('projects', id)
+        const project = await getDataById<Project>('projects', projectId)
+
+        if (project?.thumbnail) {
+            await Promise.all(
+                project?.thumbnail.map((fileUrl) => deleteFile(fileUrl))
+            )
+        }
+
+        if (project?.photos) {
+            await Promise.all(
+                project?.photos.map((fileUrl) => deleteFile(fileUrl))
+            )
+        }
+
+        await deleteData('projects', projectId)
 
         return NextResponse.json({
             status: true,
@@ -94,6 +113,7 @@ export async function DELETE(
             status: false,
             statusCode: 500,
             message: 'Projek gagal dihapus!',
+            error,
         })
     }
 }

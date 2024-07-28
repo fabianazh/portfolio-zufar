@@ -12,14 +12,24 @@ import { RxDotsVertical } from 'react-icons/rx'
 import TextInput from '@/components/Form/TextInput'
 import FileInput from '@/components/Form/FileInput'
 import TextareaInput from '@/components/Form/TextareaInput'
+import WarnModal from '@/components/Modal/WarnModal'
+import { useRouter } from 'next/navigation'
+import { useToast } from '@/context/ToastContext'
 
 export default function ProjectDetail({ projectId }: { projectId: string }) {
     const [project, setProject] = useState<Project | null | undefined>(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+    const [isImageModalOpen, setIsImageModalOpen] = useState<boolean>(false)
+    const [isDeleteProjectModalOpen, setIsDeleteProjectModalOpen] =
+        useState<boolean>(false)
     const [modalData, setModalData] = useState({ photo: '', alt: '' })
     const [previewMode, setPreviewMode] = useState<boolean>(false)
+    const [submitLoading, setSubmitLoading] = useState<boolean>(false)
+
+    const router = useRouter()
+    const { showToast } = useToast()
+    const lastIndex = project?.tools.length
 
     useEffect(() => {
         async function fetchProject() {
@@ -33,21 +43,29 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
             }
         }
         fetchProject()
-    }, [projectId])
+    }, [])
 
     if (error) {
         return <></>
     }
 
-    function openModal() {
-        setIsModalOpen(true)
+    async function handleDeleteProject() {
+        try {
+            setSubmitLoading(true)
+            const response = await projectServices.deleteProject(projectId)
+            if (response.data.status === true) {
+                showToast(response.data.message, { type: 'success' })
+                router.push('/dashboard/projects')
+            } else {
+                showToast(response.data.message, { type: 'error' })
+            }
+        } catch (error) {
+            showToast('Error', { type: 'error' })
+        } finally {
+            setSubmitLoading(false)
+            setIsDeleteProjectModalOpen(false)
+        }
     }
-
-    function closeModal() {
-        setIsModalOpen(false)
-    }
-
-    const lastIndex = project?.tools.length
 
     return (
         <>
@@ -77,7 +95,14 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                 Edit
                             </Dropdown.Item>
                             <Dropdown.Divider />
-                            <Dropdown.Item as="delete">Hapus</Dropdown.Item>
+                            <Dropdown.Item
+                                as="delete"
+                                onClick={() =>
+                                    setIsDeleteProjectModalOpen(true)
+                                }
+                            >
+                                Hapus
+                            </Dropdown.Item>
                         </Dropdown.Items>
                     </Dropdown>
                 </ActionLayout.Buttons>
@@ -98,7 +123,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             <div className="w-full flex h-fit overflow-hidden scale-100">
                                 <Image
                                     onClick={() => {
-                                        openModal()
+                                        setIsImageModalOpen(true)
                                         setModalData({
                                             photo: `${project?.thumbnail[0]}`,
                                             alt: `${project?.id}`,
@@ -180,7 +205,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                         <div
                                             key={index}
                                             onClick={() => {
-                                                openModal()
+                                                setIsImageModalOpen(true)
                                                 setModalData({
                                                     photo: `${photo}`,
                                                     alt: `${project.id}`,
@@ -271,11 +296,22 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
             </ActionLayout>
             {/* Modal */}
             <ImageDetailModal
-                isOpen={isModalOpen}
-                close={closeModal}
-                photo={`${modalData.photo}`}
+                isOpen={isImageModalOpen}
+                close={() => setIsImageModalOpen(false)}
+                photo={modalData.photo}
                 alt={modalData.alt}
             />
+
+            <WarnModal
+                isOpen={isDeleteProjectModalOpen}
+                close={() => setIsDeleteProjectModalOpen(false)}
+                confirmButtonColor="red"
+                title={`Apakah kamu yakin ingin menghapus projek ${project?.name}?`}
+                content={`Dengan menghapus projek ${project?.name}, seluruh data dan aset dari projek ini akan dihapus permanen dan tidak dapat dikembalikan.`}
+                onSubmit={handleDeleteProject}
+                loading={submitLoading}
+            />
+
             {/* End Modal */}
         </>
     )

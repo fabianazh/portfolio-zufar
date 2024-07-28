@@ -11,7 +11,13 @@ import {
     where,
 } from 'firebase/firestore'
 import { firestore, storage } from './init'
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
+import {
+    getDownloadURL,
+    ref,
+    uploadBytesResumable,
+    getStorage,
+    deleteObject,
+} from 'firebase/storage'
 
 export async function getData<T>(collectionName: string): Promise<T[]> {
     const snapshot = await getDocs(collection(firestore, collectionName))
@@ -147,4 +153,13 @@ export async function uploadFile(
             resolve(null)
         }
     })
+}
+
+export async function deleteFile(filePath: string) {
+    const fileArrayRef = ref(storage, filePath)
+    try {
+        await deleteObject(fileArrayRef)
+    } catch (error) {
+        console.error('Failed to delete file:', error)
+    }
 }

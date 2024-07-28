@@ -6,6 +6,7 @@ const projectServices = {
     createProject: (data: any) => instance.post('/api/projects', { data }),
     updateProject: (id: string, data: any) =>
         instance.put(`/api/projects/${id}`, { id, data }),
+    deleteProject: (id: string) => instance.delete(`/api/projects/${id}`),
 }
 
 export default projectServices

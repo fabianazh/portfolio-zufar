@@ -42,10 +42,10 @@ export default function ToolDetail({ toolId }: { toolId: string }) {
         getToolDetail()
     }, [toolId])
 
-    async function deleteTool(id: string) {
+    async function handleDeleteTool() {
         try {
             setSubmitLoading(true)
-            const response = await toolServices.deleteTool(id)
+            const response = await toolServices.deleteTool(toolId)
             if (response.data.status === true) {
                 showToast(response.data.message, { type: 'success' })
                 router.push('/dashboard/tools')
@@ -123,7 +123,7 @@ export default function ToolDetail({ toolId }: { toolId: string }) {
                 confirmButtonColor="red"
                 title={`Apakah kamu yakin ingin menghapus perangkat ${tool?.name}?`}
                 content={`Dengan menghapus perangkat ${tool?.name}, seluruh data dan aset dari perangkat ${tool?.name} akan dihapus permanen dan tidak dapat dikembalikan.`}
-                onSubmit={() => deleteTool(tool?.id ?? '')}
+                onSubmit={handleDeleteTool}
                 loading={submitLoading}
             />
         </ActionLayout>

@@ -66,12 +66,20 @@ export default function EditProject({ projectId }: { projectId: string }) {
     function handleRemoveThumbnailPreview(index: number) {
         setThumbnailPreview((prev) => {
             const updatedPreviews = prev.filter((_, i) => i !== index)
-            const updatedFiles = getValues('thumbnail') as FileList
 
-            const newFileList = Array.from(updatedFiles).filter(
-                (_, i) => i !== index
-            )
-            setValue('thumbnail', newFileList)
+            const currentFiles = getValues('thumbnail') as FileList
+            if (!currentFiles) {
+                return updatedPreviews
+            }
+
+            const newFileList = new DataTransfer()
+            Array.from(currentFiles).forEach((file, i) => {
+                if (i !== index) {
+                    newFileList.items.add(file)
+                }
+            })
+
+            setValue('thumbnail', newFileList.files)
 
             return updatedPreviews
         })
@@ -94,14 +102,21 @@ export default function EditProject({ projectId }: { projectId: string }) {
     function handleRemovePhotosPreview(index: number) {
         setPhotosPreview((prev) => {
             const updatedPhotos = prev.filter((_, i) => i !== index)
-            const currentFiles = getValues('photos') as FileList
-            const updatedFiles = Array.from(currentFiles).filter(
-                (_, i) => i !== index
-            )
+
+            const photosInput = photosRef.current
+            if (!photosInput) return updatedPhotos
+
+            const currentFiles = photosInput.files
+            if (!currentFiles) return updatedPhotos
 
             const newFileList = new DataTransfer()
-            updatedFiles.forEach((file) => newFileList.items.add(file))
+            Array.from(currentFiles).forEach((file, i) => {
+                if (i !== index) {
+                    newFileList.items.add(file)
+                }
+            })
 
+            photosInput.files = newFileList.files
             setValue('photos', newFileList.files)
 
             return updatedPhotos
@@ -114,26 +129,30 @@ export default function EditProject({ projectId }: { projectId: string }) {
         setPhotosPreview(project?.photos ?? [])
     }
 
-    async function fetchData() {
-        try {
-            const toolsResponse = await toolServices.getAllTools()
-            const projectResponse = await projectServices.getProjectById(
-                projectId
-            )
-            setProject(projectResponse.data.data)
-            setTools(toolsResponse.data.data)
-            setThumbnailPreview(projectResponse.data.data?.thumbnail)
-            setPhotosPreview(projectResponse.data.data?.photos)
-        } catch (error) {
-            setError(true)
-        } finally {
-            setLoading(false)
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const toolsResponse = await toolServices.getAllTools()
+                const projectResponse = await projectServices.getProjectById(
+                    projectId
+                )
+                setProject(projectResponse.data.data)
+                setTools(toolsResponse.data.data)
+                setThumbnailPreview(projectResponse.data.data?.thumbnail)
+                setPhotosPreview(projectResponse.data.data?.photos)
+            } catch (error) {
+                setError(true)
+            } finally {
+                setLoading(false)
+            }
         }
-    }
+
+        fetchData()
+    }, [projectId])
 
     useEffect(() => {
-        fetchData()
-    }, [])
+        setValue('tools', project?.tools ?? [])
+    }, [project?.tools, setValue])
 
     async function onSubmit(data: FormData) {
         try {
@@ -306,13 +325,9 @@ export default function EditProject({ projectId }: { projectId: string }) {
                                     name="tools"
                                     control={control}
                                     render={({ field }) => {
-                                        const isChecked =
-                                            field.value?.some(
-                                                (t: Tool) => t.id === tool.id
-                                            ) ||
-                                            project?.tools?.some(
-                                                (item) => item.id === tool.id
-                                            )
+                                        const isChecked = field.value?.some(
+                                            (t: Tool) => t.id === tool.id
+                                        )
 
                                         return (
                                             <input
@@ -321,10 +336,10 @@ export default function EditProject({ projectId }: { projectId: string }) {
                                                 value={tool.id}
                                                 checked={isChecked}
                                                 onChange={(e) => {
-                                                    const currentTools =
-                                                        field.value || []
                                                     const isChecked =
                                                         e.target.checked
+                                                    const currentTools =
+                                                        field.value || []
 
                                                     const newTools = isChecked
                                                         ? [
@@ -336,6 +351,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                                                                   t.id !==
                                                                   tool.id
                                                           )
+
                                                     field.onChange(newTools)
                                                 }}
                                             />

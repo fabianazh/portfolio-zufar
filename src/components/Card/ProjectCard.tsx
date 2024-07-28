@@ -10,11 +10,15 @@ export default function ProjectCard({
     href,
     className,
     withDropdown = false,
+    openModal,
+    setModalData,
 }: {
     project: Project
     href: string
     className?: string
     withDropdown?: boolean
+    openModal?: () => void
+    setModalData?: ({ id, name }: { id: string; name: string }) => void
 }) {
     return (
         <>
@@ -56,10 +60,26 @@ export default function ProjectCard({
                                     >
                                         Edit
                                     </Dropdown.Item>
-                                    <Dropdown.Divider />
-                                    <Dropdown.Item as="delete">
-                                        Hapus
-                                    </Dropdown.Item>
+                                    {openModal && setModalData ? (
+                                        <>
+                                            <Dropdown.Divider />
+
+                                            <Dropdown.Item
+                                                as="delete"
+                                                onClick={() => {
+                                                    openModal()
+                                                    setModalData({
+                                                        id: project.id,
+                                                        name: project.name,
+                                                    })
+                                                }}
+                                            >
+                                                Hapus
+                                            </Dropdown.Item>
+                                        </>
+                                    ) : (
+                                        <></>
+                                    )}
                                 </Dropdown.Items>
                             </Dropdown>
                         </>

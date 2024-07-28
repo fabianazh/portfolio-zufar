@@ -45,7 +45,7 @@ export default function ToolList() {
         fetchTools()
     }, [])
 
-    async function deleteTool(id: string) {
+    async function handleDeleteTool(id: string) {
         try {
             setSubmitLoading(true)
             const response = await toolServices.deleteTool(id)
@@ -163,7 +163,7 @@ export default function ToolList() {
                     confirmButtonColor="red"
                     title={`Apakah kamu yakin ingin menghapus perangkat ${modalData.name}?`}
                     content={`Dengan menghapus perangkat ${modalData.name}, seluruh data dan aset dari perangkat ${modalData.name} akan dihapus permanen dan tidak dapat dikembalikan.`}
-                    onSubmit={() => deleteTool(modalData.id)}
+                    onSubmit={() => handleDeleteTool(modalData.id)}
                     loading={submitLoading}
                 />
             </TableLayout>
