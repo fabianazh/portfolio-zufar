@@ -41,7 +41,7 @@ export default function PrimaryButton({
         return (
             <>
                 <Link
-                    href={href}
+                    href={href ?? ''}
                     className={`py-2 max-h-9 px-4 text-xs lg:text-sm text-center rounded transition-all duration-300 shadow-sm border opacity-100 disabled:opacity-80 ${bgColor} ${className}`}
                 >
                     {children}

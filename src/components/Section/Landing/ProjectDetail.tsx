@@ -83,7 +83,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             <span className="text-sm font-medium">
                                 Nama Projek
                             </span>
-                            <span className="text-base font-bold">
+                            <span className="text-base font-semibold lg:font-bold">
                                 {project?.name}
                             </span>
                         </div>
@@ -92,7 +92,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             <span className="text-sm font-medium">
                                 Kategori
                             </span>
-                            <span className="text-base font-bold">
+                            <span className="text-base font-semibold lg:font-bold">
                                 {project?.category}
                             </span>
                         </div>
@@ -103,7 +103,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                 {project?.tools.map((tool, index) => (
                                     <LinkText
                                         href={tool.link}
-                                        className="text-base font-bold"
+                                        className="text-base font-semibold lg:font-bold"
                                         key={tool.name}
                                     >
                                         {tool.name}
@@ -115,7 +115,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
 
                         <div className="w-full lg:w-fit flex flex-col">
                             <span className="text-sm font-medium">Tahun</span>
-                            <span className="text-base font-bold">
+                            <span className="text-base font-semibold lg:font-bold">
                                 {project?.date}
                             </span>
                         </div>
@@ -127,7 +127,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                     {/* End Description */}
                     {/* Images */}
                     <div className="w-full h-auto flex flex-col gap-3">
-                        <span className="font-semibold text-base">
+                        <span className="font-semibold text-sm lg:text-base">
                             Gambar Lainnya
                         </span>
                         <div className="w-full columns-1 lg:columns-2 gap-4 lg:gap-6 h-fit">
