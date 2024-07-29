@@ -1,6 +1,6 @@
 import { getDataById, updateData } from '@/libs/firebase/service'
 import { NextRequest, NextResponse } from 'next/server'
-import jwt from 'jsonwebtoken'
+import { verifyToken } from '@/libs/utils/verifyToken'
 
 export async function GET(
     req: NextRequest,
@@ -22,22 +22,9 @@ export async function PUT(
 ) {
     const data = await req.json()
     const contactId = params.contactId
-    const token = req.headers.get('Authorization')?.split(' ')[1] ?? ''
 
     try {
-        const decoded = await new Promise((resolve, reject) => {
-            jwt.verify(
-                token,
-                process.env.NEXTAUTH_SECRET as string,
-                (err, decoded) => {
-                    if (err) {
-                        reject(err)
-                    } else {
-                        resolve(decoded)
-                    }
-                }
-            )
-        })
+        const decoded = await verifyToken(req)
 
         await updateData('contacts', contactId, data.data)
 

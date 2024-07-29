@@ -22,4 +22,12 @@
     select::-ms-expand {
         @apply hidden;
     }
+
+    .checkbox {
+        @apply px-4 py-2.5 rounded text-sm border text-black bg-transparent cursor-pointer;
+    }
+
+    input:checked + .checkbox {
+        @apply bg-white text-gray-900;
+    }
 }

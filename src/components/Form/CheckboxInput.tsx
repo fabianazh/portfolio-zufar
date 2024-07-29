@@ -21,7 +21,7 @@ const CheckboxInput = forwardRef<HTMLTextAreaElement, CheckboxInputProps>(
     ) {
         return (
             <fieldset
-                className={`relative h-fit flex flex-col gap-1.5 ${className}`}
+                className={`relative w-full lg:w-6/12 h-fit flex flex-col gap-3.5 ${className}`}
             >
                 <label
                     className={`inline-block w-fit text-sm text-gray-700 font-medium px-1 ${labelClassName}`}

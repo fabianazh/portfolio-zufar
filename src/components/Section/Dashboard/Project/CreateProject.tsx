@@ -226,7 +226,7 @@ export default function CreateProject() {
     }
 
     return (
-        <ActionLayout returnLink="/dashboard/projects" isLoading={loading}>
+        <ActionLayout returnLink="/dashboard/projects">
             <ActionLayout.Buttons>
                 <BackButton href={'/dashboard/projects'} />
             </ActionLayout.Buttons>
@@ -293,17 +293,14 @@ export default function CreateProject() {
                         error={errors?.tools?.message}
                     >
                         {tools.map((tool, index) => (
-                            <label
-                                key={index}
-                                className="flex items-center gap-2 text-sm"
-                            >
+                            <label key={index} className="mb-4">
                                 <Controller
                                     name="tools"
                                     control={control}
                                     render={({ field }) => (
                                         <input
                                             type="checkbox"
-                                            className="form-checkbox"
+                                            className="sr-only"
                                             value={tool.id}
                                             checked={field.value?.some(
                                                 (t: Tool) => t.id === tool.id
@@ -325,7 +322,7 @@ export default function CreateProject() {
                                         />
                                     )}
                                 />
-                                {tool.name}
+                                <span className="checkbox">{tool.name}</span>
                             </label>
                         ))}
                     </CheckboxInput>

@@ -1,7 +1,9 @@
 import { getData } from '@/libs/firebase/service'
 import { NextRequest, NextResponse } from 'next/server'
+import { verifyToken } from '@/libs/utils/verifyToken'
 
 export async function GET(req: NextRequest) {
+    const decoded = await verifyToken(req)
     const pages = await getData<any>('pages')
     return NextResponse.json({
         status: true,

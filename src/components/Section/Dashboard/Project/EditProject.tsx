@@ -317,10 +317,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                         error={errors?.tools?.message}
                     >
                         {tools.map((tool, index) => (
-                            <label
-                                key={index}
-                                className="flex items-center gap-2 text-sm"
-                            >
+                            <label key={index} className="mb-4">
                                 <Controller
                                     name="tools"
                                     control={control}
@@ -332,9 +329,9 @@ export default function EditProject({ projectId }: { projectId: string }) {
                                         return (
                                             <input
                                                 type="checkbox"
-                                                className="form-checkbox"
                                                 value={tool.id}
                                                 checked={isChecked}
+                                                className="sr-only"
                                                 onChange={(e) => {
                                                     const isChecked =
                                                         e.target.checked
@@ -358,7 +355,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                                         )
                                     }}
                                 />
-                                {tool.name}
+                                <span className="checkbox">{tool.name}</span>
                             </label>
                         ))}
                     </CheckboxInput>

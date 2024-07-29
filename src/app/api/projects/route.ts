@@ -1,8 +1,8 @@
 import { getData, addData } from '@/libs/firebase/service'
 import { NextRequest, NextResponse } from 'next/server'
-import jwt from 'jsonwebtoken'
 import slugify from 'slugify'
 import { serverTimestamp } from 'firebase/firestore'
+import { verifyToken } from '@/libs/utils/verifyToken'
 
 export async function GET(req: NextRequest) {
     const projects = await getData<Project>('projects')
@@ -16,12 +16,10 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
     const data = await req.json()
-    const token = req.headers.get('Authorization')?.split(' ')[1] ?? ''
 
     const projectId = slugify(data.data.name, { lower: true })
 
     const newData = {
-        id: projectId,
         name: data.data.name,
         desc: data.data.desc,
         category: data.data.category,
@@ -32,19 +30,7 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        const decoded = await new Promise((resolve, reject) => {
-            jwt.verify(
-                token,
-                process.env.NEXTAUTH_SECRET as string,
-                (err, decoded) => {
-                    if (err) {
-                        reject(err)
-                    } else {
-                        resolve(decoded)
-                    }
-                }
-            )
-        })
+        const decoded = await verifyToken(req)
 
         await addData('projects', newData, projectId)
 

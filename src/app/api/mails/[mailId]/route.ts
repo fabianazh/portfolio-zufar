@@ -1,6 +1,6 @@
 import { getDataById, updateData, deleteData } from '@/libs/firebase/service'
 import { NextRequest, NextResponse } from 'next/server'
-import jwt from 'jsonwebtoken'
+import { verifyToken } from '@/libs/utils/verifyToken'
 
 export async function GET(
     req: NextRequest,
@@ -10,6 +10,7 @@ export async function GET(
     const mail = await getDataById<Mail>('mails', mailId)
 
     if (mail?.isUnread) {
+        const decoded = await verifyToken(req)
         await updateData('mails', mailId, {
             isUnread: false,
         })
@@ -28,22 +29,9 @@ export async function DELETE(
     { params }: { params: { mailId: string } }
 ) {
     const mailId = params.mailId
-    const token = req.headers.get('Authorization')?.split(' ')[1] ?? ''
 
     try {
-        const decoded = await new Promise((resolve, reject) => {
-            jwt.verify(
-                token,
-                process.env.NEXTAUTH_SECRET as string,
-                (err, decoded) => {
-                    if (err) {
-                        reject(err)
-                    } else {
-                        resolve(decoded)
-                    }
-                }
-            )
-        })
+        const decoded = await verifyToken(req)
 
         await deleteData('mails', mailId)
 

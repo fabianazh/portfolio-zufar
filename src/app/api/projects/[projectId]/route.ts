@@ -5,8 +5,8 @@ import {
     deleteFile,
 } from '@/libs/firebase/service'
 import { NextRequest, NextResponse } from 'next/server'
-import jwt from 'jsonwebtoken'
 import { serverTimestamp } from 'firebase/firestore'
+import { verifyToken } from '@/libs/utils/verifyToken'
 
 export async function GET(
     req: NextRequest,
@@ -27,23 +27,10 @@ export async function PUT(
     { params }: { params: { projectId: string } }
 ) {
     const data = await req.json()
-    const token = req.headers.get('Authorization')?.split(' ')[1] ?? ''
     const projectId = params.projectId
 
     try {
-        const decoded = await new Promise((resolve, reject) => {
-            jwt.verify(
-                token,
-                process.env.NEXTAUTH_SECRET as string,
-                (err, decoded) => {
-                    if (err) {
-                        reject(err)
-                    } else {
-                        resolve(decoded)
-                    }
-                }
-            )
-        })
+        const decoded = await verifyToken(req)
 
         await updateData('projects', projectId, {
             ...data.data,
@@ -70,22 +57,9 @@ export async function DELETE(
     { params }: { params: { projectId: string } }
 ) {
     const { projectId } = params
-    const token = req.headers.get('Authorization')?.split(' ')[1] ?? ''
 
     try {
-        const decoded = await new Promise((resolve, reject) => {
-            jwt.verify(
-                token,
-                process.env.NEXTAUTH_SECRET as string,
-                (err, decoded) => {
-                    if (err) {
-                        reject(err)
-                    } else {
-                        resolve(decoded)
-                    }
-                }
-            )
-        })
+        const decoded = await verifyToken(req)
 
         const project = await getDataById<Project>('projects', projectId)
 

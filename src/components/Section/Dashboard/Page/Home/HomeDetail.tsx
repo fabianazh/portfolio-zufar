@@ -147,6 +147,7 @@ export default function HomeDetail() {
                                 className="lg:w-6/12"
                                 rows={2}
                                 defaultValue={homeData?.heading}
+                                readOnly
                             />
                             <TextareaInput
                                 label="Sub Heading"
@@ -154,6 +155,7 @@ export default function HomeDetail() {
                                 className="lg:w-6/12"
                                 rows={2}
                                 defaultValue={homeData?.subHeading}
+                                readOnly
                             />
                             <TextareaInput
                                 label="Deskripsi"
@@ -161,6 +163,7 @@ export default function HomeDetail() {
                                 className="lg:w-6/12"
                                 rows={5}
                                 defaultValue={homeData?.desc}
+                                readOnly
                             />
                             <div className="w-9/12 flex gap-6">
                                 <FileInput
