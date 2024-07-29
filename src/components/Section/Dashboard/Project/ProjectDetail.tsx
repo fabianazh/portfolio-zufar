@@ -11,6 +11,7 @@ import Dropdown from '@/components/Other/Dropdown'
 import { RxDotsVertical } from 'react-icons/rx'
 import TextInput from '@/components/Form/TextInput'
 import FileInput from '@/components/Form/FileInput'
+import CheckboxInput from '@/components/Form/CheckboxInput'
 import TextareaInput from '@/components/Form/TextareaInput'
 import WarnModal from '@/components/Modal/WarnModal'
 import { useRouter } from 'next/navigation'
@@ -189,7 +190,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                 </div>
                             </div>
                             {/* Description */}
-                            <div className="w-full h-fit flex flex-col">
+                            <div className="w-full h-fit flex flex-col my-2">
                                 <span className="font-medium">
                                     {project?.desc}
                                 </span>
@@ -262,6 +263,21 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                 type="text"
                                 value={project?.category}
                             />
+                            <CheckboxInput label="Perangkat">
+                                {project?.tools?.map((tool, index) => (
+                                    <label key={index} className="mb-4">
+                                        <input
+                                            type="checkbox"
+                                            className="sr-only"
+                                            checked
+                                        />
+
+                                        <span className="checkbox">
+                                            {tool.name}
+                                        </span>
+                                    </label>
+                                ))}
+                            </CheckboxInput>
                             <div className="w-full lg:w-6/12 flex flex-row gap-4">
                                 <TextInput
                                     label="Bulan"

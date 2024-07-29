@@ -8,6 +8,7 @@ export default function PrimaryButton({
     disabled,
     theme,
     href,
+    as = 'link',
 }: {
     onClick?: () => void
     className?: string
@@ -16,6 +17,7 @@ export default function PrimaryButton({
     disabled?: boolean
     theme: 'black' | 'gray' | 'white' | 'red'
     href?: string
+    as?: 'link' | 'button'
 }) {
     let bgColor
     switch (theme) {
@@ -29,13 +31,13 @@ export default function PrimaryButton({
             break
         case 'red':
             bgColor =
-                'bg-red-500 text-white border-red-500 hover:bg-red-600 hover:border-red-600'
+                'bg-red-600 text-white border-red-600 hover:bg-red-700 hover:border-red-700'
             break
         default:
             bgColor = 'bg-black text-white hover:opacity-90 border-black'
     }
 
-    if (href) {
+    if (as === 'link') {
         return (
             <>
                 <Link

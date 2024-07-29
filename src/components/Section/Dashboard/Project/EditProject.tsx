@@ -156,7 +156,10 @@ export default function EditProject({ projectId }: { projectId: string }) {
 
     async function onSubmit(data: FormData) {
         try {
-            const response = await projectServices.createProject(data)
+            const response = await projectServices.updateProject(
+                projectId,
+                data
+            )
 
             if (response.data.status === true) {
                 const projectId = response.data.projectId

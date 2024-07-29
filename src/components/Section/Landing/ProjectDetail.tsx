@@ -121,7 +121,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                         </div>
                     </div>
                     {/* Description */}
-                    <div className="w-full h-fit flex flex-col">
+                    <div className="w-full h-fit flex flex-col my-2">
                         <span className="font-medium">{project?.desc}</span>
                     </div>
                     {/* End Description */}
