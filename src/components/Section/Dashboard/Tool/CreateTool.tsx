@@ -77,6 +77,7 @@ export default function CreateTool() {
                     />
                     <div className="w-full lg:w-8/12 grid grid-cols-2 gap-6">
                         <PrimaryButton
+                            as="button"
                             type="reset"
                             theme="gray"
                             disabled={isSubmitting}
@@ -85,6 +86,7 @@ export default function CreateTool() {
                             Reset
                         </PrimaryButton>
                         <PrimaryButton
+                            as="button"
                             type="submit"
                             theme="black"
                             disabled={isSubmitting}

@@ -106,6 +106,7 @@ export default function ToolDetail({ toolId }: { toolId: string }) {
                             Edit
                         </PrimaryButton>
                         <PrimaryButton
+                            as="button"
                             type="button"
                             onClick={() => openModal()}
                             theme="red"

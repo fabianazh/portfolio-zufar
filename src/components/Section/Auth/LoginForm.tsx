@@ -121,6 +121,7 @@ export default function LoginForm() {
 
                     {/* Submit Button */}
                     <PrimaryButton
+                        as="button"
                         type="submit"
                         theme="black"
                         disabled={isSubmitting}
@@ -136,6 +137,7 @@ export default function LoginForm() {
                     </div>
 
                     <PrimaryButton
+                        as="button"
                         type="button"
                         onClick={() =>
                             signIn('google', {

@@ -22,6 +22,7 @@ export default function BottomMenu() {
                 className={`flex flex-col gap-4 w-full h-fit place-self-end lg:mt-8`}
             >
                 <PrimaryButton
+                    as="button"
                     type="button"
                     theme="black"
                     onClick={openModal}

@@ -43,6 +43,7 @@ export default function WarnModal({
                             <span className={`lg:font-medium`}>{content}</span>
                             <div className="w-full flex justify-end items-center gap-2 mt-3">
                                 <PrimaryButton
+                                    as="button"
                                     onClick={close}
                                     type="button"
                                     theme="gray"
@@ -52,6 +53,7 @@ export default function WarnModal({
                                     {cancelButton}
                                 </PrimaryButton>
                                 <PrimaryButton
+                                    as="button"
                                     onClick={onSubmit}
                                     type="button"
                                     theme={confirmButtonColor}

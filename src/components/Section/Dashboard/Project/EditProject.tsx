@@ -421,6 +421,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                     />
                     <div className="w-full lg:w-6/12 grid grid-cols-2 gap-6">
                         <PrimaryButton
+                            as="button"
                             type="button"
                             theme="gray"
                             disabled={isSubmitting}
@@ -430,6 +431,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                             Reset
                         </PrimaryButton>
                         <PrimaryButton
+                            as="button"
                             type="submit"
                             theme="black"
                             disabled={isSubmitting}
