@@ -320,7 +320,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                         error={errors?.tools?.message}
                     >
                         {tools.map((tool, index) => (
-                            <label key={index} className="mb-4">
+                            <label key={index}>
                                 <Controller
                                     name="tools"
                                     control={control}

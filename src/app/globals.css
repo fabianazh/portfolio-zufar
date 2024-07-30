@@ -24,10 +24,18 @@
     }
 
     .checkbox {
-        @apply px-4 py-2.5 rounded text-sm border text-black bg-transparent cursor-pointer;
+        @apply px-4 py-2.5 rounded text-sm border text-black bg-stone-100/80 cursor-pointer;
     }
 
     input:checked + .checkbox {
+        @apply bg-white text-gray-900;
+    }
+
+    .radio {
+        @apply px-4 py-2.5 rounded text-sm border text-black bg-stone-100/80 cursor-pointer;
+    }
+
+    input:checked + .radio {
         @apply bg-white text-gray-900;
     }
 }

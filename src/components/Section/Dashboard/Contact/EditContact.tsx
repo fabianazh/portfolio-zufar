@@ -16,9 +16,10 @@ import BackButton from '@/components/Button/BackButton'
 
 type FormData = z.infer<typeof contactSchema>
 
-export default function ContactEdit({ contactId }: { contactId: string }) {
+export default function EditContact({ contactId }: { contactId: string }) {
     const [contact, setContact] = useState<Contact | null | undefined>(null)
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState<boolean>(true)
+    const [error, setError] = useState<boolean>(false)
 
     const router = useRouter()
     const { showToast } = useToast()
@@ -38,7 +39,7 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
                 setContact(data.data)
                 reset(data.data)
             } catch (error) {
-                console.error(error)
+                setError(true)
             } finally {
                 setLoading(false)
             }
@@ -100,7 +101,7 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
                         label="Nama Tampilan"
                         id="displayName"
                         type="text"
-                        placeholder="Masukan Nama Tampilan"
+                        placeholder="Masukan nama tampilan"
                         required
                         defaultValue={contact?.displayName}
                         error={errors?.displayName?.message}
@@ -110,14 +111,12 @@ export default function ContactEdit({ contactId }: { contactId: string }) {
                         label="Link"
                         id="link"
                         type="text"
-                        name="link"
-                        placeholder="Masukan Link Kontak"
+                        placeholder="Masukan link kontak"
                         required
-                        inputClassName="bg-stone-200/50"
                         defaultValue={contact?.link}
                         error={errors?.link?.message}
                     />
-                    <div className="w-full lg:w-8/12 grid grid-cols-2 gap-6">
+                    <div className="w-full lg:w-6/12 grid grid-cols-2 gap-6">
                         <PrimaryButton
                             as="button"
                             type="reset"

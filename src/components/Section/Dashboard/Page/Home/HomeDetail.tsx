@@ -13,7 +13,7 @@ import FileInput from '@/components/Form/FileInput'
 import TextareaInput from '@/components/Form/TextareaInput'
 
 export default function HomeDetail() {
-    const [homeData, setHomeData] = useState<Home | null | undefined>(null)
+    const [homePage, setHomePage] = useState<Home | null | undefined>(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
@@ -24,7 +24,7 @@ export default function HomeDetail() {
         async function fetchHome() {
             try {
                 const { data } = await pageServices.getPageById('home')
-                setHomeData(data.data)
+                setHomePage(data.data)
             } catch (error) {
                 setError(true)
             } finally {
@@ -51,7 +51,7 @@ export default function HomeDetail() {
             <ActionLayout
                 returnLink={'/dashboard/pages'}
                 isLoading={loading}
-                isEmpty={!homeData}
+                isEmpty={!homePage}
                 emptyMessage="Halaman tidak ditemukan."
             >
                 <ActionLayout.Buttons>
@@ -69,7 +69,7 @@ export default function HomeDetail() {
                                 {previewMode ? 'Mode Form' : 'Mode Preview'}
                             </Dropdown.Item>
                             <Dropdown.Item
-                                href={`/dashboard/pages/${homeData?.id}/edit`}
+                                href={`/dashboard/pages/${homePage?.id}/edit`}
                             >
                                 Edit
                             </Dropdown.Item>
@@ -99,7 +99,7 @@ export default function HomeDetail() {
                                         onClick={() => {
                                             openModal()
                                             setModalData({
-                                                photo: `${homeData?.primaryPhoto}`,
+                                                photo: `${homePage?.primaryPhoto}`,
                                                 alt: `Zufar Syabana`,
                                             })
                                         }}
@@ -114,7 +114,7 @@ export default function HomeDetail() {
                                         onClick={() => {
                                             openModal()
                                             setModalData({
-                                                photo: `${homeData?.secondaryPhoto}`,
+                                                photo: `${homePage?.secondaryPhoto}`,
                                                 alt: `Zufar Syabana`,
                                             })
                                         }}
@@ -125,16 +125,16 @@ export default function HomeDetail() {
 
                             <div className="flex flex-col">
                                 <span className="block text-2xl lg:text-3xl font-extrabold lg:font-bold">
-                                    {homeData?.heading}
+                                    {homePage?.heading}
                                 </span>
                                 <span className="block text-lg lg:text-2xl font-semibold">
-                                    {homeData?.subHeading}
+                                    {homePage?.subHeading}
                                 </span>
                             </div>
 
                             <div className="w-full lg:w-full flex h-fit">
                                 <span className="text-base font-base lg:font-medium">
-                                    {homeData?.desc}
+                                    {homePage?.desc}
                                 </span>
                             </div>
                             {/* End Images */}
@@ -146,7 +146,7 @@ export default function HomeDetail() {
                                 id="heading"
                                 className="lg:w-6/12"
                                 rows={2}
-                                defaultValue={homeData?.heading}
+                                defaultValue={homePage?.heading}
                                 readOnly
                             />
                             <TextareaInput
@@ -154,7 +154,7 @@ export default function HomeDetail() {
                                 id="subHeading"
                                 className="lg:w-6/12"
                                 rows={2}
-                                defaultValue={homeData?.subHeading}
+                                defaultValue={homePage?.subHeading}
                                 readOnly
                             />
                             <TextareaInput
@@ -162,7 +162,7 @@ export default function HomeDetail() {
                                 id="desc"
                                 className="lg:w-6/12"
                                 rows={5}
-                                defaultValue={homeData?.desc}
+                                defaultValue={homePage?.desc}
                                 readOnly
                             />
                             <div className="w-9/12 flex gap-6">
@@ -173,7 +173,7 @@ export default function HomeDetail() {
                                     className="w-3/12 lg:w-3/12 shrink-0"
                                     previewClassName="w-full lg:w-full"
                                     inputClassName="w-full lg:w-full"
-                                    preview={[homeData?.primaryPhoto ?? '']}
+                                    preview={[homePage?.primaryPhoto ?? '']}
                                 />
                                 <FileInput
                                     label="Foto 2"
@@ -182,7 +182,7 @@ export default function HomeDetail() {
                                     className="w-9/12 lg:w-9/12 shrink-0"
                                     previewClassName="w-full lg:w-full"
                                     inputClassName="w-full lg:w-full"
-                                    preview={[homeData?.secondaryPhoto ?? '']}
+                                    preview={[homePage?.secondaryPhoto ?? '']}
                                 />
                             </div>
                         </>

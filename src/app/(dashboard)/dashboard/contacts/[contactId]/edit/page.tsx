@@ -1,4 +1,4 @@
-import ContactEdit from '@/components/Section/Dashboard/Contact/ContactEdit'
+import EditContact from '@/components/Section/Dashboard/Contact/EditContact'
 import contactServices from '@/services/contacts'
 
 export async function generateMetadata({
@@ -32,14 +32,14 @@ export async function generateMetadata({
     }
 }
 
-export default function ContactEditPage({
+export default function EditContactPage({
     params,
 }: {
     params: { contactId: string }
 }) {
     return (
         <>
-            <ContactEdit contactId={params.contactId} />
+            <EditContact contactId={params.contactId} />
         </>
     )
 }

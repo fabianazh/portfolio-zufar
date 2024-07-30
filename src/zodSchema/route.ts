@@ -13,6 +13,30 @@ export const mailSchema = z.object({
         .nonempty('Pesan harus diisi.'),
 })
 
+export const contactPageSchema = z.object({
+    title: z
+        .string()
+        .min(4, 'Judul halaman minmal harus berisi 4 karakter.')
+        .max(64, 'Judul halaman maksimal berisi 64 karakter.'),
+    desc: z
+        .string()
+        .min(4, 'Deskripsi halaman minimal harus 4 karakter.')
+        .max(255, 'Deskripsi halaman maksimal berisi 255 karakter.')
+        .nonempty('Deskripsi halaman harus diisi.'),
+    primaryContact: z.object({
+        id: z.string(),
+        type: z.string(),
+        displayName: z.string(),
+        link: z.string(),
+    }),
+    secondaryContact: z.object({
+        id: z.string(),
+        type: z.string(),
+        displayName: z.string(),
+        link: z.string(),
+    }),
+})
+
 export const toolSchema = z.object({
     name: z
         .string()

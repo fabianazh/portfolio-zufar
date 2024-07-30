@@ -1,10 +1,10 @@
 'use client'
 
 import { forwardRef } from 'react'
-import { CheckboxInputProps } from '@/interfaces/component'
+import { RadioInputProps } from '@/interfaces/component'
 
-const CheckboxInput = forwardRef<HTMLDivElement, CheckboxInputProps>(
-    function CheckboxInput(
+const RadioInput = forwardRef<HTMLDivElement, RadioInputProps>(
+    function RadioInput(
         {
             className,
             labelClassName,
@@ -22,6 +22,8 @@ const CheckboxInput = forwardRef<HTMLDivElement, CheckboxInputProps>(
         return (
             <fieldset
                 className={`relative w-full lg:w-6/12 h-auto flex flex-col gap-3.5 ${className}`}
+                ref={ref}
+                {...rest}
             >
                 <label
                     className={`inline-block w-fit text-sm text-gray-700 font-medium px-1 ${labelClassName}`}
@@ -40,4 +42,4 @@ const CheckboxInput = forwardRef<HTMLDivElement, CheckboxInputProps>(
     }
 )
 
-export default CheckboxInput
+export default RadioInput

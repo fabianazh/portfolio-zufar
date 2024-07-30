@@ -36,6 +36,10 @@ export interface CheckboxInputProps extends InputProps {
     children: React.ReactNode
 }
 
+export interface RadioInputProps extends InputProps {
+    children: React.ReactNode
+}
+
 export interface TextareaInputProps
     extends InputHTMLAttributes<HTMLTextAreaElement> {
     className?: string
