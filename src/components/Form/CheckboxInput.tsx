@@ -3,7 +3,7 @@
 import { forwardRef } from 'react'
 import { CheckboxInputProps } from '@/interfaces/component'
 
-const CheckboxInput = forwardRef<HTMLDivElement, CheckboxInputProps>(
+const CheckboxInput = forwardRef<HTMLInputElement, CheckboxInputProps>(
     function CheckboxInput(
         {
             className,

@@ -21,7 +21,7 @@ type FormData = z.infer<typeof contactPageSchema>
 
 export default function EditContact() {
     const [contacts, setContacts] = useState<Contact[] | null | undefined>(null)
-    const [contactPage, setContactPage] = useState<Contact | null | undefined>(
+    const [contactPage, setContactPage] = useState<Page | null | undefined>(
         null
     )
     const [loading, setLoading] = useState<boolean>(true)
@@ -155,7 +155,7 @@ export default function EditContact() {
                                         return (
                                             <input
                                                 type="radio"
-                                                value={contact}
+                                                value={contact.id}
                                                 checked={isChecked}
                                                 className="sr-only"
                                                 onChange={() =>
@@ -188,7 +188,7 @@ export default function EditContact() {
                                         return (
                                             <input
                                                 type="radio"
-                                                value={contact}
+                                                value={contact.id}
                                                 checked={isChecked}
                                                 className="sr-only"
                                                 onChange={() =>

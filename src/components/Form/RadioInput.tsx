@@ -3,7 +3,7 @@
 import { forwardRef } from 'react'
 import { RadioInputProps } from '@/interfaces/component'
 
-const RadioInput = forwardRef<HTMLDivElement, RadioInputProps>(
+const RadioInput = forwardRef<HTMLInputElement, RadioInputProps>(
     function RadioInput(
         {
             className,
@@ -22,8 +22,6 @@ const RadioInput = forwardRef<HTMLDivElement, RadioInputProps>(
         return (
             <fieldset
                 className={`relative w-full lg:w-6/12 h-auto flex flex-col gap-3.5 ${className}`}
-                ref={ref}
-                {...rest}
             >
                 <label
                     className={`inline-block w-fit text-sm text-gray-700 font-medium px-1 ${labelClassName}`}
