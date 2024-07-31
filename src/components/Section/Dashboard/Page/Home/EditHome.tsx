@@ -127,8 +127,8 @@ export default function HomeDetail() {
             try {
                 const { data } = await pageServices.getPageById('home')
                 setHomePage(data.data)
-                setPrimaryPhotoPreview(data?.primaryPhoto)
-                setSecondaryPhotoPreview(data?.secondaryPhoto)
+                setPrimaryPhotoPreview([data?.primaryPhoto ?? ''])
+                setSecondaryPhotoPreview([data?.secondaryPhoto ?? ''])
             } catch (error) {
                 setError(true)
             } finally {
