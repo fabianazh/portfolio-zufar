@@ -6,7 +6,7 @@ export default function ContactPageSkeleton() {
         <>
             <Skeleton
                 height={'1.5rem'}
-                containerClassName="w-56 object-cover"
+                containerClassName="w-72 object-cover"
             />
             <div className="w-full flex flex-col">
                 <Skeleton
@@ -21,11 +21,11 @@ export default function ContactPageSkeleton() {
             </div>
             <div className="flex gap-2">
                 <Skeleton
-                    height={'1rem'}
+                    height={'1.2rem'}
                     containerClassName="w-32 object-cover"
                 />
                 <Skeleton
-                    height={'1rem'}
+                    height={'1.2rem'}
                     containerClassName="w-36 object-cover"
                 />
             </div>

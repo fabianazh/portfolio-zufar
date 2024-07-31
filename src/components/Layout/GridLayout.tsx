@@ -1,6 +1,6 @@
-import ProjectsCardSkeleton from '@/components/Skeleton/ProjectsCardSkeleton'
 import Heading from '@/components/Typography/Heading'
 import Empty from '@/components/Other/Empty'
+import Error from '@/components/Other/Error'
 
 export default function GridLayout({
     className,
@@ -38,6 +38,7 @@ function Items({
     isEmpty,
     emptyMessage = 'Belum ada data.',
     loadingSkeleton,
+    isError = false,
 }: {
     className?: string
     children: React.ReactNode
@@ -45,12 +46,15 @@ function Items({
     isEmpty?: boolean
     emptyMessage?: string
     loadingSkeleton: React.ReactNode
+    isError?: boolean
 }) {
     return (
         <>
             <div className={`w-full h-full ${className}`}>
                 {isLoading ? (
                     loadingSkeleton
+                ) : isError ? (
+                    <Error />
                 ) : isEmpty ? (
                     <Empty message={emptyMessage} />
                 ) : (

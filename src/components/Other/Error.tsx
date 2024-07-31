@@ -1,20 +1,28 @@
 import Image from 'next/image'
 
-export default function Error({
-    message = 'Data kosong.',
+export default function Empty({
+    message = 'Terjadi Kesalahan.',
+    fullPage = false,
 }: {
-    message: string
+    message?: string
+    fullPage?: boolean
 }) {
     return (
-        <section className="w-full min-h-screen flex flex-col gap-3 justify-center items-center fixed top-0 right-0 overflow-hidden lg:pl-80">
+        <div
+            className={`w-full flex flex-col gap-3 justify-center items-center ${
+                fullPage
+                    ? ' min-h-screen fixed top-0 right-0 overflow-hidden lg:pl-80'
+                    : 'my-3'
+            }`}
+        >
             <Image
-                src={'/illustrations/void.svg'}
-                alt="Empty"
+                src={'/illustrations/empty.svg'}
+                alt="Error"
                 width={300}
                 height={200}
-                className="lg:w-72 h-fit mb-3"
+                className={`h-fit mb-3 ${fullPage ? 'lg:w-72' : 'lg:w-56'}`}
             />
             <span className="font-medium text-lg">{message}</span>
-        </section>
+        </div>
     )
 }

@@ -1,6 +1,7 @@
 import Heading from '@/components/Typography/Heading'
 import TableSkeleton from '@/components/Skeleton/TableSkeleton'
 import Empty from '@/components/Other/Empty'
+import Error from '@/components/Other/Error'
 
 export default function TableLayout({
     className,
@@ -52,6 +53,7 @@ export function Content({
     children,
     isLoading,
     isEmpty,
+    isError = false,
     emptyMessage = 'Belum ada data.',
 }: {
     className?: string
@@ -59,12 +61,15 @@ export function Content({
     isLoading: boolean
     isEmpty: boolean
     emptyMessage: string
+    isError?: boolean
 }) {
     return (
         <>
             <div className={`w-full h-fit flex flex-col gap-4 ${className}`}>
                 {isLoading ? (
                     <TableSkeleton />
+                ) : isError ? (
+                    <Error />
                 ) : isEmpty ? (
                     <Empty message={emptyMessage} />
                 ) : (

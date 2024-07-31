@@ -1,6 +1,7 @@
 import Heading from '@/components/Typography/Heading'
 import FormSkeleton from '@/components/Skeleton/FormSkeleton'
 import Empty from '@/components/Other/Empty'
+import Error from '@/components/Other/Error'
 import BackButton from '@/components/Button/BackButton'
 
 export default function ActionLayout({
@@ -9,6 +10,7 @@ export default function ActionLayout({
     isLoading,
     isEmpty,
     emptyMessage = 'Belum ada data.',
+    isError = false,
     loadingSkeleton = <FormSkeleton />,
     returnLink,
 }: {
@@ -16,6 +18,7 @@ export default function ActionLayout({
     children: React.ReactNode
     isLoading?: boolean
     isEmpty?: boolean
+    isError?: boolean
     emptyMessage?: string
     loadingSkeleton?: React.ReactNode
     returnLink: string
@@ -32,6 +35,8 @@ export default function ActionLayout({
                         </Buttons>
                         {loadingSkeleton}
                     </>
+                ) : isError ? (
+                    <Error fullPage />
                 ) : isEmpty ? (
                     <>
                         <Buttons>

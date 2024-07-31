@@ -252,6 +252,7 @@ export default function CreateProject() {
                         handleFileChange={handleThumbnailChange}
                         handleRemovePreview={handleRemoveThumbnailPreview}
                         preview={thumbnailPreview}
+                        required
                     />
                     <TextInput
                         {...register('name')}
@@ -293,7 +294,7 @@ export default function CreateProject() {
                         error={errors?.tools?.message}
                     >
                         {tools.map((tool, index) => (
-                            <label key={index}>
+                            <label key={index} className="chip__container">
                                 <Controller
                                     name="tools"
                                     control={control}
@@ -322,7 +323,7 @@ export default function CreateProject() {
                                         />
                                     )}
                                 />
-                                <span className="checkbox">{tool.name}</span>
+                                <span className="chip">{tool.name}</span>
                             </label>
                         ))}
                     </CheckboxInput>
@@ -369,6 +370,7 @@ export default function CreateProject() {
                         handleFileChange={handlePhotosChange}
                         handleRemovePreview={handleRemovePhotosPreview}
                         preview={photosPreview}
+                        required
                     />
                     <div className="w-full lg:w-6/12 grid grid-cols-2 gap-6">
                         <PrimaryButton

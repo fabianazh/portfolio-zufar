@@ -161,85 +161,100 @@ export default function EditProject({ projectId }: { projectId: string }) {
                 data
             )
 
+            const thumbnailFiles = thumbnailRef.current?.files ?? []
+            const photosFiles = photosRef.current?.files ?? []
+
             if (response.data.status === true) {
-                const projectId = response.data.projectId
+                if (thumbnailFiles.length > 0 || photosFiles.length > 0) {
+                    const projectId = response.data.projectId
 
-                const uploadPromises: Promise<string | null>[] = []
+                    const uploadPromises: Promise<string | null>[] = []
 
-                const thumbnailFiles = thumbnailRef.current?.files ?? []
-                if (thumbnailFiles.length > 0) {
-                    Array.from(thumbnailFiles).forEach((file) => {
-                        uploadPromises.push(
-                            uploadFile('projects', projectId, file)
-                        )
-                    })
-                }
-
-                const photosFiles = photosRef.current?.files ?? []
-                if (photosFiles.length > 0) {
-                    Array.from(photosFiles).forEach((file) => {
-                        uploadPromises.push(
-                            uploadFile('projects', projectId, file)
-                        )
-                    })
-                }
-
-                const uploadResults = await Promise.allSettled(uploadPromises)
-
-                const thumbnailUrls = uploadResults
-                    .slice(0, thumbnailFiles.length)
-                    .filter(
-                        (
-                            result
-                        ): result is PromiseFulfilledResult<string | null> =>
-                            result.status === 'fulfilled'
-                    )
-                    .map((result) => result.value) as string[]
-
-                const photoUrls = uploadResults
-                    .slice(thumbnailFiles.length)
-                    .filter(
-                        (
-                            result
-                        ): result is PromiseFulfilledResult<string | null> =>
-                            result.status === 'fulfilled'
-                    )
-                    .map((result) => result.value) as string[]
-
-                const updateData: any = {}
-                if (thumbnailUrls.length > 0) {
-                    updateData.thumbnail = thumbnailUrls
-                }
-                if (photoUrls.length > 0) {
-                    updateData.photos = photoUrls
-                }
-
-                if (Object.keys(updateData).length > 0) {
-                    try {
-                        const updateImage = await projectServices.updateProject(
-                            projectId,
-                            updateData
-                        )
-
-                        if (updateImage.data.status === true) {
-                            showToast('Projek berhasil dibuat!', {
-                                type: 'success',
-                            })
-                            router.push('/dashboard/projects')
-                        } else {
-                            showToast('Projek gagal dibuat!', { type: 'error' })
-                        }
-                    } catch (error) {
-                        showToast('Error saat pembuatan projek', {
-                            type: 'error',
+                    if (thumbnailFiles.length > 0) {
+                        Array.from(thumbnailFiles).forEach((file) => {
+                            uploadPromises.push(
+                                uploadFile('projects', projectId, file)
+                            )
                         })
                     }
+
+                    if (photosFiles.length > 0) {
+                        Array.from(photosFiles).forEach((file) => {
+                            uploadPromises.push(
+                                uploadFile('projects', projectId, file)
+                            )
+                        })
+                    }
+
+                    const uploadResults = await Promise.allSettled(
+                        uploadPromises
+                    )
+
+                    const thumbnailUrls = uploadResults
+                        .slice(0, thumbnailFiles.length)
+                        .filter(
+                            (
+                                result
+                            ): result is PromiseFulfilledResult<
+                                string | null
+                            > => result.status === 'fulfilled'
+                        )
+                        .map((result) => result.value) as string[]
+
+                    const photoUrls = uploadResults
+                        .slice(thumbnailFiles.length)
+                        .filter(
+                            (
+                                result
+                            ): result is PromiseFulfilledResult<
+                                string | null
+                            > => result.status === 'fulfilled'
+                        )
+                        .map((result) => result.value) as string[]
+
+                    const updateData: any = {}
+                    if (thumbnailUrls.length > 0) {
+                        updateData.thumbnail = thumbnailUrls
+                    }
+                    if (photoUrls.length > 0) {
+                        updateData.photos = photoUrls
+                    }
+
+                    if (Object.keys(updateData).length > 0) {
+                        try {
+                            const updateImage =
+                                await projectServices.updateProject(
+                                    projectId,
+                                    updateData
+                                )
+
+                            if (updateImage.data.status === true) {
+                                showToast('Projek berhasil diperbarui!', {
+                                    type: 'success',
+                                })
+                                router.push('/dashboard/projects')
+                            } else {
+                                showToast('Projek gagal diperbarui!', {
+                                    type: 'error',
+                                })
+                            }
+                        } catch (error) {
+                            showToast('Error saat memperbarui projek', {
+                                type: 'error',
+                            })
+                        }
+                    }
+                } else {
+                    showToast(response.data.message, {
+                        type: 'success',
+                    })
+                    router.push('/dashboard/projects')
                 }
             } else {
                 showToast(response.data.message, { type: 'error' })
             }
         } catch (error) {
-            showToast('Error saat pembuatan projek', { type: 'error' })
+            showToast('Error saat memperbarui projek', { type: 'error' })
         }
     }
 
@@ -320,7 +335,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                         error={errors?.tools?.message}
                     >
                         {tools.map((tool, index) => (
-                            <label key={index}>
+                            <label key={index} className="chip__container">
                                 <Controller
                                     name="tools"
                                     control={control}
@@ -358,7 +373,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                                         )
                                     }}
                                 />
-                                <span className="checkbox">{tool.name}</span>
+                                <span className="chip">{tool.name}</span>
                             </label>
                         ))}
                     </CheckboxInput>

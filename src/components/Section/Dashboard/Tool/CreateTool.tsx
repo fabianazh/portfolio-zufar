@@ -75,7 +75,7 @@ export default function CreateTool() {
                         required
                         error={errors?.link?.message}
                     />
-                    <div className="w-full lg:w-8/12 grid grid-cols-2 gap-6">
+                    <div className="w-full lg:w-6/12 grid grid-cols-2 gap-6">
                         <PrimaryButton
                             as="button"
                             type="reset"

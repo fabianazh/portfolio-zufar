@@ -6,16 +6,26 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastProvider } from '@/context/ToastContext'
 import { urbanist } from '@/app/fonts'
+import { useInView } from 'framer-motion'
+import { useState, useEffect, useRef } from 'react'
 
 export default function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode
 }>) {
+    const [isScrolled, setIsScrolled] = useState<boolean>(false)
+    const mainRef = useRef(null)
+    const isInView = useInView(mainRef, { once: false, amount: 0.5 })
+
+    useEffect(() => {
+        isInView ? setIsScrolled(true) : setIsScrolled(false)
+    }, [isInView])
+
     return (
         <>
             <ToastProvider>
-                <Header />
+                <Header isScrolled={isScrolled} />
                 <Sidebar />
                 <main
                     className={

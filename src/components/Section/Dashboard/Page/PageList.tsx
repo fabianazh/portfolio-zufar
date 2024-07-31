@@ -42,9 +42,9 @@ export default function PageList() {
                     loadingSkeleton={<PagesCardSkeleton />}
                     className="grid grid-cols-1 lg:grid-cols-3 gap-x-4 gap-y-4 lg:gap-x-6 lg:gap-y-6"
                 >
-                    {pages.map((page) => (
+                    {pages.map((page, index) => (
                         <>
-                            <PageCard key={page.id} page={page} />
+                            <PageCard key={index} page={page} />
                         </>
                     ))}
                 </GridLayout.Items>

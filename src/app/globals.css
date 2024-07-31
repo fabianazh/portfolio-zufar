@@ -23,19 +23,15 @@
         @apply hidden;
     }
 
-    .checkbox {
+    .chip__container {
+        @apply flex items-center;
+    }
+
+    .chip {
         @apply px-4 py-2.5 rounded text-sm border text-black bg-stone-100/80 cursor-pointer;
     }
 
-    input:checked + .checkbox {
-        @apply bg-white text-gray-900;
-    }
-
-    .radio {
-        @apply px-4 py-2.5 rounded text-sm border text-black bg-stone-100/80 cursor-pointer;
-    }
-
-    input:checked + .radio {
+    input:checked + .chip {
         @apply bg-white text-gray-900;
     }
 }

@@ -5,7 +5,7 @@ export default function MailDetailSkeleton() {
     return (
         <>
             <div className="flex flex-col gap-2.5">
-                <Skeleton height={'1.7rem'} containerClassName="w-3/12" />
+                <Skeleton height={'1.7rem'} containerClassName="w-5/12" />
                 <div className="w-full h-fit flex flex-col gap-1.5">
                     <Skeleton height={'1.2rem'} containerClassName="w-full" />
                     <Skeleton height={'1.2rem'} containerClassName="w-5/12" />

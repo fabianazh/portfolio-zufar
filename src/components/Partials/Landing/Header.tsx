@@ -9,7 +9,7 @@ import AppIcon from '@/components/Icon/AppIcon'
 import Navbar from '@/components/Partials/Navbar'
 import Footer from '@/components/Partials/Footer'
 
-export default function Header() {
+export default function Header({ isScrolled }: { isScrolled: boolean }) {
     const [isNavOpen, setIsNavOpen] = useState<boolean>(false)
 
     const pathname = usePathname()
@@ -51,7 +51,9 @@ export default function Header() {
     return (
         <>
             <header
-                className={`bg-white fixed items-center w-screen h-14 z-40 top-0 left-0 shadow flex lg:hidden`}
+                className={`fixed items-center w-screen h-14 z-40 top-0 left-0 shadow flex lg:hidden ${
+                    isScrolled ? 'bg-black' : 'bg-transparent'
+                }`}
             >
                 <div className="grid grid-cols-2 justify-between w-full relative gap-x-10 top-0 px-6">
                     <AppIcon size="sm" />

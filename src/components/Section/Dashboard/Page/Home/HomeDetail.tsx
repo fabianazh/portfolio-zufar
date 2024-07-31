@@ -141,6 +141,26 @@ export default function HomeDetail() {
                         </>
                     ) : (
                         <>
+                            <div className="w-full lg:w-9/12 flex flex-col lg:flex-row gap-6">
+                                <FileInput
+                                    label="Foto 1"
+                                    id="primaryPhoto"
+                                    accept=".jpg,.png"
+                                    className="w-full lg:w-3/12"
+                                    previewClassName="w-6/12 lg:w-full"
+                                    inputClassName="w-full lg:w-full"
+                                    preview={[homePage?.primaryPhoto ?? '']}
+                                />
+                                <FileInput
+                                    label="Foto 2"
+                                    id="secondaryPhoto"
+                                    accept=".jpg,.png"
+                                    className="w-full lg:w-fit lg:shrink-0"
+                                    previewClassName="w-full lg:w-full"
+                                    inputClassName="w-full lg:w-full"
+                                    preview={[homePage?.secondaryPhoto ?? '']}
+                                />
+                            </div>
                             <TextareaInput
                                 label="Heading"
                                 id="heading"
@@ -153,7 +173,7 @@ export default function HomeDetail() {
                                 label="Sub Heading"
                                 id="subHeading"
                                 className="lg:w-6/12"
-                                rows={2}
+                                rows={4}
                                 defaultValue={homePage?.subHeading}
                                 readOnly
                             />
@@ -165,26 +185,6 @@ export default function HomeDetail() {
                                 defaultValue={homePage?.desc}
                                 readOnly
                             />
-                            <div className="w-9/12 flex gap-6">
-                                <FileInput
-                                    label="Foto 1"
-                                    id="primaryPhoto"
-                                    accept=".jpg,.png"
-                                    className="w-3/12 lg:w-3/12 shrink-0"
-                                    previewClassName="w-full lg:w-full"
-                                    inputClassName="w-full lg:w-full"
-                                    preview={[homePage?.primaryPhoto ?? '']}
-                                />
-                                <FileInput
-                                    label="Foto 2"
-                                    id="secondaryPhoto"
-                                    accept=".jpg,.png"
-                                    className="w-9/12 lg:w-9/12 shrink-0"
-                                    previewClassName="w-full lg:w-full"
-                                    inputClassName="w-full lg:w-full"
-                                    preview={[homePage?.secondaryPhoto ?? '']}
-                                />
-                            </div>
                         </>
                     )}
                 </ActionLayout.Content>

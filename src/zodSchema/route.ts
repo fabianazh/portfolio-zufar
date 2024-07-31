@@ -37,6 +37,24 @@ export const contactPageSchema = z.object({
     }),
 })
 
+export const homePageSchema = z.object({
+    heading: z
+        .string()
+        .min(4, 'Heading halaman minmal harus berisi 4 karakter.')
+        .max(64, 'Heading halaman maksimal berisi 64 karakter.'),
+    subHeading: z
+        .string()
+        .min(4, 'Sub heading halaman minmal harus berisi 4 karakter.')
+        .max(128, 'Sub heading halaman maksimal berisi 128 karakter.'),
+    desc: z
+        .string()
+        .min(4, 'Deskripsi halaman minimal harus 4 karakter.')
+        .max(255, 'Deskripsi halaman maksimal berisi 255 karakter.')
+        .nonempty('Deskripsi halaman harus diisi.'),
+    primaryPhoto: z.any(),
+    secondaryPhoto: z.any(),
+})
+
 export const toolSchema = z.object({
     name: z
         .string()

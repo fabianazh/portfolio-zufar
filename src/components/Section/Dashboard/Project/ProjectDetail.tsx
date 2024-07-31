@@ -46,10 +46,6 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
         fetchProject()
     }, [])
 
-    if (error) {
-        return <></>
-    }
-
     async function handleDeleteProject() {
         try {
             setSubmitLoading(true)
@@ -75,6 +71,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                 isLoading={loading}
                 isEmpty={!project}
                 emptyMessage="Projek tidak ditemukan."
+                isError={error}
             >
                 <ActionLayout.Buttons>
                     <BackButton href={'/dashboard/projects'} />
@@ -190,7 +187,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                 </div>
                             </div>
                             {/* Description */}
-                            <div className="w-full h-fit flex flex-col my-2">
+                            <div className="w-full h-fit flex flex-col mb-2">
                                 <span className="font-medium">
                                     {project?.desc}
                                 </span>
@@ -265,7 +262,10 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                             />
                             <CheckboxInput label="Perangkat">
                                 {project?.tools?.map((tool, index) => (
-                                    <label key={index} className="mb-4">
+                                    <label
+                                        key={index}
+                                        className="chip__container"
+                                    >
                                         <input
                                             type="checkbox"
                                             className="sr-only"

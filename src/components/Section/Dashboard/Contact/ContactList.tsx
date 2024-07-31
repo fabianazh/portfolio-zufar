@@ -2,7 +2,6 @@
 
 import TableLayout from '@/components/Layout/TableLayout'
 import Dropdown from '@/components/Other/Dropdown'
-import NotFound from '@/components/Other/NotFound'
 import Table from '@/components/Other/Table'
 import contactServices from '@/services/contacts'
 import { useEffect, useState } from 'react'
@@ -68,10 +67,10 @@ export default function ContactList() {
                                         <Table.Data className="w-1/12 text-center">
                                             {index + 1}
                                         </Table.Data>
-                                        <Table.Data className="w-3/12">
+                                        <Table.Data className="w-4/12 truncate">
                                             {contact.type}
                                         </Table.Data>
-                                        <Table.Data className="w-4/12">
+                                        <Table.Data className="w-5/12 truncate">
                                             {contact.displayName}
                                         </Table.Data>
                                         <Table.Data className="w-1/12 grid place-items-center">

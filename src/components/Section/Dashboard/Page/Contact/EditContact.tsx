@@ -25,14 +25,13 @@ export default function EditContact() {
         null
     )
     const [loading, setLoading] = useState<boolean>(true)
-    const [error, setError] = useState<boolean>(true)
+    const [error, setError] = useState<boolean>(false)
     const {
         handleSubmit,
         register,
         control,
         reset,
         setValue,
-        getFieldState,
         getValues,
         formState: { errors, isSubmitting, isDirty, isValid },
     } = useForm<FormData>({
@@ -41,6 +40,8 @@ export default function EditContact() {
 
     const router = useRouter()
     const { showToast } = useToast()
+    const primaryContact = getValues('primaryContact')
+    const secondaryContact = getValues('secondaryContact')
 
     useEffect(() => {
         async function fetchData() {
@@ -99,6 +100,7 @@ export default function EditContact() {
             isEmpty={!contactPage}
             emptyMessage="Tidak dapat menemukan halaman."
             returnLink="/dashboard/pages"
+            isError={error}
         >
             <ActionLayout.Buttons>
                 <BackButton href={'/dashboard/pages'} />
@@ -141,10 +143,7 @@ export default function EditContact() {
                         error={errors?.primaryContact?.message}
                     >
                         {contacts?.map((contact) => (
-                            <label
-                                key={contact.id}
-                                className="flex items-center"
-                            >
+                            <label key={contact.id} className="chip__container">
                                 <Controller
                                     name="primaryContact"
                                     control={control}
@@ -165,7 +164,7 @@ export default function EditContact() {
                                         )
                                     }}
                                 />
-                                <span className="radio">{contact.type}</span>
+                                <span className="chip">{contact.type}</span>
                             </label>
                         ))}
                     </RadioInput>
@@ -174,10 +173,7 @@ export default function EditContact() {
                         error={errors?.secondaryContact?.message}
                     >
                         {contacts?.map((contact) => (
-                            <label
-                                key={contact.id}
-                                className="flex items-center"
-                            >
+                            <label key={contact.id} className="chip__container">
                                 <Controller
                                     name="secondaryContact"
                                     control={control}
@@ -198,7 +194,7 @@ export default function EditContact() {
                                         )
                                     }}
                                 />
-                                <span className="radio">{contact.type}</span>
+                                <span className="chip">{contact.type}</span>
                             </label>
                         ))}
                     </RadioInput>

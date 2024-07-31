@@ -97,7 +97,7 @@ export default function ToolDetail({ toolId }: { toolId: string }) {
                         value={tool?.link}
                         readOnly
                     />
-                    <div className="w-full lg:w-8/12 grid grid-cols-2 gap-6">
+                    <div className="w-full lg:w-6/12 grid grid-cols-2 gap-6">
                         <PrimaryButton
                             theme="gray"
                             href={`/dashboard/tools/${tool?.id}/edit`}

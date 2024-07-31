@@ -6,7 +6,6 @@ import ActionLayout from '@/components/Layout/ActionLayout'
 import TextInput from '@/components/Form/TextInput'
 import TextareaInput from '@/components/Form/TextareaInput'
 import RadioInput from '@/components/Form/RadioInput'
-import PrimaryButton from '@/components/Button/PrimaryButton'
 import BackButton from '@/components/Button/BackButton'
 import Link from 'next/link'
 import Heading from '@/components/Typography/Heading'
@@ -76,7 +75,7 @@ export default function ContactDetail() {
             <ActionLayout.Content>
                 {previewMode ? (
                     <>
-                        <section className="w-full flex flex-col px-0 lg:px-24 items-start gap-3 mb-10">
+                        <section className="w-full flex flex-col px-0 lg:px-24 items-start gap-3 my-10">
                             <Heading>{contactPage?.title}</Heading>
                             <span>{contactPage?.desc}</span>
                             <div className="flex gap-2">
@@ -94,6 +93,65 @@ export default function ContactDetail() {
                                     {contactPage?.secondaryContact?.displayName}
                                 </Link>
                             </div>
+                        </section>
+                        <section className="w-full h-fit px-0 lg:px-24">
+                            <form className="w-full h-fit flex flex-col gap-4 z-0">
+                                <div className="w-full h-fit flex flex-col gap-6">
+                                    <fieldset className="w-full h-fit relative flex flex-col gap-1">
+                                        <label
+                                            htmlFor="name"
+                                            className="absolute -top-2.5 left-0 bg-white z-10 px-2 lg:px-3 text-sm"
+                                        >
+                                            Nama
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="name"
+                                            className="w-full bg-white valid:bg-white py-3 px-4 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500 text-sm lg:text-sm border border-black autofill:bg-white"
+                                            placeholder="Masukan nama anda"
+                                            required
+                                            autoComplete={'off'}
+                                        />
+                                    </fieldset>
+
+                                    <fieldset className="w-full h-fit relative flex flex-col gap-1">
+                                        <label
+                                            htmlFor="email"
+                                            className="absolute -top-2.5 left-0 bg-white z-10 px-2 lg:px-3 text-sm"
+                                        >
+                                            Email
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="email"
+                                            className="w-full bg-white valid:bg-white py-3 px-4 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500 text-sm lg:text-sm border border-black autofill:bg-white"
+                                            placeholder="Masukan email anda"
+                                            required
+                                            autoComplete={'off'}
+                                        />
+                                    </fieldset>
+
+                                    <fieldset className="w-full h-fit relative flex flex-col gap-1">
+                                        <label
+                                            htmlFor="message"
+                                            className="absolute -top-2.5 left-0 bg-white z-10 px-2 lg:px-3 text-sm"
+                                        >
+                                            Pesan
+                                        </label>
+                                        <textarea
+                                            id="message"
+                                            rows={6}
+                                            className="w-full bg-white valid:bg-white py-3 px-4 focus:outline-0 focus:ring-0 placeholder:font-normal placeholder:text-stone-500 text-sm lg:text-sm border border-black autofill:bg-white resize-none"
+                                            placeholder="Masukan pesan anda"
+                                            required
+                                            autoComplete={'off'}
+                                        ></textarea>
+                                    </fieldset>
+                                </div>
+                                <div className="border border-black w-fit py-2 px-16">
+                                    <button type="button">Kirim</button>
+                                </div>
+                            </form>
                         </section>
                     </>
                 ) : (
@@ -115,41 +173,33 @@ export default function ContactDetail() {
                             className="lg:w-6/12"
                             readOnly
                         />
-                        <RadioInput label="Kontak Pertama">
-                            <label className="flex items-center">
-                                <input
-                                    type="radio"
-                                    value={''}
-                                    checked
-                                    className="sr-only"
-                                />
-                                <span className="radio">
-                                    {contactPage?.primaryContact.type}
-                                </span>
-                            </label>
-                        </RadioInput>
-                        <RadioInput label="Kontak Kedua">
-                            <label className="flex items-center">
-                                <input
-                                    type="radio"
-                                    value={''}
-                                    checked
-                                    className="sr-only"
-                                />
-                                <span className="radio">
-                                    {contactPage?.secondaryContact.type}
-                                </span>
-                            </label>
-                        </RadioInput>
-                        <div className="w-full lg:w-6/12 grid grid-cols-2 gap-6">
-                            <PrimaryButton
-                                as="link"
-                                href={`/dashboard/pages/contact/edit`}
-                                theme="gray"
-                                className="w-full grid place-items-center"
-                            >
-                                Edit
-                            </PrimaryButton>
+                        <div className="flex w-full lg:w-6/12 gap-6 justify-between">
+                            <RadioInput label="Kontak Pertama">
+                                <label className="flex items-center">
+                                    <input
+                                        type="radio"
+                                        value={''}
+                                        checked
+                                        className="sr-only"
+                                    />
+                                    <span className="chip">
+                                        {contactPage?.primaryContact.type}
+                                    </span>
+                                </label>
+                            </RadioInput>
+                            <RadioInput label="Kontak Kedua">
+                                <label className="flex items-center">
+                                    <input
+                                        type="radio"
+                                        value={''}
+                                        checked
+                                        className="sr-only"
+                                    />
+                                    <span className="chip">
+                                        {contactPage?.secondaryContact.type}
+                                    </span>
+                                </label>
+                            </RadioInput>
                         </div>
                     </form>
                 )}

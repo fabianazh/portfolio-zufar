@@ -11,8 +11,8 @@ import BackButton from '@/components/Button/BackButton'
 
 export default function ProjectDetail({ projectId }: { projectId: string }) {
     const [project, setProject] = useState<Project | null | undefined>(null)
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(false)
+    const [loading, setLoading] = useState<boolean>(true)
+    const [error, setError] = useState<boolean>(false)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [modalData, setModalData] = useState({ photo: '', alt: '' })
 
@@ -29,10 +29,6 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
         }
         fetchProject()
     }, [projectId])
-
-    if (error) {
-        return <></>
-    }
 
     function openModal() {
         setIsModalOpen(true)
@@ -52,6 +48,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                 loadingSkeleton={<ProjectDetailSkeleton />}
                 isEmpty={!project}
                 emptyMessage="Projek tidak ditemukan."
+                isError={error}
             >
                 <ActionLayout.Buttons>
                     <BackButton href={'/projects'} />
@@ -121,7 +118,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                         </div>
                     </div>
                     {/* Description */}
-                    <div className="w-full h-fit flex flex-col my-2">
+                    <div className="w-full h-fit flex flex-col mb-2">
                         <span className="font-medium">{project?.desc}</span>
                     </div>
                     {/* End Description */}
