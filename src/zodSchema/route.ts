@@ -21,7 +21,6 @@ export const contactPageSchema = z.object({
     desc: z
         .string()
         .min(4, 'Deskripsi halaman minimal harus 4 karakter.')
-        .max(255, 'Deskripsi halaman maksimal berisi 255 karakter.')
         .nonempty('Deskripsi halaman harus diisi.'),
     primaryContact: z.object({
         id: z.string(),
@@ -49,7 +48,6 @@ export const homePageSchema = z.object({
     desc: z
         .string()
         .min(4, 'Deskripsi halaman minimal harus 4 karakter.')
-        .max(255, 'Deskripsi halaman maksimal berisi 255 karakter.')
         .nonempty('Deskripsi halaman harus diisi.'),
     primaryPhoto: z.any(),
     secondaryPhoto: z.any(),

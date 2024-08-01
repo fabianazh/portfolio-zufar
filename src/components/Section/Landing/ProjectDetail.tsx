@@ -113,7 +113,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                         <div className="w-full lg:w-fit flex flex-col">
                             <span className="text-sm font-medium">Tahun</span>
                             <span className="text-base font-semibold lg:font-bold">
-                                {project?.date}
+                                {project?.month} {project?.year}
                             </span>
                         </div>
                     </div>

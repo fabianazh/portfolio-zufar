@@ -85,7 +85,7 @@ export default function ProjectCard({
                         </>
                     ) : (
                         <>
-                            <span>{project.date.split(' ')[1]}</span>
+                            <span>{project.year}</span>
                             <span>/</span>
                             <span className="truncate">{project.name}</span>
                         </>

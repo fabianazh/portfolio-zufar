@@ -24,6 +24,12 @@ import { uploadFile } from '@/libs/firebase/service'
 type FormData = z.infer<typeof projectSchema>
 
 export default function EditProject({ projectId }: { projectId: string }) {
+    const [project, setProject] = useState<Project | null | undefined>(null)
+    const [tools, setTools] = useState<Tool[]>([])
+    const [loading, setLoading] = useState<boolean>(true)
+    const [error, setError] = useState<boolean>(false)
+    const [thumbnailPreview, setThumbnailPreview] = useState<string[]>([])
+    const [photosPreview, setPhotosPreview] = useState<string[]>([])
     const {
         handleSubmit,
         control,
@@ -34,14 +40,17 @@ export default function EditProject({ projectId }: { projectId: string }) {
         formState: { errors, isSubmitting },
     } = useForm<FormData>({
         resolver: zodResolver(projectSchema),
+        defaultValues: {
+            name: project?.name || '',
+            desc: project?.desc || '',
+            category: project?.category || '',
+            tools: project?.tools || [],
+            month: project?.month || '',
+            year: project?.year || '',
+            thumbnail: project?.thumbnail || [],
+            photos: project?.photos || [],
+        },
     })
-
-    const [project, setProject] = useState<Project | null | undefined>(null)
-    const [tools, setTools] = useState<Tool[]>([])
-    const [loading, setLoading] = useState<boolean>(true)
-    const [error, setError] = useState<boolean>(false)
-    const [thumbnailPreview, setThumbnailPreview] = useState<string[]>([])
-    const [photosPreview, setPhotosPreview] = useState<string[]>([])
 
     const router = useRouter()
     const { showToast } = useToast()
@@ -136,10 +145,22 @@ export default function EditProject({ projectId }: { projectId: string }) {
                 const projectResponse = await projectServices.getProjectById(
                     projectId
                 )
-                setProject(projectResponse.data.data)
+                const projectData = projectResponse.data.data
+                setProject(projectData)
                 setTools(toolsResponse.data.data)
-                setThumbnailPreview(projectResponse.data.data?.thumbnail)
-                setPhotosPreview(projectResponse.data.data?.photos)
+
+                reset({
+                    name: projectData.name,
+                    desc: projectData.desc,
+                    category: projectData.category,
+                    tools: projectData.tools,
+                    month: projectData.month,
+                    year: projectData.year,
+                    thumbnail: projectData.thumbnail,
+                    photos: projectData.photos,
+                })
+                setThumbnailPreview(projectData?.thumbnail)
+                setPhotosPreview(projectData?.photos)
             } catch (error) {
                 setError(true)
             } finally {
@@ -155,103 +176,100 @@ export default function EditProject({ projectId }: { projectId: string }) {
     }, [project?.tools, setValue])
 
     async function onSubmit(data: FormData) {
+        const thumbnailFiles = thumbnailRef.current?.files ?? []
+        const photosFiles = photosRef.current?.files ?? []
+
         try {
-            const response = await projectServices.updateProject(
-                projectId,
-                data
-            )
+            if (thumbnailFiles.length < 1 && photosFiles.length < 1) {
+                const response = await projectServices.updateProject(
+                    projectId,
+                    data
+                )
 
-            const thumbnailFiles = thumbnailRef.current?.files ?? []
-            const photosFiles = photosRef.current?.files ?? []
-
-            if (response.data.status === true) {
-                if (thumbnailFiles.length > 0 || photosFiles.length > 0) {
-                    const projectId = response.data.projectId
-
-                    const uploadPromises: Promise<string | null>[] = []
-
-                    if (thumbnailFiles.length > 0) {
-                        Array.from(thumbnailFiles).forEach((file) => {
-                            uploadPromises.push(
-                                uploadFile('projects', projectId, file)
-                            )
-                        })
-                    }
-
-                    if (photosFiles.length > 0) {
-                        Array.from(photosFiles).forEach((file) => {
-                            uploadPromises.push(
-                                uploadFile('projects', projectId, file)
-                            )
-                        })
-                    }
-
-                    const uploadResults = await Promise.allSettled(
-                        uploadPromises
-                    )
-
-                    const thumbnailUrls = uploadResults
-                        .slice(0, thumbnailFiles.length)
-                        .filter(
-                            (
-                                result
-                            ): result is PromiseFulfilledResult<
-                                string | null
-                            > => result.status === 'fulfilled'
-                        )
-                        .map((result) => result.value) as string[]
-
-                    const photoUrls = uploadResults
-                        .slice(thumbnailFiles.length)
-                        .filter(
-                            (
-                                result
-                            ): result is PromiseFulfilledResult<
-                                string | null
-                            > => result.status === 'fulfilled'
-                        )
-                        .map((result) => result.value) as string[]
-
-                    const updateData: any = {}
-                    if (thumbnailUrls.length > 0) {
-                        updateData.thumbnail = thumbnailUrls
-                    }
-                    if (photoUrls.length > 0) {
-                        updateData.photos = photoUrls
-                    }
-
-                    if (Object.keys(updateData).length > 0) {
-                        try {
-                            const updateImage =
-                                await projectServices.updateProject(
-                                    projectId,
-                                    updateData
-                                )
-
-                            if (updateImage.data.status === true) {
-                                showToast('Projek berhasil diperbarui!', {
-                                    type: 'success',
-                                })
-                                router.push('/dashboard/projects')
-                            } else {
-                                showToast('Projek gagal diperbarui!', {
-                                    type: 'error',
-                                })
-                            }
-                        } catch (error) {
-                            showToast('Error saat memperbarui projek', {
-                                type: 'error',
-                            })
-                        }
-                    }
-                } else {
+                if (response.data.status === true) {
                     showToast(response.data.message, {
                         type: 'success',
                     })
                     router.push('/dashboard/projects')
+                } else {
+                    showToast(response.data.message, {
+                        type: 'error',
+                    })
                 }
-            } else {
-                showToast(response.data.message, { type: 'error' })
+            } else if (thumbnailFiles.length > 0 || photosFiles.length > 0) {
+                const uploadPromises: Promise<string | null>[] = []
+
+                if (thumbnailFiles.length > 0) {
+                    Array.from(thumbnailFiles).forEach((file) => {
+                        uploadPromises.push(
+                            uploadFile('projects', projectId, file)
+                        )
+                    })
+                }
+
+                if (photosFiles.length > 0) {
+                    Array.from(photosFiles).forEach((file) => {
+                        uploadPromises.push(
+                            uploadFile('projects', projectId, file)
+                        )
+                    })
+                }
+
+                const uploadResults = await Promise.allSettled(uploadPromises)
+
+                const thumbnailUrls = uploadResults
+                    .slice(0, thumbnailFiles.length)
+                    .filter(
+                        (
+                            result
+                        ): result is PromiseFulfilledResult<string | null> =>
+                            result.status === 'fulfilled'
+                    )
+                    .map((result) => result.value) as string[]
+
+                const photoUrls = uploadResults
+                    .slice(thumbnailFiles.length)
+                    .filter(
+                        (
+                            result
+                        ): result is PromiseFulfilledResult<string | null> =>
+                            result.status === 'fulfilled'
+                    )
+                    .map((result) => result.value) as string[]
+
+                const updateData: any = {}
+                if (thumbnailUrls.length > 0) {
+                    updateData.thumbnail = thumbnailUrls
+                }
+                if (photoUrls.length > 0) {
+                    updateData.photos = photoUrls
+                }
+
+                console.log(updateData)
+
+                if (Object.keys(updateData).length > 0) {
+                    try {
+                        const updateImage = await projectServices.updateProject(
+                            projectId,
+                            { ...data, updateData }
+                        )
+
+                        if (updateImage.data.status === true) {
+                            showToast('Projek berhasil diperbarui!', {
+                                type: 'success',
+                            })
+                            router.push('/dashboard/projects')
+                        } else {
+                            showToast('Projek gagal diperbarui!', {
+                                type: 'error',
+                            })
+                        }
+                    } catch (error) {
+                        showToast('Error saat memperbarui projek', {
+                            type: 'error',
+                        })
+                    }
+                }
             }
         } catch (error) {
             showToast('Error saat memperbarui projek', { type: 'error' })
@@ -285,7 +303,6 @@ export default function EditProject({ projectId }: { projectId: string }) {
                         id="thumbnail"
                         accept=".jpg,.png"
                         className="w-full"
-                        inputClassName="w-full lg:w-6/12"
                         error={errors?.thumbnail?.message as string}
                         handleFileChange={handleThumbnailChange}
                         handleRemovePreview={handleRemoveThumbnailPreview}
@@ -300,7 +317,6 @@ export default function EditProject({ projectId }: { projectId: string }) {
                         placeholder="Masukan nama projek"
                         required
                         error={errors?.name?.message}
-                        defaultValue={project?.name}
                     />
                     <TextareaInput
                         {...register('desc')}
@@ -311,7 +327,6 @@ export default function EditProject({ projectId }: { projectId: string }) {
                         required
                         rows={4}
                         error={errors?.desc?.message}
-                        defaultValue={project?.desc}
                     />
                     <SelectInput
                         {...register('category')}
@@ -390,10 +405,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                                 <option
                                     value={month.value}
                                     key={index}
-                                    selected={
-                                        month.value ===
-                                        project?.date.split(' ')[0]
-                                    }
+                                    selected={month.value === project?.month}
                                 >
                                     {month.label}
                                 </option>
@@ -410,10 +422,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                                 <option
                                     value={year.value}
                                     key={index}
-                                    selected={
-                                        year.value ===
-                                        project?.date.split(' ')[1]
-                                    }
+                                    selected={year.value === project?.year}
                                 >
                                     {year.label}
                                 </option>
@@ -423,12 +432,11 @@ export default function EditProject({ projectId }: { projectId: string }) {
                     <FileInput
                         {...register('photos')}
                         ref={photosRef}
-                        label="Gambar projek"
+                        label="Gambar Projek"
                         id="photos"
                         multiple
                         accept=".jpg,.png"
-                        className="w-full"
-                        inputClassName="w-full lg:w-6/12"
+                        className="w-full lg:w-full"
                         error={errors?.photos?.message as string}
                         handleFileChange={handlePhotosChange}
                         handleRemovePreview={handleRemovePhotosPreview}

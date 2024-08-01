@@ -5,6 +5,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     labelClassName?: string
     descClassName?: string
     inputClassName?: string
+    previewContainerClassName?: string
     previewClassName?: string
     label: string
     desc?: string

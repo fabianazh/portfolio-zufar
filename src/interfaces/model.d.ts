@@ -88,7 +88,8 @@ interface Profile {
 interface Project {
     id: string
     thumbnail: string[]
-    date: string
+    month: string
+    year: string
     name: string
     desc: string
     category: string

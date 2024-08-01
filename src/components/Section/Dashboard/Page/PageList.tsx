@@ -29,6 +29,13 @@ export default function PageList() {
         return <></>
     }
 
+    const sortedPages = [...pages].sort((a, b) => {
+        return (
+            new Date(b.updated_at.seconds).getTime() -
+            new Date(a.updated_at.seconds).getTime()
+        )
+    })
+
     return (
         <>
             <GridLayout>
@@ -42,7 +49,7 @@ export default function PageList() {
                     loadingSkeleton={<PagesCardSkeleton />}
                     className="grid grid-cols-1 lg:grid-cols-3 gap-x-4 gap-y-4 lg:gap-x-6 lg:gap-y-6"
                 >
-                    {pages.map((page, index) => (
+                    {sortedPages.map((page, index) => (
                         <>
                             <PageCard key={index} page={page} />
                         </>

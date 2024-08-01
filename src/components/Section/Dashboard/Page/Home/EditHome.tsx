@@ -127,8 +127,8 @@ export default function HomeDetail() {
             try {
                 const { data } = await pageServices.getPageById('home')
                 setHomePage(data.data)
-                setPrimaryPhotoPreview([data?.primaryPhoto ?? ''])
-                setSecondaryPhotoPreview([data?.secondaryPhoto ?? ''])
+                setPrimaryPhotoPreview([data?.data?.primaryPhoto ?? ''])
+                setSecondaryPhotoPreview([data?.data?.secondaryPhoto ?? ''])
             } catch (error) {
                 setError(true)
             } finally {
@@ -250,9 +250,8 @@ export default function HomeDetail() {
                             label="Foto 1"
                             id="primaryPhoto"
                             accept=".jpg,.png"
-                            className="w-full lg:w-3/12"
+                            className="w-full lg:w-full"
                             previewClassName="w-6/12 lg:w-full"
-                            inputClassName="w-full lg:w-6/12"
                             preview={primaryPhotoPreview}
                             error={errors?.primaryPhoto?.message as string}
                             handleFileChange={handlePrimaryPhotoChange}
@@ -266,9 +265,8 @@ export default function HomeDetail() {
                             label="Foto 2"
                             id="secondaryPhoto"
                             accept=".jpg,.png"
-                            className="w-full lg:w-fit lg:shrink-0"
+                            className="w-full lg:w-full"
                             previewClassName="w-full lg:w-full"
-                            inputClassName="w-full lg:w-6/12"
                             preview={secondaryPhotoPreview}
                             error={errors?.secondaryPhoto?.message as string}
                             handleFileChange={handleSecondaryPhotoChange}

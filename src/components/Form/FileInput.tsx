@@ -22,6 +22,7 @@ const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
             preview,
             handleFileChange,
             handleRemovePreview,
+            previewContainerClassName,
             previewClassName,
             ...rest
         },
@@ -43,12 +44,11 @@ const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
                 <fieldset
                     className={`w-full relative h-fit flex flex-col gap-1.5 ${className}`}
                 >
-                    <label
-                        htmlFor={id}
+                    <span
                         className={`inline-block w-fit text-sm text-gray-700 font-medium px-1 ${labelClassName}`}
                     >
                         {label}
-                    </label>
+                    </span>
                     {desc && (
                         <div
                             className={`w-full h-fit text-xs ${descClassName}`}
@@ -62,7 +62,7 @@ const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
                                 multiple
                                     ? 'w-full grid gap-6 grid-cols-2 lg:grid-cols-3'
                                     : 'w-full lg:w-6/12'
-                            } ${inputClassName}`}
+                            } ${previewContainerClassName}`}
                         >
                             {preview.map((src, index) => (
                                 <div
@@ -101,7 +101,7 @@ const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
                         <>
                             <label
                                 htmlFor={id}
-                                className={`peer h-fit flex flex-col gap-1 justify-center items-center cursor-pointer w-full px-4 py-4 rounded text-sm focus:border-gray-400 focus:outline-none border text-gray-900 bg-white disabled:bg-stone-100/80 read-only:cursor-auto ${inputClassName}`}
+                                className={`peer h-fit flex flex-col gap-1 justify-center items-center cursor-pointer w-full px-4 py-4 rounded text-sm focus:border-gray-400 focus:outline-none border text-gray-900 bg-white disabled:bg-stone-100/80 read-only:cursor-auto w-full lg:w-6/12 ${inputClassName}`}
                             >
                                 <svg
                                     viewBox="0 -2 20 20"

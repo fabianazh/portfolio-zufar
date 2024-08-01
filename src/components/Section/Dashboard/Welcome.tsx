@@ -8,7 +8,7 @@ export default function Welcome() {
     const [session, setSession] = useState<Session | null>(null)
 
     useEffect(() => {
-        const fetchSession = async () => {
+        async function fetchSession() {
             const sessionData = await getSession()
             setSession(sessionData)
         }

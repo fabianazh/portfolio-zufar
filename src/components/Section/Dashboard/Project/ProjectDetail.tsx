@@ -182,7 +182,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                         Tahun
                                     </span>
                                     <span className="text-base font-semibold lg:font-bold">
-                                        {project?.date}
+                                        {project?.month} {project?.year}
                                     </span>
                                 </div>
                             </div>
@@ -272,7 +272,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                             checked
                                         />
 
-                                        <span className="checkbox">
+                                        <span className="chip">
                                             {tool.name}
                                         </span>
                                     </label>
@@ -285,7 +285,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                     id="name"
                                     className="lg:w-6/12"
                                     type="text"
-                                    value={project?.date.split(' ')[0]}
+                                    value={project?.month}
                                 />
                                 <TextInput
                                     label="Tahun"
@@ -293,7 +293,7 @@ export default function ProjectDetail({ projectId }: { projectId: string }) {
                                     id="name"
                                     className="lg:w-6/12"
                                     type="text"
-                                    value={project?.date.split(' ')[1]}
+                                    value={project?.year}
                                 />
                             </div>
                             <FileInput
