@@ -60,7 +60,7 @@ const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
                         <div
                             className={`${
                                 multiple
-                                    ? 'w-full grid gap-6 grid-cols-2 lg:grid-cols-3'
+                                    ? 'w-full columns-1 md:columns-2 lg:columns-3 gap-4 lg:gap-6'
                                     : 'w-full lg:w-6/12'
                             } ${previewContainerClassName}`}
                         >

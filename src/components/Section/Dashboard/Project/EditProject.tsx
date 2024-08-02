@@ -112,32 +112,21 @@ export default function EditProject({ projectId }: { projectId: string }) {
         setPhotosPreview((prev) => {
             const updatedPhotos = prev.filter((_, i) => i !== index)
 
-            const photosValue = getValues('photos')
+            const photosInput = photosRef.current
+            if (!photosInput) return updatedPhotos
 
-            if (
-                Array.isArray(photosValue) &&
-                photosValue.every((item) => typeof item === 'string')
-            ) {
-                setValue('photos', updatedPhotos)
-            } else {
-                const photosInput = photosRef.current
-                if (photosInput) {
-                    const currentFiles = photosInput.files
-                    if (currentFiles) {
-                        const newFileList = new DataTransfer()
+            const currentFiles = photosInput.files
+            if (!currentFiles) return updatedPhotos
 
-                        Array.from(currentFiles).forEach((file, i) => {
-                            if (i !== index) {
-                                newFileList.items.add(file)
-                            }
-                        })
-
-                        photosInput.files = newFileList.files
-
-                        setValue('photos', newFileList.files)
-                    }
+            const newFileList = new DataTransfer()
+            Array.from(currentFiles).forEach((file, i) => {
+                if (i !== index) {
+                    newFileList.items.add(file)
                 }
-            }
+            })
+
+            photosInput.files = newFileList.files
+            setValue('photos', newFileList.files)
 
             return updatedPhotos
         })
@@ -207,7 +196,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                         type: 'error',
                     })
                 }
-            } else {
+            } else if (thumbnailFiles.length > 0 || photosFiles.length > 0) {
                 const uploadPromises: Promise<string | null>[] = []
 
                 if (thumbnailFiles.length > 0) {
@@ -256,17 +245,15 @@ export default function EditProject({ projectId }: { projectId: string }) {
                     updateData.photos = photoUrls
                 }
 
-                const updatedProjectData = {
-                    ...data,
-                    thumbnail: updateData.thumbnail,
-                    photos: updateData.photos,
-                }
-
                 if (Object.keys(updateData).length > 0) {
                     try {
                         const updateImage = await projectServices.updateProject(
                             projectId,
-                            updatedProjectData
+                            {
+                                ...data,
+                                thumbnail: updateData.thumbnail,
+                                photos: updateData.photos,
+                            }
                         )
 
                         if (updateImage.data.status === true) {
@@ -354,7 +341,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                             <option
                                 value={category.value}
                                 key={index}
-                                // selected={category.value === project?.category}
+                                selected={category.value === project?.category}
                             >
                                 {category.label}
                             </option>
@@ -420,7 +407,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                                 <option
                                     value={month.value}
                                     key={index}
-                                    // selected={month.value === project?.month}
+                                    selected={month.value === project?.month}
                                 >
                                     {month.label}
                                 </option>
@@ -437,7 +424,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                                 <option
                                     value={year.value}
                                     key={index}
-                                    // selected={year.value === project?.year}
+                                    selected={year.value === project?.year}
                                 >
                                     {year.label}
                                 </option>
@@ -452,7 +439,6 @@ export default function EditProject({ projectId }: { projectId: string }) {
                         multiple
                         accept=".jpg,.png"
                         className="w-full lg:w-full"
-                        inputClassName={'w-full lg:w-6/12'}
                         error={errors?.photos?.message as string}
                         handleFileChange={handlePhotosChange}
                         handleRemovePreview={handleRemovePhotosPreview}
