@@ -52,7 +52,7 @@ export default function Header({ isScrolled }: { isScrolled: boolean }) {
         <>
             <header
                 className={`fixed items-center w-screen h-14 z-40 top-0 left-0 shadow flex lg:hidden ${
-                    isScrolled ? 'bg-black' : 'bg-transparent'
+                    isScrolled ? 'bg-white' : 'bg-transparent'
                 }`}
             >
                 <div className="grid grid-cols-2 justify-between w-full relative gap-x-10 top-0 px-6">
