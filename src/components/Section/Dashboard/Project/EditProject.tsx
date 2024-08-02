@@ -112,21 +112,31 @@ export default function EditProject({ projectId }: { projectId: string }) {
         setPhotosPreview((prev) => {
             const updatedPhotos = prev.filter((_, i) => i !== index)
 
-            const photosInput = photosRef.current
-            if (!photosInput) return updatedPhotos
+            const photosValue = getValues('photos')
 
-            const currentFiles = photosInput.files
-            if (!currentFiles) return updatedPhotos
+            if (
+                Array.isArray(photosValue) &&
+                photosValue.every((item) => typeof item === 'string')
+            ) {
+                setValue('photos', updatedPhotos)
+            } else {
+                const photosInput = photosRef.current
+                if (photosInput) {
+                    const currentFiles = photosInput.files
+                    if (currentFiles) {
+                        const newFileList = new DataTransfer()
 
-            const newFileList = new DataTransfer()
-            Array.from(currentFiles).forEach((file, i) => {
-                if (i !== index) {
-                    newFileList.items.add(file)
+                        Array.from(currentFiles).forEach((file, i) => {
+                            if (i !== index) {
+                                newFileList.items.add(file)
+                            }
+                        })
+
+                        photosInput.files = newFileList.files
+                        setValue('photos', newFileList.files)
+                    }
                 }
-            })
-
-            photosInput.files = newFileList.files
-            setValue('photos', newFileList.files)
+            }
 
             return updatedPhotos
         })
