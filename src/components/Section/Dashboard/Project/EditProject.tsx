@@ -245,14 +245,12 @@ export default function EditProject({ projectId }: { projectId: string }) {
                     updateData.photos = photoUrls
                 }
 
-                console.log(updateData)
 
                 if (Object.keys(updateData).length > 0) {
                     try {
                         const updateImage = await projectServices.updateProject(
                             projectId,
-                            { ...data, updateData }
-                        )
+                            { ...data, thumbnail:updateData.thumbnail,photos:updateData.photos}                        )
 
                         if (updateImage.data.status === true) {
                             showToast('Projek berhasil diperbarui!', {
