@@ -32,7 +32,6 @@ export default function EditContact() {
         control,
         reset,
         setValue,
-        getValues,
         formState: { errors, isSubmitting, isDirty, isValid },
     } = useForm<FormData>({
         resolver: zodResolver(contactPageSchema),
@@ -40,8 +39,6 @@ export default function EditContact() {
 
     const router = useRouter()
     const { showToast } = useToast()
-    const primaryContact = getValues('primaryContact')
-    const secondaryContact = getValues('secondaryContact')
 
     useEffect(() => {
         async function fetchData() {
@@ -68,7 +65,7 @@ export default function EditContact() {
             const response = await pageServices.updatePage('contact', data)
             if (response.data.status === true) {
                 showToast(response.data.message, { type: 'success' })
-                router.push('/dashboard/pages')
+                router.push('/dashboard/pages/contact')
             } else {
                 showToast(response.data.message, { type: 'error' })
             }
@@ -99,11 +96,11 @@ export default function EditContact() {
             isLoading={loading}
             isEmpty={!contactPage}
             emptyMessage="Tidak dapat menemukan halaman."
-            returnLink="/dashboard/pages"
+            returnLink="/dashboard/pages/contact"
             isError={error}
         >
             <ActionLayout.Buttons>
-                <BackButton href={'/dashboard/pages'} />
+                <BackButton href={'/dashboard/pages/contact'} />
             </ActionLayout.Buttons>
             <ActionLayout.Header
                 title={`Edit Halaman Kontak`}

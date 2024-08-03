@@ -58,7 +58,7 @@ export function Header({
     children: React.ReactNode
 }) {
     return (
-        <th className={`h-fit shrink-0 text-left ${className}`}>{children}</th>
+        <th className={`h-fit shrink-0 text-sm lg:text-base text-left ${className}`}>{children}</th>
     )
 }
 

@@ -37,9 +37,7 @@ export default function WarnModal({
                         className="w-fit h-full max-w-2xl relative bg-white p-4 lg:p-5 duration-300 ease-out data-[closed]:opacity-0 rounded"
                     >
                         <form className="w-full flex flex-col gap-2">
-                            <h1 className={`text-2xl font-semibold`}>
-                                {title}
-                            </h1>
+                            <h1 className={`text-xl font-semibold`}>{title}</h1>
                             <span className={`lg:font-medium`}>{content}</span>
                             <div className="w-full flex justify-end items-center gap-2 mt-3">
                                 <PrimaryButton

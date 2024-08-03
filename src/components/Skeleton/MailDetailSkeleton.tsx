@@ -28,6 +28,11 @@ export default function MailDetailSkeleton() {
                                 height={'1rem'}
                                 containerClassName="w-32"
                             />
+                            <Skeleton
+                                height={'1rem'}
+                                containerClassName="w-32"
+                                className="block lg:hidden"
+                            />
                         </div>
                     </div>
                     <Skeleton height={'1.3rem'} containerClassName="w-80" />
@@ -37,6 +42,7 @@ export default function MailDetailSkeleton() {
                         height={'1rem'}
                         count={3}
                         containerClassName="w-full"
+                        className="hidden lg:block"
                     />
                     <Skeleton height={'1rem'} containerClassName="w-4/12" />
                 </div>

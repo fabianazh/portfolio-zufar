@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-export default function Empty({
+export default function Error({
     message = 'Terjadi Kesalahan.',
     fullPage = false,
 }: {
@@ -16,7 +16,7 @@ export default function Empty({
             }`}
         >
             <Image
-                src={'/illustrations/empty.svg'}
+                src={'/illustrations/error.svg'}
                 alt="Error"
                 width={300}
                 height={200}

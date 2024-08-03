@@ -26,8 +26,10 @@ type FormData = z.infer<typeof projectSchema>
 export default function EditProject({ projectId }: { projectId: string }) {
     const [project, setProject] = useState<Project | null | undefined>(null)
     const [tools, setTools] = useState<Tool[]>([])
-    const [loading, setLoading] = useState<boolean>(true)
-    const [error, setError] = useState<boolean>(false)
+    const [loadingProject, setLoadingProject] = useState<boolean>(true)
+    const [loadingTools, setLoadingTools] = useState<boolean>(true)
+    const [errorProject, setErrorProject] = useState<boolean>(false)
+    const [errorTools, setErrorTools] = useState<boolean>(false)
     const [thumbnailPreview, setThumbnailPreview] = useState<string[]>([])
     const [photosPreview, setPhotosPreview] = useState<string[]>([])
     const {
@@ -149,15 +151,11 @@ export default function EditProject({ projectId }: { projectId: string }) {
     }
 
     useEffect(() => {
-        async function fetchData() {
+        async function fetchProject() {
             try {
-                const toolsResponse = await toolServices.getAllTools()
-                const projectResponse = await projectServices.getProjectById(
-                    projectId
-                )
-                const projectData = projectResponse.data.data
+                const response = await projectServices.getProjectById(projectId)
+                const projectData = response.data.data
                 setProject(projectData)
-                setTools(toolsResponse.data.data)
 
                 reset({
                     name: projectData.name,
@@ -172,13 +170,28 @@ export default function EditProject({ projectId }: { projectId: string }) {
                 setThumbnailPreview(projectData?.thumbnail)
                 setPhotosPreview(projectData?.photos)
             } catch (error) {
-                setError(true)
+                setErrorProject(true)
             } finally {
-                setLoading(false)
+                setLoadingProject(false)
             }
         }
 
-        fetchData()
+        fetchProject()
+    }, [projectId])
+
+    useEffect(() => {
+        async function fetchTools() {
+            try {
+                const response = await toolServices.getAllTools()
+                setTools(response.data.data)
+            } catch (error) {
+                setErrorTools(true)
+            } finally {
+                setLoadingTools(false)
+            }
+        }
+
+        fetchTools()
     }, [projectId])
 
     useEffect(() => {
@@ -200,7 +213,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                     showToast(response.data.message, {
                         type: 'success',
                     })
-                    router.push('/dashboard/projects')
+                    router.push(`/dashboard/projects/${projectId}`)
                 } else {
                     showToast(response.data.message, {
                         type: 'error',
@@ -270,7 +283,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                             showToast('Projek berhasil diperbarui!', {
                                 type: 'success',
                             })
-                            router.push('/dashboard/projects')
+                            router.push(`/dashboard/projects/${projectId}`)
                         } else {
                             showToast('Projek gagal diperbarui!', {
                                 type: 'error',
@@ -290,13 +303,14 @@ export default function EditProject({ projectId }: { projectId: string }) {
 
     return (
         <ActionLayout
-            returnLink="/dashboard/projects"
-            isLoading={loading}
+            returnLink={`/dashboard/projects/${projectId}`}
+            isLoading={loadingProject}
             isEmpty={!project}
             emptyMessage="Projek tidak ditemukan."
+            isError={errorProject || errorTools}
         >
             <ActionLayout.Buttons>
-                <BackButton href={'/dashboard/projects'} />
+                <BackButton href={`/dashboard/projects/${projectId}`} />
             </ActionLayout.Buttons>
             <ActionLayout.Header
                 title={`Edit Projek ${project?.name}`}
@@ -319,6 +333,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                         handleFileChange={handleThumbnailChange}
                         handleRemovePreview={handleRemoveThumbnailPreview}
                         preview={thumbnailPreview}
+                        required={getValues('thumbnail').length === 0}
                     />
                     <TextInput
                         {...register('name')}
@@ -348,11 +363,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                         error={errors?.category?.message}
                     >
                         {categoryOptions.map((category, index) => (
-                            <option
-                                value={category.value}
-                                key={index}
-                                selected={category.value === project?.category}
-                            >
+                            <option value={category.value} key={index}>
                                 {category.label}
                             </option>
                         ))}
@@ -414,11 +425,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                             className="w-full"
                         >
                             {monthOptions.map((month, index) => (
-                                <option
-                                    value={month.value}
-                                    key={index}
-                                    selected={month.value === project?.month}
-                                >
+                                <option value={month.value} key={index}>
                                     {month.label}
                                 </option>
                             ))}
@@ -431,11 +438,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                             className="w-full"
                         >
                             {yearOptions.map((year, index) => (
-                                <option
-                                    value={year.value}
-                                    key={index}
-                                    selected={year.value === project?.year}
-                                >
+                                <option value={year.value} key={index}>
                                     {year.label}
                                 </option>
                             ))}
@@ -453,6 +456,7 @@ export default function EditProject({ projectId }: { projectId: string }) {
                         handleFileChange={handlePhotosChange}
                         handleRemovePreview={handleRemovePhotosPreview}
                         preview={photosPreview}
+                        required={getValues('photos').length === 0}
                     />
                     <div className="w-full lg:w-6/12 grid grid-cols-2 gap-6">
                         <PrimaryButton

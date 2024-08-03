@@ -82,26 +82,31 @@ export default function MailDetail({ mailId }: { mailId: string }) {
             <ActionLayout.Content className="bg-white rounded-md w-full h-fit shadow-sm px-6 pt-4 pb-8">
                 <div className="w-full flex justify-between h-fit">
                     <div className="h-fit w-fit flex gap-2.5">
-                        <div className="flex flex-grow aspect-square items-center justify-center">
+                        <div className="flex flex-grow aspect-square shrink-0 items-center justify-center">
                             <Image
                                 src={'/img/avatar/default.png'}
                                 alt="Default Avatar"
                                 height={100}
                                 width={100}
-                                className="w-full h-fit aspect-square rounded-full"
+                                className="w-full h-fit aspect-square rounded-full shrink-0"
                             />
                         </div>
                         <div className="flex flex-col">
-                            <span className="text-sm lg:text-base font-semibold text-black">
+                            <span className="text-base font-semibold text-black">
                                 {mail?.name}
                             </span>
                             <span className="text-xs lg:text-sm font-medium text-stone-700">
                                 {mail?.email}
                             </span>
+                            <span className="block lg:hidden text-xs lg:text-sm font-medium">
+                                {detailedFormatDate(
+                                    mail?.created_at.seconds ?? 0
+                                )}
+                            </span>
                         </div>
                     </div>
                     <div className="flex gap-4 items-center">
-                        <span className="text-sm font-medium">
+                        <span className="hidden lg:block text-sm font-medium">
                             {detailedFormatDate(mail?.created_at.seconds ?? 0)}
                         </span>
                         <Dropdown>

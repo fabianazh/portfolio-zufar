@@ -203,7 +203,7 @@ export default function CreateProject() {
                             showToast('Projek berhasil dibuat!', {
                                 type: 'success',
                             })
-                            router.push('/dashboard/projects')
+                            router.push(`/dashboard/projects/${projectId}`)
                         } else {
                             showToast('Projek gagal dibuat!', { type: 'error' })
                         }

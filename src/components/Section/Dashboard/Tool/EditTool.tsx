@@ -55,7 +55,7 @@ export default function EditTool({ toolId }: { toolId: string }) {
             const response = await toolServices.updateTool(toolId, data)
             if (response.data.status === true) {
                 showToast(response.data.message, { type: 'success' })
-                router.push('/dashboard/tools')
+                router.push(`/dashboard/tools/${toolId}`)
             } else {
                 showToast(response.data.message, { type: 'error' })
             }
@@ -69,10 +69,10 @@ export default function EditTool({ toolId }: { toolId: string }) {
             isLoading={loading}
             isEmpty={!tool}
             emptyMessage="Tidak dapat menemukan data perangkat."
-            returnLink="/dashboard/tools"
+            returnLink={`/dashboard/tools/${toolId}`}
         >
             <ActionLayout.Buttons>
-                <BackButton href={'/dashboard/tools'} />
+                <BackButton href={`/dashboard/tools/${toolId}`} />
             </ActionLayout.Buttons>
             <ActionLayout.Header
                 title={`Edit Info Perangkat ${tool?.name}`}
