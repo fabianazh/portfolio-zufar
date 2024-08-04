@@ -27,7 +27,7 @@ export default function PrimaryButton({
             break
         case 'white':
             bgColor =
-                'bg-white text-black font-medium border-stone-200 hover:bg-stone-100'
+                'bg-white text-black font-medium border-stone-200 hover:bg-stone-100 shadow-none'
             break
         case 'red':
             bgColor =

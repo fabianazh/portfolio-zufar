@@ -1,9 +1,9 @@
-import Home from '@/components/Section/Landing/Home'
+import Hero from '@/components/Section/Landing/Hero'
 
 export default function HomePage() {
     return (
         <>
-            <Home />
+            <Hero />
         </>
     )
 }

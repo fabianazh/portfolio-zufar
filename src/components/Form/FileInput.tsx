@@ -67,7 +67,7 @@ const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
                             {preview.map((src, index) => (
                                 <div
                                     key={index}
-                                    className={`relative ${previewClassName}`}
+                                    className={`relative w-full h-auto mb-4 lg:mb-6 ${previewClassName}`}
                                 >
                                     <Image
                                         src={src}
