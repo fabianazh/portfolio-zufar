@@ -34,7 +34,7 @@ export default function ContactInfo() {
                 <ContactPageSkeleton />
             ) : (
                 <>
-                    <Heading>{contactPage?.title}</Heading>
+                    <Heading>Kontak Saya</Heading>
                     <span>{contactPage?.desc}</span>
                     <div className="flex gap-2">
                         <Link

@@ -14,10 +14,6 @@ export const mailSchema = z.object({
 })
 
 export const contactPageSchema = z.object({
-    title: z
-        .string()
-        .min(4, 'Judul halaman minmal harus berisi 4 karakter.')
-        .max(64, 'Judul halaman maksimal berisi 64 karakter.'),
     desc: z
         .string()
         .min(4, 'Deskripsi halaman minimal harus 4 karakter.')

@@ -7,7 +7,6 @@ import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { contactPageSchema } from '@/zodSchema/route'
 import ActionLayout from '@/components/Layout/ActionLayout'
-import TextInput from '@/components/Form/TextInput'
 import TextareaInput from '@/components/Form/TextareaInput'
 import RadioInput from '@/components/Form/RadioInput'
 import PrimaryButton from '@/components/Button/PrimaryButton'
@@ -113,17 +112,6 @@ export default function EditContact() {
                     className="w-full h-fit flex flex-col gap-6"
                     onSubmit={handleSubmit(onSubmit)}
                 >
-                    <TextInput
-                        {...register('title')}
-                        label="Judul Halaman"
-                        id="title"
-                        type="text"
-                        placeholder="Masukan judul halaman"
-                        required
-                        defaultValue={contactPage?.title}
-                        className="lg:w-6/12"
-                        error={errors?.title?.message}
-                    />
                     <TextareaInput
                         {...register('desc')}
                         label="Deskripsi Halaman"

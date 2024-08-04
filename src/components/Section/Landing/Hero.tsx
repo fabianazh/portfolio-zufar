@@ -4,13 +4,25 @@ import { useRef, useEffect } from 'react'
 import Image from 'next/image'
 
 const contents = [
-    { path: '/img/bg/bg1.avif' },
-    { path: '/img/z/z7.png' },
-    { path: '/img/z/z7.png' },
-    { path: '/img/bg/bg1.avif' },
+    {
+        path: '/img/projects/detail-engineering-design-rumah-tinggal-2-lantai/site-plan.png',
+    },
+    {
+        path: '/img/projects/detail-engineering-design-rumah-tinggal-2-lantai/site-plan.png',
+    },
+    {
+        path: '/img/projects/interior-showroom-smkn-1-kota-sukabumi/denah-rencana-renovasi.png',
+    },
+    {
+        path: '/img/projects/interior-showroom-smkn-1-kota-sukabumi/denah-rencana-renovasi.png',
+    },
     { text: 'Lorem ipsum doler sit amet, anjay mabar bosku!' },
-    { path: '/img/bg/bg1.avif' },
-    { path: '/img/bg/bg1.avif' },
+    {
+        path: '/img/projects/detail-engineering-design-rumah-tinggal-2-lantai/site-plan.png',
+    },
+    {
+        path: '/img/projects/detail-engineering-design-rumah-tinggal-2-lantai/site-plan.png',
+    },
 ]
 
 export default function Hero() {
@@ -20,7 +32,7 @@ export default function Hero() {
         const handleScroll = (event: WheelEvent) => {
             if (window.innerWidth >= 1024 && heroRef.current) {
                 heroRef.current.scrollLeft += event.deltaY
-                event.preventDefault() // Prevent default scroll behavior for horizontal scroll
+                event.preventDefault()
             }
         }
 
@@ -63,7 +75,7 @@ export default function Hero() {
                                 />
                             )}
                             {content.text && (
-                                <div className="w-full h-auto lg:h-full lg:w-auto px-5 lg:pl-10 lg:pr-32 flex items-center">
+                                <div className="w-full h-72 lg:h-full lg:w-auto px-5 lg:pl-10 lg:pr-32 flex items-center">
                                     <span className="text-base italic">
                                         {'"'}
                                         {content.text}

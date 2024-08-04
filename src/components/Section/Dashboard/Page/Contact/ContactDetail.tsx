@@ -3,7 +3,6 @@
 import pageServices from '@/services/pages'
 import { useEffect, useState } from 'react'
 import ActionLayout from '@/components/Layout/ActionLayout'
-import TextInput from '@/components/Form/TextInput'
 import TextareaInput from '@/components/Form/TextareaInput'
 import RadioInput from '@/components/Form/RadioInput'
 import BackButton from '@/components/Button/BackButton'
@@ -76,7 +75,7 @@ export default function ContactDetail() {
                 {previewMode ? (
                     <>
                         <section className="w-full flex flex-col px-0 lg:px-24 items-start gap-3 my-10">
-                            <Heading>{contactPage?.title}</Heading>
+                            <Heading>Kontak Saya</Heading>
                             <span>{contactPage?.desc}</span>
                             <div className="flex gap-2">
                                 <Link
@@ -156,15 +155,6 @@ export default function ContactDetail() {
                     </>
                 ) : (
                     <form className="w-full h-fit flex flex-col gap-6">
-                        <TextInput
-                            label="Judul Halaman"
-                            id="title"
-                            type="text"
-                            placeholder="Masukan judul halaman"
-                            readOnly
-                            defaultValue={contactPage?.title}
-                            className="lg:w-6/12"
-                        />
                         <TextareaInput
                             label="Deskripsi Halaman"
                             id="desc"

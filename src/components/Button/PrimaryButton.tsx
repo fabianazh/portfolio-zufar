@@ -23,7 +23,7 @@ export default function PrimaryButton({
     switch (theme) {
         case 'gray':
             bgColor =
-                'bg-stone-200 text-black font-medium border-stone-200 hover:bg-stone-300 hover:border-stone-300'
+                'bg-stone-200 text-black font-medium border-stone-200 hover:bg-stone-300 hover:border-stone-300 shadow-sm'
             break
         case 'white':
             bgColor =
@@ -31,7 +31,7 @@ export default function PrimaryButton({
             break
         case 'red':
             bgColor =
-                'bg-red-600 text-white border-red-600 hover:bg-red-700 hover:border-red-700'
+                'bg-red-600 text-white border-red-600 hover:bg-red-700 hover:border-red-700 shadow-sm'
             break
         default:
             bgColor = 'bg-black text-white hover:opacity-90 border-black'
@@ -42,7 +42,7 @@ export default function PrimaryButton({
             <>
                 <Link
                     href={href ?? ''}
-                    className={`py-2 max-h-9 px-4 text-xs lg:text-sm text-center rounded transition-all duration-300 shadow-sm border opacity-100 disabled:opacity-80 ${bgColor} ${className}`}
+                    className={`py-2 max-h-9 px-4 text-xs lg:text-sm text-center rounded transition-all duration-300 border opacity-100 disabled:opacity-80 ${bgColor} ${className}`}
                 >
                     {children}
                 </Link>
@@ -56,7 +56,7 @@ export default function PrimaryButton({
                 type={type}
                 onClick={onClick}
                 disabled={disabled}
-                className={`py-2 max-h-9 px-4 text-xs lg:text-sm text-center rounded transition-all duration-300 shadow-sm border opacity-100 disabled:opacity-80 ${bgColor} ${className}`}
+                className={`py-2 max-h-9 px-4 text-xs lg:text-sm text-center rounded transition-all duration-300 border opacity-100 disabled:opacity-80 ${bgColor} ${className}`}
             >
                 {children}
             </button>

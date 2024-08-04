@@ -8,8 +8,6 @@ import { useEffect, useState } from 'react'
 import pageServices from '@/services/pages'
 import Dropdown from '@/components/Other/Dropdown'
 import { RxDotsVertical } from 'react-icons/rx'
-import { useRouter } from 'next/navigation'
-import { useToast } from '@/context/ToastContext'
 import ActionLayout from '@/components/Layout/ActionLayout'
 import BackButton from '@/components/Button/BackButton'
 import ProfileDetailSkeleton from '@/components/Skeleton/ProfileDetailSkeleton'
@@ -22,16 +20,13 @@ export default function ProfileDetail() {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 
-    const router = useRouter()
-    const { showToast } = useToast()
-
     useEffect(() => {
         async function getProfileDetail() {
             try {
                 const { data } = await pageServices.getPageById('about')
                 setProfile(data.data)
             } catch (error) {
-                console.error(error)
+                setError(error)
             } finally {
                 setLoading(false)
             }
