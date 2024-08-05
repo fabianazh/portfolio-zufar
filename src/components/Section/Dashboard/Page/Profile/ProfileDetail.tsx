@@ -26,7 +26,7 @@ export default function ProfileDetail() {
                 const { data } = await pageServices.getPageById('about')
                 setProfile(data.data)
             } catch (error) {
-                setError(error)
+                setError(true)
             } finally {
                 setLoading(false)
             }
@@ -34,10 +34,6 @@ export default function ProfileDetail() {
 
         getProfileDetail()
     }, [])
-
-    if (error) {
-        return <></>
-    }
 
     return (
         <ActionLayout
@@ -47,6 +43,7 @@ export default function ProfileDetail() {
             isEmpty={!profile}
             emptyMessage="Tidak dapat menemukan data profil."
             loadingSkeleton={<ProfileDetailSkeleton />}
+            isError={error}
         >
             <ActionLayout.Buttons>
                 <BackButton href={'/dashboard/pages'} />
